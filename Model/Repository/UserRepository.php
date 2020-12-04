@@ -32,7 +32,7 @@ class UserRepository
         return $result;
     }
 
-    public function getAllUser()
+    public function getAllUsers()
     {
         $pdo = DBManager::getInstance()->getConnection();
 
@@ -41,8 +41,7 @@ class UserRepository
         $stmt = $pdo->prepare($sql);
         $stmt->execute();
 
-        $result = $stmt->fetchAll(\PDO::FETCH_ASSOC);
-        return $result;
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
 }

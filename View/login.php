@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1>Login.</h1>
-<form action="index.php?target=player&action=add" method="post">
+<form action="../index.php?target=user&action=add" method="post">
     <div class="form-group">
         <label>Health(Max 4):</label>
         <input type="text" name = "Health" class="form-control" required>

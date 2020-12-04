@@ -11,7 +11,7 @@ class UserService
     {
         $result = ['success' => false];
 
-        $repo = new UserController();
+        $repo = new UserRepository();
 
         $userToInsert = [
             'Username' => $username,
@@ -33,7 +33,7 @@ class UserService
         return $result;
     }
 
-    public function getPlayer($userId)
+    public function getUser($userId)
     {
         $result = [
             'success' => false

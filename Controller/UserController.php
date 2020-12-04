@@ -3,12 +3,11 @@
 
 namespace Controller;
 use Core\View;
-use Model\Services\PlayerService;
+use Model\Services\UserService;
 
 class UserController
 {
-    const MAX_USER_PASSWORD = 32;
-    const MAX_USER_NAME = 30;
+    const ID_MIN = 0;
 
     public function add(){
         $result = [
@@ -16,22 +15,19 @@ class UserController
         ];
 
         $password = $_POST['Password'] ?? '';
-        $name = $POST['Username'] ?? '';
+        $name = $_POST['Username'] ?? '';
+        $mail = $_POST['Email'] ?? '';
 
-        if(
-            !$this->validatePasswordLength($password)
-            || !$this->validateNameLength($name)
-        )
-        {
-            $result['msg'] = 'Invalid player parameters';
+        $hash = password_hash($password, PASSWORD_DEFAULT);
 
-            return $result;
-        }
+        $service = new UserService();
+        $result1 = $service->saveUser($name, $mail, $hash);
 
-        $service = new PlayerService();
-        $result1 = $service->savePlayer($password, $name);
+        View::redirect('index.php?target=user&action=loadMain');
+    }
 
-        View::redirect('main.php');
+    public function loadMain(){
+        View::render('main');
     }
 
     public function getById($userId)
@@ -54,7 +50,12 @@ class UserController
     public function getAll()
     {
         $service = new UserService();
-        $result = $service->getAllUser();
+        $result = $service->getAllUsers();
 
+    }
+
+    private function validateSize($userId)
+    {
+        return $userId>=self::ID_MIN;
     }
 }

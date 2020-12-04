@@ -9,16 +9,16 @@
 </head>
 <body>
 <h1>Register.</h1>
-<form action="index.php?target=user&action=add" method="post">
+<form action="../index.php?target=user&action=add" method="post">
     <div class="form-group">
         <label>Username:</label>
            <input type="text" name = "Username" class="form-control" required>
            <div class="form-group">
+        <label>Password:</label>
+            <input type="text" name = "Password" class="form-control" required>
+            <div class="form-group">
         <label>Email:</label>
            <input type="text" name = "Email" class="form-control" required>
-           <div class="form-group">
-        <label>Password:</label>
-           <input type="text" name = "Password" class="form-control" required>
            <div class="form-group">
         <button type="submit" class="btn btn-primary"> Start </button>
     </div>
