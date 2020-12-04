@@ -8,6 +8,10 @@ use Model\Services\UserService;
 class UserController
 {
     const ID_MIN = 0;
+    const CYPHER = "AES-128-CTR";
+    const KEY = "Na1Lud1tP1|_|_|atN@PHP";
+    const OPTIONS = 0;
+    const IV = '8565825542115032';
 
     public function add(){
         $result = [
@@ -18,36 +22,32 @@ class UserController
         $name = $_POST['Username'] ?? '';
         $mail = $_POST['Email'] ?? '';
 
-        //$hash = password_hash($password, PASSWORD_DEFAULT);
+        $hash = openssl_encrypt($password, self::CYPHER, self::KEY, self::OPTIONS, self::IV);
 
         $service = new UserService();
-        $result1 = $service->saveUser($name, $mail, $password);
+        $result1 = $service->saveUser($name, $mail, $hash);
 
         View::redirect('index.php?target=user&action=loadMain');
     }
 
     public function authenticate(){
-        $password = $_POST['Password'] ?? '';
+        $password = $_POST['Pass'] ?? '';
         $name = $_POST['Name'] ?? '';
         unset($_COOKIE['MyUserId']);
 
-        $service1 = new UserService();
-        $service2 = new UserService();
+        $service = new UserService();
 
-        $result1 = $service1->getUserByName($name);
-        $result2 = $service2->getUserByPassword($password);
+        $hash = openssl_encrypt($password, self::CYPHER, self::KEY, self::OPTIONS, self::IV);
 
-        if(($result1['success'] ==  true)
-                && ($result2['success'] == true) &&
-            ($result1['user'] == $result2['user'])){
+        $result = $service->getUserByNameAndPassword($name, $hash);
+        if($result['success'] == false){
+            View::render('login');
+        }else{
             $cookieName = 'MyUserId';
             $date = time() + (60*60*24*7*2);
-            setcookie($cookieName, $result2['user'], $date);
+            setcookie($cookieName, $result['user'], $date, '/');
 
             View::redirect('index.php?target=user&action=loadMain');
-
-        }else{
-            View::redirect('index.php?target=user&action=reTry');
         }
 
     }
@@ -77,24 +77,6 @@ class UserController
         return $result;
     }
 
-    public function getByPassword($userPassword)
-    {
-        //$hash = password_hash($userPassword, PASSWORD_DEFAULT);
-
-        $service = new UserService();
-        $result = $service->getUser($userPassword);
-
-        return $result;
-    }
-
-    public function getByName($userName)
-    {
-        $service = new UserService();
-        $result = $service->getUser($userName);
-
-        return $result;
-    }
-
     public function getAll()
     {
         $service = new UserService();
@@ -106,4 +88,5 @@ class UserController
     {
         return $userId>=self::ID_MIN;
     }
+
 }

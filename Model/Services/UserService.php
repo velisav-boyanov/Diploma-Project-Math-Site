@@ -52,32 +52,14 @@ class UserService
         return $result;
     }
 
-    public function getUserByPassword($userPassword)
+    public function getUserByNameAndPassword($userName, $userPassword)
     {
         $result = [
             'success' => false
         ];
 
         $repo = new UserRepository();
-        $user = $repo->getUserByPassword($userPassword);
-
-        if(!$user){
-            return $result;
-        }
-
-        $result['success'] = true;
-        $result['user'] = $user;
-        return $result;
-    }
-
-    public function getUserByName($userName)
-    {
-        $result = [
-            'success' => false
-        ];
-
-        $repo = new UserRepository();
-        $user = $repo->getUserByName($userName);
+        $user = $repo->getUserByNameAndPassword($userName, $userPassword);
 
         if(!$user){
             return $result;
