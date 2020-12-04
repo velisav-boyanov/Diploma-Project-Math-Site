@@ -20,7 +20,7 @@
         <label>Email:</label>
            <input type="text" name = "Email" class="form-control" required>
            <div class="form-group">
-        <button type="submit" class="btn btn-primary"> Start </button>
+        <button type="submit" class="btn btn-primary"> register </button>
     </div>
 </form>
 </body>

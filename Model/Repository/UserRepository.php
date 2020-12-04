@@ -32,6 +32,34 @@ class UserRepository
         return $result;
     }
 
+    public function getUserByName($userName)
+    {
+        $pdo = DBManager::getInstance()->getConnection();
+
+        $sql = 'SELECT Id FROM `User` 
+                WHERE `Username` = :userName OR `Email` = :userName';
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['userName' => $userName]);
+
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getUserByPassword($userPassword)
+    {
+        $pdo = DBManager::getInstance()->getConnection();
+
+        $sql = 'SELECT Id FROM `User` 
+                WHERE `Password` = :userPassword';
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['userPassword' => $userPassword]);
+
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result;
+    }
+
     public function getAllUsers()
     {
         $pdo = DBManager::getInstance()->getConnection();

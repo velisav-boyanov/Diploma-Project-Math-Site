@@ -52,6 +52,42 @@ class UserService
         return $result;
     }
 
+    public function getUserByPassword($userPassword)
+    {
+        $result = [
+            'success' => false
+        ];
+
+        $repo = new UserRepository();
+        $user = $repo->getUserByPassword($userPassword);
+
+        if(!$user){
+            return $result;
+        }
+
+        $result['success'] = true;
+        $result['user'] = $user;
+        return $result;
+    }
+
+    public function getUserByName($userName)
+    {
+        $result = [
+            'success' => false
+        ];
+
+        $repo = new UserRepository();
+        $user = $repo->getUserByName($userName);
+
+        if(!$user){
+            return $result;
+        }
+
+        $result['success'] = true;
+        $result['user'] = $user;
+        return $result;
+    }
+
     public function getAllUsers()
     {
         $result = [
