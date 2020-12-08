@@ -24,11 +24,8 @@ class UserService
         {
             $result['success'] = true;
             $result['msg'] = 'User successfully added!';
+            $result['id'] = $userId;
         }
-        //COOKIE
-        $cookieName = 'MyUserId';
-        $date = time() + (60*60*24*7*2);
-        setcookie($cookieName, $userId, $date);
 
         return $result;
     }
@@ -65,8 +62,8 @@ class UserService
             return $result;
         }
 
+        $result['id'] = $user;
         $result['success'] = true;
-        $result['user'] = $user;
         return $result;
     }
 
@@ -86,6 +83,22 @@ class UserService
 
         $result['success'] = true;
         $result['user'] = $user;
+        return $result;
+    }
+
+    public function getUserByName($userName){
+        $result = [
+            'success' => false
+        ];
+
+        $repo = new UserRepository();
+        $user = $repo->getUserByName($userName);
+
+        if(!$user){
+            return $result;
+        }
+
+        $result['success'] = true;
         return $result;
     }
 }

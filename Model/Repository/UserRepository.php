@@ -58,4 +58,18 @@ class UserRepository
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function getUserByName($userName)
+    {
+        $pdo = DBManager::getInstance()->getConnection();
+
+        $sql = 'SELECT Id FROM `User` 
+                WHERE `Username` = :userName OR `Email` = :userName';
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['userName' => $userName]);
+
+        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $result;
+    }
+
 }
