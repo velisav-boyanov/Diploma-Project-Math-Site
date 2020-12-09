@@ -3,7 +3,7 @@
 namespace Controller;
 use Core\View;
 use Model\Services\UserService;
-session_start();
+//session_start();
 
 class UserController
 {
@@ -26,8 +26,8 @@ class UserController
         $service = new UserService();
 
         if (
-        !$this->validateUserName($name)
-        || !$this->validatePassword($mail)){
+        $this->validateUserName($name)
+        || $this->validateUserName($mail)){
             View::render('register');
             echo json_encode("Name or Mail is already in use.");
             return $result;
