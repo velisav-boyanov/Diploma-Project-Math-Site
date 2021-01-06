@@ -64,11 +64,14 @@ class TriangleController
             return $result;
         }
 
-        $triangle = new Triangle();
+        $triangle = new Triangle($AB, $AC, $BC, $A, $B, $C, $S, $P, $r, $R, $AM, $BM, $CM, $AL, $BL, $CL, $AH, $BH, $CH);
 
     }
 
     public function validateNumber($number){
+        if(!isset($number)){
+            $number = "Empty";
+        }
         return $number <= 0;
     }
 }
