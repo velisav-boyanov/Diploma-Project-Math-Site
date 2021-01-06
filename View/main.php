@@ -4,7 +4,7 @@
 <body>
 
 <div class="navbar">
-    <a href="#triangle">Triangle</a>
+    <a href="View/triangle.php">Triangle</a>
     <a href="#rectangle">Rectangle</a>
     <a href="#circle">Circle</a>
     <div class="dropdown">
