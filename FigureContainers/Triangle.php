@@ -1,6 +1,6 @@
 <?php
 
-
+namespace FigureContainers;
 class Triangle
 {
     //Sides

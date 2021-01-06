@@ -19,7 +19,7 @@
 
 <h3>Fill in the blank spots and press run.</h3>
 
-<form action="../index.php?target=triangle&action=calculate" method="post">
+<form name = "triangle" action="../index.php?target=triangle&action=run" method="post">
     <div class="form-group">
         <label>Side AB:</label>
         <input type="number" name = "AB" class="form-control" >
