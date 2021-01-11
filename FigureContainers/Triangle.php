@@ -204,30 +204,37 @@ class Triangle
 
     public function surfaceFromSides($side1, $side2, $side3){
         $p = $this->pFromSides($side1, $side2, $side3);
+        $this->surface= sqrt($p*($p-$side1)*($p-$side3)*($p-$side2));
         return $s = sqrt($p*($p-$side1)*($p-$side3)*($p-$side2));
     }
 
     public function surfaceFromSideAndHeight($side, $height){
+        $this->surface= ($side*$height)/2;
         return $s = ($side*$height)/2;
     }
 
     public function surfaceFromSidesAndAngle($angle, $side1, $side2){
+        $this->surface= ($side2*$side2*sin($angle))/2;
         return $s = ($side2*$side2*sin($angle))/2;
     }
 
     public function surfaceFromAnglesAndSide($angle1, $angle2, $angle3, $side1){
+        $this->surface=(pow($side1, 2)*sin($angle2)*sin($angle3))/(2*sin($angle1));
         return $s = (pow($side1, 2)*sin($angle2)*sin($angle3))/(2*sin($angle1));
     }
 
     public function surfaceFromSideAndR($side1, $side2, $side3, $R){
+        $this->surface= ($side1*$side2*$side3)/(4*$R);
         return $s = ($side1*$side2*$side3)/(4*$R);
     }
 
     public function surfaceFromSideAndRSmall($side1, $side2, $side3, $r){
+        $this->surface=$this->pFromSides($side1, $side2, $side3)*$r;
         return $s = $this->pFromSides($side1, $side2, $side3)*$r;
     }
 
     public function perimeterFromSides($side1, $side2, $side3){
+        $this->perimeter = $side3+$side2+$side1;
         return $p = $side3+$side2+$side1;
     }
 }
