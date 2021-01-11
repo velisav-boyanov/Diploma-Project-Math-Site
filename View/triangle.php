@@ -81,10 +81,29 @@
                                                                             <label>Surface:</label>
                                                                             <input type="number" name = "S" class="form-control" >
                                                                             <div class="form-group">
-                                                                                <label>Parameter:</label>
+                                                                                <label>Perimeter:</label>
                                                                                 <input type="number" name = "P" class="form-control" >
                                                                                 <div class="form-group">
                                                                                     <br>
+                                                                                    <label>Side(CL) cut by bisector AL:</label>
+                                                                                    <input type="number" name = "ClFromA" class="form-control" >
+                                                                                    <div class="form-group">
+                                                                                        <label>Side(BL) cut by bisector AL:</label>
+                                                                                        <input type="number" name = "BLFromA" class="form-control" >
+                                                                                        <div class="form-group">
+                                                                                            <label>Side(CL) cut by bisector BL:</label>
+                                                                                            <input type="number" name = "CLFromB" class="form-control" >
+                                                                                            <div class="form-group">
+                                                                                                <label>Side(AL) cut by bisector BL:</label>
+                                                                                                <input type="number" name = "ALFromB" class="form-control" >
+                                                                                                <div class="form-group">
+                                                                                                    <label>Side(AL) cut by bisector CL:</label>
+                                                                                                    <input type="number" name = "ALFromC" class="form-control" >
+                                                                                                    <div class="form-group">
+                                                                                                        <label>Side(BL) cut by bisector CL:</label>
+                                                                                                        <input type="number" name = "BLFromC" class="form-control" >
+                                                                                                        <div class="form-group">
+                                                                                                            <br>
                     <button type="submit" class="btn btn-primary"> run </button>
                 </div>
 </form>

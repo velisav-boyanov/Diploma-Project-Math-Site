@@ -39,6 +39,13 @@ class TriangleController
         $R = $_POST['RLarge'] ?? '';
         $r = $_POST['RSmall'] ?? '';
 
+        $ALFromB = $_POST['ALFromB'] ?? '';
+        $CLFromB = $_POST['CLFromB'] ?? '';
+        $ALFromC = $_POST['ALFromC'] ?? '';
+        $BLFromC = $_POST['BLFromC'] ?? '';
+        $BLFromA = $_POST['BLFromA'] ?? '';
+        $CLFromA = $_POST['CLFromA'] ?? '';
+
         if($this->validateNumber($AB) ||
             $this->validateNumber($BC) ||
             $this->validateNumber($AC) ||
@@ -57,15 +64,33 @@ class TriangleController
             $this->validateNumber($P) ||
             $this->validateNumber($S) ||
             $this->validateNumber($R) ||
-            $this->validateNumber($r)
+            $this->validateNumber($r) ||
+            $this->validateNumber($ALFromB) ||
+            $this->validateNumber($CLFromB) ||
+            $this->validateNumber($ALFromC) ||
+            $this->validateNumber($BLFromC) ||
+            $this->validateNumber($CLFromA) ||
+            $this->validateNumber($BLFromA)
         ){
             View::render('triangle');
             echo json_encode("No negative values please.");
             return $result;
         }
 
-        $triangle = new Triangle($AB, $AC, $BC, $A, $B, $C, $S, $P, $r, $R, $AM, $BM, $CM, $AL, $BL, $CL, $AH, $BH, $CH);
+        return new Triangle($AB, $AC, $BC, $A, $B, $C, $S, $P, $r, $R, $AM, $BM, $CM, $AL, $BL, $CL, $ALFromB, $CLFromB, $ALFromC, $BLFromC, $BLFromA, $CLFromA, $AH, $BH, $CH);
 
+    }
+
+    public function run(){
+
+        $triangle = new Triangle;
+        $triangle = $this->fillTriangle();
+
+        $stuck = false;
+        while($stuck!=true){
+            //do some stuff here;
+            break;
+        }
     }
 
     public function validateNumber($number){
