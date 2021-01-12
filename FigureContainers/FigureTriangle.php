@@ -1,7 +1,7 @@
 <?php
 
 namespace FigureContainers;
-class Triangle
+class FigureTriangle
 {
     //Sides
     public $sideAB;
@@ -52,7 +52,7 @@ class Triangle
     public $isIsosceles;//has two equal sides.
 
     /**
-     * Triangle constructor.
+     * FigureTriangle constructor.
      * @param $sideAB
      * @param $sideAC
      * @param $sideBC

@@ -3,7 +3,7 @@
 
 namespace Controller;
 
-use FigureContainers\Triangle;
+use FigureContainers\FigureTriangle;
 use Core\View;
 
 class TriangleController
@@ -46,57 +46,56 @@ class TriangleController
         $BLFromA = $_POST['BLFromA'] ?? '';
         $CLFromA = $_POST['CLFromA'] ?? '';
 
-        if($this->validateNumber($AB) ||
-            $this->validateNumber($BC) ||
-            $this->validateNumber($AC) ||
-            $this->validateNumber($A) ||
-            $this->validateNumber($B) ||
-            $this->validateNumber($C) ||
-            $this->validateNumber($AL) ||
-            $this->validateNumber($BL) ||
-            $this->validateNumber($CL) ||
-            $this->validateNumber($AM) ||
-            $this->validateNumber($BM) ||
-            $this->validateNumber($CM) ||
-            $this->validateNumber($AH) ||
-            $this->validateNumber($BH) ||
-            $this->validateNumber($CH) ||
-            $this->validateNumber($P) ||
-            $this->validateNumber($S) ||
-            $this->validateNumber($R) ||
-            $this->validateNumber($r) ||
-            $this->validateNumber($ALFromB) ||
-            $this->validateNumber($CLFromB) ||
-            $this->validateNumber($ALFromC) ||
-            $this->validateNumber($BLFromC) ||
-            $this->validateNumber($CLFromA) ||
-            $this->validateNumber($BLFromA)
+        if(!$this->validateNumber($AB) &&
+            !$this->validateNumber($AC) &&
+            !$this->validateNumber($A) &&
+            !$this->validateNumber($B) &&
+            !$this->validateNumber($C) &&
+            !$this->validateNumber($AL) &&
+            !$this->validateNumber($BL) &&
+            !$this->validateNumber($CL) &&
+            !$this->validateNumber($AM) &&
+            !$this->validateNumber($BM) &&
+            !$this->validateNumber($CM) &&
+            !$this->validateNumber($AH) &&
+            !$this->validateNumber($BH) &&
+            !$this->validateNumber($CH) &&
+            !$this->validateNumber($P) &&
+            !$this->validateNumber($S) &&
+            !$this->validateNumber($R) &&
+            !$this->validateNumber($r) &&
+            !$this->validateNumber($ALFromB) &&
+            !$this->validateNumber($CLFromB) &&
+            !$this->validateNumber($ALFromC) &&
+            !$this->validateNumber($BLFromC) &&
+            !$this->validateNumber($CLFromA) &&
+            !$this->validateNumber($BLFromA)
         ){
             View::render('triangle');
-            echo json_encode("No negative values please.");
-            return $result;
+            echo json_encode("No negative values.");
+            return -1;
+        }else{
+            $triangle =  new FigureTriangle($AB, $AC, $BC, $A, $B, $C, $S, $P, $r, $R, $AM, $BM, $CM, $AL, $BL, $CL, $ALFromB, $CLFromB, $ALFromC, $BLFromC, $BLFromA, $CLFromA, $AH, $BH, $CH);
+            $this->run($triangle);
         }
-
-        return new Triangle($AB, $AC, $BC, $A, $B, $C, $S, $P, $r, $R, $AM, $BM, $CM, $AL, $BL, $CL, $ALFromB, $CLFromB, $ALFromC, $BLFromC, $BLFromA, $CLFromA, $AH, $BH, $CH);
 
     }
 
-    public function run(){
+    public function run($triangle){
 
-        $triangle = new Triangle;
-        $triangle = $this->fillTriangle();
+//        if(!($triangle === -1)){
+//            return false;
+//        }
+//        $stuck = true;
+//        do{
+//            break;
+//        } while ($stuck!=true);
 
-        $stuck = false;
-        while($stuck!=true){
-            //do some stuff here;
-            break;
-        }
+        View::render('main');
+        echo json_encode("Lmao it works");
     }
 
     public function validateNumber($number){
-        if(!isset($number)){
-            $number = "Empty";
-        }
-        return $number <= 0;
+        return $number > 0;
     }
 }
