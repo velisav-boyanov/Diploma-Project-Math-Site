@@ -132,17 +132,23 @@ class Triangle
     public function cosTheoremForAngle($side1, $side2, $side3){
         //the first side is the one opposite to the angle
         //returns cos
-        return $angleCos = (-pow($side1, 2) + (pow($side2, 2) + pow($side3, 2)))/ (2*$side2*$side3);
+        return $angleCos = (-pow($side1, 2) +
+                (pow($side2, 2) + pow($side3, 2)))/
+            (2*$side2*$side3);
     }
 
     public function cosTheoremForSideOppositeOfAngle($angle, $side2, $side3){
         //the first side is the one opposite to the angle
-        return $side1 = sqrt(pow($side3, 2) + pow($side2, 2) - 2*$side2*$side3*cos($angle));
+        return $side1 = sqrt(pow($side3, 2) +
+            pow($side2, 2) -
+            2*$side2*$side3*cos($angle));
     }
 
     public function cosTheoremForSideOpposite($angle, $side1, $side2){
         //the first side is the one opposite to the angle
-        return $side3 = sqrt(pow($side1, 2) - pow($side2, 2) - 2*$side1*$side2*cos($angle));
+        return $side3 = sqrt(pow($side1, 2) -
+            pow($side2, 2) -
+            2*$side1*$side2*cos($angle));
     }
 
     public function sinTheoremForAngle($side, $R){
@@ -162,17 +168,23 @@ class Triangle
 
     public function medianFromSides($side1, $side2, $side3){
         //the first side is the on being crossed by the median
-        return $median = sqrt(2*pow($side2, 2) + 2*pow($side3, 2) - pow($side1, 2))/ 2;
+        return $median = sqrt(2*pow($side2, 2) +
+                2*pow($side3, 2) -
+                pow($side1, 2))/ 2;
     }
 
     public function sideFromMedianOpposite($median, $side2, $side3){
         //the first side is the on being crossed by the median
-        return $side = sqrt(2*pow($side2, 2) + 2*pow($side3, 2) - 4*pow($median, 2));
+        return $side = sqrt(2*pow($side2, 2) +
+            2*pow($side3, 2) -
+            4*pow($median, 2));
     }
 
     public function sideFromMedianNonOpposite($side1, $side2, $median){
         //the first side is the on being crossed by the median
-        return $side3 = sqrt(-2*pow($side2, 2) + pow($side1, 2) + pow($median, 2));
+        return $side3 = sqrt(-2*pow($side2, 2) +
+            pow($side1, 2) +
+            pow($median, 2));
     }
 
     public function bisectorFromSides($side12, $side11, $side2, $side3){
@@ -188,7 +200,9 @@ class Triangle
     }
 
     public function bisectorFromSidesAndAngle($side2, $side3, $angle){
-        return $bisector = (2*$side3*$side2*cos($angle/2))/($side3+$side2);
+        return $bisector = (2*$side3*$side2*
+                cos($angle/2))/
+            ($side3+$side2);
     }
 
     public function angleFromBisectorAndSide($side2, $side3, $bisector){
@@ -204,8 +218,12 @@ class Triangle
 
     public function surfaceFromSides($side1, $side2, $side3){
         $p = $this->pFromSides($side1, $side2, $side3);
-        $this->surface= sqrt($p*($p-$side1)*($p-$side3)*($p-$side2));
-        return $s = sqrt($p*($p-$side1)*($p-$side3)*($p-$side2));
+        $this->surface= sqrt($p*($p-$side1)*
+            ($p-$side3)*
+            ($p-$side2));
+        return $s = sqrt($p*($p-$side1)*
+            ($p-$side3)*
+            ($p-$side2));
     }
 
     public function surfaceFromSideAndHeight($side, $height){
@@ -220,12 +238,17 @@ class Triangle
 
     public function surfaceFromAnglesAndSide($angle1, $angle2, $angle3, $side1){
         $this->surface=(pow($side1, 2)*sin($angle2)*sin($angle3))/(2*sin($angle1));
-        return $s = (pow($side1, 2)*sin($angle2)*sin($angle3))/(2*sin($angle1));
+        return $s = (pow($side1, 2)*
+                sin($angle2)*
+                sin($angle3))/
+            (2*sin($angle1));
     }
 
     public function surfaceFromSideAndR($side1, $side2, $side3, $R){
-        $this->surface= ($side1*$side2*$side3)/(4*$R);
-        return $s = ($side1*$side2*$side3)/(4*$R);
+        $this->surface= ($side1*$side2*$side3)/
+            (4*$R);
+        return $s = ($side1*$side2*$side3)/
+            (4*$R);
     }
 
     public function surfaceFromSideAndRSmall($side1, $side2, $side3, $r){
@@ -236,5 +259,63 @@ class Triangle
     public function perimeterFromSides($side1, $side2, $side3){
         $this->perimeter = $side3+$side2+$side1;
         return $p = $side3+$side2+$side1;
+    }
+
+    public function heightFromSides($side1, $side2, $side3){
+        return $h3 = sqrt(($side1+$side2-$side3)*
+                ($side1-$side2+$side3)*
+                ($side2+$side3-$side1)*
+                ($side1+$side2+$side3))
+            /(2*$side3);
+    }
+
+    public function smallRadiusFromSides($side1, $side2, $side3){
+        return $r = sqrt(($side1+$side2-$side3)*
+            ($side1-$side2+$side3)*
+            ($side2+$side3-$side1)
+            /($side3+$side1+$side2));
+    }
+
+    public function largeRadiusFromSides($side1, $side2, $side3){
+        return $R = ($side2*$side3*$side1)/
+            sqrt(($side1+$side2-$side3)
+                *($side1-$side2+$side3)
+                *($side2+$side3-$side1)
+                *($side1+$side2+$side3));
+    }
+
+    public function sideFromBisectorHeightMedian($bisector, $median, $height){
+        //returns a', where a'>a
+        return $a = 2*sqrt(pow($median, 2) - 2*pow($height, 2) + ((2*pow($height, 2) - pow($bisector, 2))*
+                    sqrt((pow($median, 2) - pow($height, 2))/
+                        (pow($bisector, 2) - pow($height, 2)))));
+    }
+
+    public function side1FromMedianHeightAndSide($median, $height, $side){
+        return $b = intdiv(1, 2)*
+            sqrt(4*pow($median, 2) + pow($side, 2) +
+                $side*4*
+                sqrt(pow($median, 2) - pow($height, 2)));
+    }
+
+    public function sideFromOppositeHeightSmallRadiusLargeRadius($height, $r, $R){
+        $pWithoutC = ($height/(2*$r)-1);
+        $sumOfSidesDividedByOtherSide = ($height - $r)/$r;
+
+        $a = 4*$pWithoutC*(pow($pWithoutC, 2) - $pWithoutC*$sumOfSidesDividedByOtherSide);
+        $b = pow($height, 2);
+        $c = 2*$height*$R;
+
+        return $this->quadraticSolver($a, $b, $c);
+    }
+
+    public function quadraticSolver($a, $b, $c){
+        $t = (pow($b, 2)) - (4*$a*$c);
+        if($t < 0){
+            return false;
+        }
+        $result['x1'] = ($b+(sqrt($t))) / (2*$a);
+        $result['x2'] = ($b-(sqrt($t))) / (2*$a);
+        return $result;
     }
 }
