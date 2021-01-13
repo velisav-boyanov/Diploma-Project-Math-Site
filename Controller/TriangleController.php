@@ -73,23 +73,23 @@ class TriangleController
         ){
             View::render('triangle');
             echo json_encode("No negative values.");
-            return -1;
+            return $result;
         }else{
-            $triangle =  new FigureTriangle($AB, $AC, $BC, $A, $B, $C, $S, $P, $r, $R, $AM, $BM, $CM, $AL, $BL, $CL, $ALFromB, $CLFromB, $ALFromC, $BLFromC, $BLFromA, $CLFromA, $AH, $BH, $CH);
+            $triangle =  [$AB, $AC, $BC, $A, $B, $C, $S, $P, $r, $R, $AM, $BM, $CM, $AL, $BL, $CL, $ALFromB, $CLFromB, $ALFromC, $BLFromC, $BLFromA, $CLFromA, $AH, $BH, $CH];
             $this->run($triangle);
+            return true;
         }
 
     }
 
-    public function run($triangle){
+    public function run($triangleFill){
 
-//        if(!($triangle === -1)){
-//            return false;
-//        }
-//        $stuck = true;
-//        do{
-//            break;
-//        } while ($stuck!=true);
+        $stuck = true;
+        $triangle = new FigureTriangle($triangleFill);
+
+        do{
+            break;
+        } while ($stuck!=true);
 
         View::render('main');
         echo json_encode("Lmao it works");

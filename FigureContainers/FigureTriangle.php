@@ -51,6 +51,8 @@ class FigureTriangle
     public $isObtuse;//has an angle larger than 90 deg.
     public $isIsosceles;//has two equal sides.
 
+    public $valuesAreSet;
+
     /**
      * FigureTriangle constructor.
      * @param $sideAB
@@ -80,49 +82,183 @@ class FigureTriangle
      * @param $heightCH
      */
 
-    public function __construct($sideAB, $sideAC, $sideBC, $angleA, $angleB, $angleC, $surface, $perimeter, $innerRadius, $outerRadius, $medianAM, $medianBM, $medianCM, $bisectorAL, $bisectorBL, $bisectorCL, $sideALFromB, $sideCLFromB, $sideALFromC, $sideBLFromC, $sideBLFromA, $sideCLFromA, $heightAH, $heightBH, $heightCH)
+    public function __construct($triangleFill)
     {
-        $this->sideAB = $sideAB;
-        $this->sideAC = $sideAC;
-        $this->sideBC = $sideBC;
-        $this->angleA = $angleA;
-        $this->angleB = $angleB;
-        $this->angleC = $angleC;
-        $this->surface = $surface;
-        $this->perimeter = $perimeter;
-        $this->innerRadius = $innerRadius;
-        $this->outerRadius = $outerRadius;
-        $this->medianAM = $medianAM;
-        $this->medianBM = $medianBM;
-        $this->medianCM = $medianCM;
-        $this->bisectorAL = $bisectorAL;
-        $this->bisectorBL = $bisectorBL;
-        $this->bisectorCL = $bisectorCL;
-        $this->sideALFromB = $sideALFromB;
-        $this->sideCLFromB = $sideCLFromB;
-        $this->sideALFromC = $sideALFromC;
-        $this->sideBLFromC = $sideBLFromC;
-        $this->sideBLFromA = $sideBLFromA;
-        $this->sideCLFromA = $sideCLFromA;
-        $this->heightAH = $heightAH;
-        $this->heightBH = $heightBH;
-        $this->heightCH = $heightCH;
-        if(($sideAB == $sideAC) && ($sideBC == $sideAC)){
+        $this->sideAB = $triangleFill[1];
+        $this->sideAC = $triangleFill[2];
+        $this->sideBC = $triangleFill[3];
+        $this->angleA = $triangleFill[4];
+        $this->angleB = $triangleFill[5];
+        $this->angleC = $triangleFill[6];
+        $this->surface = $triangleFill[7];
+        $this->perimeter = $triangleFill[8];
+        $this->innerRadius = $triangleFill[9];
+        $this->outerRadius = $triangleFill[10];
+        $this->medianAM = $triangleFill[11];
+        $this->medianBM = $triangleFill[12];
+        $this->medianCM = $triangleFill[13];
+        $this->bisectorAL = $triangleFill[14];
+        $this->bisectorBL = $triangleFill[15];
+        $this->bisectorCL = $triangleFill[16];
+        $this->sideALFromB = $triangleFill[17];
+        $this->sideCLFromB = $triangleFill[18];
+        $this->sideALFromC = $triangleFill[19];
+        $this->sideBLFromC = $triangleFill[20];
+        $this->sideBLFromA = $triangleFill[21];
+        $this->sideCLFromA = $triangleFill[22];
+        $this->heightAH = $triangleFill[23];
+        $this->heightBH = $triangleFill[24];
+        $this->heightCH = $triangleFill[25];
+        if(($triangleFill[1] == $$triangleFill[2]) && ($triangleFill[3] == $triangleFill[2])){
             $this->isEquilateral = true;
         }
 
-        if($angleA == 90 || $angleB == 90 || $angleC == 90){
+        if($triangleFill[4] == 90 || $triangleFill[5] == 90 || $triangleFill[6] == 90){
             $this->isRight = true;
         }
 
-        if($angleA > 90 || $angleB > 90 || $angleC > 90) {
+        if($triangleFill[4] > 90 || $triangleFill[5] > 90 || $triangleFill[6] > 90) {
             $this->isObtuse = true;
         }
-        if(($sideAB == $sideAC) && ($sideBC == $sideAC)) {
+        if(($triangleFill[1] == $triangleFill[2]) && ($triangleFill[3] == $triangleFill[2])) {
             $this->isIsosceles = true;
         }
     }
 
+
+    public function setValuesAreSet(){
+        if($this->sideAB != ''){
+            $this->valuesAreSet['AB'] = false;
+        }else{
+            $this->valuesAreSet['AB'] = true;
+        }
+        if($this->sideAC != ''){
+            $this->valuesAreSet['AC'] = false;
+        }else{
+            $this->valuesAreSet['AC'] = true;
+        }
+        if($this->sideBC != ''){
+            $this->valuesAreSet['BC'] = false;
+        }else{
+            $this->valuesAreSet['BC'] = true;
+        }
+        if($this->angleA != ''){
+            $this->valuesAreSet['A'] = false;
+        }else{
+            $this->valuesAreSet['A'] = true;
+        }
+        if($this->angleB != ''){
+            $this->valuesAreSet['B'] = false;
+        }else{
+            $this->valuesAreSet['B'] = true;
+        }
+        if($this->angleC != ''){
+            $this->valuesAreSet['C'] = false;
+        }else{
+            $this->valuesAreSet['C'] = true;
+        }
+
+        if($this->medianAM != ''){
+            $this->valuesAreSet['AM'] = false;
+        }else{
+            $this->valuesAreSet['AM'] = true;
+        }
+        if($this->medianBM != ''){
+            $this->valuesAreSet['BM'] = false;
+        }else{
+            $this->valuesAreSet['BM'] = true;
+        }
+        if($this->medianCM != ''){
+            $this->valuesAreSet['CM'] = false;
+        }else{
+            $this->valuesAreSet['CM'] = true;
+        }
+
+        if($this->bisectorAL != ''){
+            $this->valuesAreSet['AL'] = false;
+        }else{
+            $this->valuesAreSet['AL'] = true;
+        }
+        if($this->bisectorBL != ''){
+            $this->valuesAreSet['BL'] = false;
+        }else{
+            $this->valuesAreSet['BL'] = true;
+        }
+        if($this->bisectorCL != ''){
+            $this->valuesAreSet['CL'] = false;
+        }else{
+            $this->valuesAreSet['CL'] = true;
+        }
+
+        if($this->heightAH != ''){
+            $this->valuesAreSet['AH'] = false;
+        }else{
+            $this->valuesAreSet['AH'] = true;
+        }
+        if($this->heightBH != ''){
+            $this->valuesAreSet['BH'] = false;
+        }else{
+            $this->valuesAreSet['BH'] = true;
+        }
+        if($this->heightCH != ''){
+            $this->valuesAreSet['CH'] = false;
+        }else{
+            $this->valuesAreSet['CH'] = true;
+        }
+
+        if($this->outerRadius != ''){
+            $this->valuesAreSet['OR'] = false;
+        }else{
+            $this->valuesAreSet['OR'] = true;
+        }
+        if($this->innerRadius != ''){
+            $this->valuesAreSet['IR'] = false;
+        }else{
+            $this->valuesAreSet['IR'] = true;
+        }
+        if($this->surface != ''){
+            $this->valuesAreSet['S'] = false;
+        }else{
+            $this->valuesAreSet['S'] = true;
+        }
+        if($this->perimeter != ''){
+            $this->valuesAreSet['P'] = false;
+        }else{
+            $this->valuesAreSet['P'] = true;
+        }
+
+        if($this->sideALFromB != ''){
+            $this->valuesAreSet['ALFromB'] = false;
+        }else{
+            $this->valuesAreSet['ALFromB'] = true;
+        }
+        if($this->sideCLFromB != ''){
+            $this->valuesAreSet['CLFromB'] = false;
+        }else{
+            $this->valuesAreSet['CLFromB'] = true;
+        }
+        if($this->sideALFromC != ''){
+            $this->valuesAreSet['ALFromC'] = false;
+        }else{
+            $this->valuesAreSet['ALFromC'] = true;
+        }
+        if($this->sideBLFromC != ''){
+            $this->valuesAreSet['BLFromC'] = false;
+        }else{
+            $this->valuesAreSet['BLFromC'] = true;
+        }
+        if($this->sideBLFromA != ''){
+            $this->valuesAreSet['BLFromA'] = false;
+        }else{
+            $this->valuesAreSet['BLFromA'] = true;
+        }
+        if($this->sideCLFromA != ''){
+            $this->valuesAreSet['CLFromA'] = false;
+        }else{
+            $this->valuesAreSet['CLFromA'] = true;
+        }
+
+    }
 
     //formulas
     public function angleFromTwoOthers($angle1, $angle2){
