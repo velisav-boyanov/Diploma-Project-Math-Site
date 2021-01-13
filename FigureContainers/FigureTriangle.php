@@ -109,7 +109,7 @@ class FigureTriangle
         $this->heightAH = $triangleFill[23];
         $this->heightBH = $triangleFill[24];
         $this->heightCH = $triangleFill[25];
-        if(($triangleFill[1] == $$triangleFill[2]) && ($triangleFill[3] == $triangleFill[2])){
+        if(($triangleFill[1] == $triangleFill[2]) && ($triangleFill[3] == $triangleFill[2])){
             $this->isEquilateral = true;
         }
 
