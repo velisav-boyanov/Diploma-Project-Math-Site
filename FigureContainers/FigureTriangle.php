@@ -8,7 +8,7 @@ class FigureTriangle
     public $sideAC;
     public $sideBC;
 
-    //Angles
+    //Angles THE ANGLES SHOULD ALWAYS BE TURNED IN TO COS, IMPORTANT !!!!!!!!!!!!!
     public $angleA;
     public $angleB;
     public $angleC;
@@ -55,31 +55,7 @@ class FigureTriangle
 
     /**
      * FigureTriangle constructor.
-     * @param $sideAB
-     * @param $sideAC
-     * @param $sideBC
-     * @param $angleA
-     * @param $angleB
-     * @param $angleC
-     * @param $surface
-     * @param $perimeter
-     * @param $innerRadius
-     * @param $outerRadius
-     * @param $medianAM
-     * @param $medianBM
-     * @param $medianCM
-     * @param $bisectorAL
-     * @param $bisectorBL
-     * @param $bisectorCL
-     * @param $sideALFromB
-     * @param $sideCLFromB
-     * @param $sideALFromC
-     * @param $sideBLFromC
-     * @param $sideBLFromA
-     * @param $sideCLFromA
-     * @param $heightAH
-     * @param $heightBH
-     * @param $heightCH
+     * @param $triangleFill
      */
 
     public function __construct($triangleFill)
@@ -127,132 +103,132 @@ class FigureTriangle
 
 
     public function setValuesAreSet(){
-        if($this->sideAB != ''){
+        if($this->sideAB == ''){
             $this->valuesAreSet['AB'] = false;
         }else{
             $this->valuesAreSet['AB'] = true;
         }
-        if($this->sideAC != ''){
+        if($this->sideAC == ''){
             $this->valuesAreSet['AC'] = false;
         }else{
             $this->valuesAreSet['AC'] = true;
         }
-        if($this->sideBC != ''){
+        if($this->sideBC == ''){
             $this->valuesAreSet['BC'] = false;
         }else{
             $this->valuesAreSet['BC'] = true;
         }
-        if($this->angleA != ''){
+        if($this->angleA == ''){
             $this->valuesAreSet['A'] = false;
         }else{
             $this->valuesAreSet['A'] = true;
         }
-        if($this->angleB != ''){
+        if($this->angleB == ''){
             $this->valuesAreSet['B'] = false;
         }else{
             $this->valuesAreSet['B'] = true;
         }
-        if($this->angleC != ''){
+        if($this->angleC == ''){
             $this->valuesAreSet['C'] = false;
         }else{
             $this->valuesAreSet['C'] = true;
         }
 
-        if($this->medianAM != ''){
+        if($this->medianAM == ''){
             $this->valuesAreSet['AM'] = false;
         }else{
             $this->valuesAreSet['AM'] = true;
         }
-        if($this->medianBM != ''){
+        if($this->medianBM == ''){
             $this->valuesAreSet['BM'] = false;
         }else{
             $this->valuesAreSet['BM'] = true;
         }
-        if($this->medianCM != ''){
+        if($this->medianCM == ''){
             $this->valuesAreSet['CM'] = false;
         }else{
             $this->valuesAreSet['CM'] = true;
         }
 
-        if($this->bisectorAL != ''){
+        if($this->bisectorAL == ''){
             $this->valuesAreSet['AL'] = false;
         }else{
             $this->valuesAreSet['AL'] = true;
         }
-        if($this->bisectorBL != ''){
+        if($this->bisectorBL == ''){
             $this->valuesAreSet['BL'] = false;
         }else{
             $this->valuesAreSet['BL'] = true;
         }
-        if($this->bisectorCL != ''){
+        if($this->bisectorCL == ''){
             $this->valuesAreSet['CL'] = false;
         }else{
             $this->valuesAreSet['CL'] = true;
         }
 
-        if($this->heightAH != ''){
+        if($this->heightAH == ''){
             $this->valuesAreSet['AH'] = false;
         }else{
             $this->valuesAreSet['AH'] = true;
         }
-        if($this->heightBH != ''){
+        if($this->heightBH == ''){
             $this->valuesAreSet['BH'] = false;
         }else{
             $this->valuesAreSet['BH'] = true;
         }
-        if($this->heightCH != ''){
+        if($this->heightCH == ''){
             $this->valuesAreSet['CH'] = false;
         }else{
             $this->valuesAreSet['CH'] = true;
         }
 
-        if($this->outerRadius != ''){
+        if($this->outerRadius == ''){
             $this->valuesAreSet['OR'] = false;
         }else{
             $this->valuesAreSet['OR'] = true;
         }
-        if($this->innerRadius != ''){
+        if($this->innerRadius == ''){
             $this->valuesAreSet['IR'] = false;
         }else{
             $this->valuesAreSet['IR'] = true;
         }
-        if($this->surface != ''){
+        if($this->surface == ''){
             $this->valuesAreSet['S'] = false;
         }else{
             $this->valuesAreSet['S'] = true;
         }
-        if($this->perimeter != ''){
+        if($this->perimeter == ''){
             $this->valuesAreSet['P'] = false;
         }else{
             $this->valuesAreSet['P'] = true;
         }
 
-        if($this->sideALFromB != ''){
+        if($this->sideALFromB == ''){
             $this->valuesAreSet['ALFromB'] = false;
         }else{
             $this->valuesAreSet['ALFromB'] = true;
         }
-        if($this->sideCLFromB != ''){
+        if($this->sideCLFromB == ''){
             $this->valuesAreSet['CLFromB'] = false;
         }else{
             $this->valuesAreSet['CLFromB'] = true;
         }
-        if($this->sideALFromC != ''){
+        if($this->sideALFromC == ''){
             $this->valuesAreSet['ALFromC'] = false;
         }else{
             $this->valuesAreSet['ALFromC'] = true;
         }
-        if($this->sideBLFromC != ''){
+        if($this->sideBLFromC == ''){
             $this->valuesAreSet['BLFromC'] = false;
         }else{
             $this->valuesAreSet['BLFromC'] = true;
         }
-        if($this->sideBLFromA != ''){
+        if($this->sideBLFromA == ''){
             $this->valuesAreSet['BLFromA'] = false;
         }else{
             $this->valuesAreSet['BLFromA'] = true;
         }
-        if($this->sideCLFromA != ''){
+        if($this->sideCLFromA == ''){
             $this->valuesAreSet['CLFromA'] = false;
         }else{
             $this->valuesAreSet['CLFromA'] = true;
@@ -338,6 +314,12 @@ class FigureTriangle
     public function bisectorFromSidesAndAngle($side2, $side3, $angle){
         return $bisector = (2*$side3*$side2*
                 cos($angle/2))/
+            ($side3+$side2);
+    }
+
+    public function bisectorFromSidesAndAngleCos($side2, $side3, $angleCos){
+        $angleCosHalf = sqrt((1+$angleCos)/2);
+        return $bisector = (2*$side3*$side2*$angleCosHalf)/
             ($side3+$side2);
     }
 
@@ -454,4 +436,5 @@ class FigureTriangle
         $result['x2'] = ($b-(sqrt($t))) / (2*$a);
         return $result;
     }
+
 }
