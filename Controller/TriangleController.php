@@ -9,6 +9,49 @@ use mysql_xdevapi\BaseResult;
 
 class TriangleController
 {
+    //Sides
+    const SIDE_AB = 0;
+    const SIDE_AC = 1;
+    const SIDE_BC = 2;
+
+    //Angles THE ANGLES SHOULD ALWAYS BE TURNED IN TO COS, IMPORTANT !!!!!!!!!!!!!
+    const ANGLE_A = 3;
+    const ANGLE_B = 4;
+    const ANGLE_C = 5;
+    //OverAll
+    const SURFACE = 6;
+    const PERIMETER = 7;
+
+    //Radius
+    const INNER_RADIUS = 8;
+    const OUTER_RADIUS = 9;
+
+    //Medians
+    const MEDIAN_AM = 10;
+    const MEDIAN_BM = 11;
+    const MEDIAN_CM = 12;
+
+    //Bisectors
+    const BISECTOR_AL = 13;
+    const BISECTOR_BL = 14;
+    const BISECTOR_CL = 15;
+
+    //SideCutBisector
+    const SIDE_AL_FROM_B = 16;
+    const SIDE_CL_FROM_B = 17;
+    const SIDE_AL_FROM_C = 18;
+    const SIDE_BL_FROM_C = 19;
+    const SIDE_BL_FROM_A = 20;
+    const SIDE_CL_FROM_A = 21;
+
+    //Heights
+    const HEIGHT_AH = 22;
+    const HEIGHT_BH = 23;
+    const HEIGHT_CH = 24;
+
+    //Empty
+    const EMPTY = "";
+
     public function fillTriangle(){
         $result = [
             'success' => false
@@ -76,7 +119,7 @@ class TriangleController
             echo json_encode("No negative values.");
             return $result;
         }else{
-            $triangle =  ["start", $AB, $AC, $BC, $A, $B, $C, $S, $P, $r, $R, $AM, $BM, $CM, $AL, $BL, $CL, $ALFromB, $CLFromB, $ALFromC, $BLFromC, $BLFromA, $CLFromA, $AH, $BH, $CH];
+            $triangle =  [$AB, $AC, $BC, $A, $B, $C, $S, $P, $r, $R, $AM, $BM, $CM, $AL, $BL, $CL, $ALFromB, $CLFromB, $ALFromC, $BLFromC, $BLFromA, $CLFromA, $AH, $BH, $CH];
             $this->run($triangle);
             return true;
         }
@@ -84,48 +127,59 @@ class TriangleController
     }
 
     public function run($triangleFill){
-        $result['success'] = false;
+        $result = false;
 
         $stuck = true;
         $triangle = new FigureTriangle($triangleFill);
-        $triangle->setValuesAreSet();
         //finds sides based on given parameters
 //        do {
 //            break;
 //        } while ($stuck != true);
 
+        if(!$this->validateSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC])){
+            View::render('triangle');
+            echo json_encode("Impossible side proportions.");
+            return $result;
+        }
         //find everything else based on sides;
-        if($triangle->valuesAreSet['AB'] && $triangle->valuesAreSet['AC'] && $triangle->valuesAreSet['BC']) {
-            $triangle->angleC = $triangle->cosTheoremForAngle($triangle->sideAB, $triangle->sideBC, $triangle->sideAC);
-            $triangle->angleB = $triangle->cosTheoremForAngle($triangle->sideAC, $triangle->sideBC, $triangle->sideAB);
-            $triangle->angleA = $triangle->cosTheoremForAngle($triangle->sideBC, $triangle->sideAB, $triangle->sideAC);
+        if($triangle->triangleParameters[self::SIDE_AB] && $triangle->triangleParameters[self::SIDE_AC] && $triangle->triangleParameters[self::SIDE_BC]) {
+            $triangle->triangleParameters[self::ANGLE_C] = number_format($triangle->cosTheoremForAngle($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
+            $triangle->triangleParameters[self::ANGLE_B] = number_format($triangle->cosTheoremForAngle($triangle->triangleParameters[self::SIDE_AC], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AB]), 3);
+            $triangle->triangleParameters[self::ANGLE_A] = number_format($triangle->cosTheoremForAngle($triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_AC]), 3);
 
-            $triangle->medianCM = $triangle->medianFromSides($triangle->sideAB, $triangle->sideBC, $triangle->sideAC);
-            $triangle->medianBM = $triangle->medianFromSides($triangle->sideAC, $triangle->sideBC, $triangle->sideAB);
-            $triangle->medianAM = $triangle->medianFromSides($triangle->sideBC, $triangle->sideAB, $triangle->sideAC);
+            $triangle->triangleParameters[self::MEDIAN_CM] = number_format($triangle->medianFromSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
+            $triangle->triangleParameters[self::MEDIAN_BM] = number_format($triangle->medianFromSides($triangle->triangleParameters[self::SIDE_AC], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AB]), 3);
+            $triangle->triangleParameters[self::MEDIAN_AM] = number_format($triangle->medianFromSides($triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_AC]), 3);
 
-            $triangle->bisectorAL = $triangle->bisectorFromSidesAndAngleCos($triangle->sideAC, $triangle->sideAB, $triangle->angleA);
-            $triangle->bisectorCL = $triangle->bisectorFromSidesAndAngleCos($triangle->sideAC, $triangle->sideBC, $triangle->angleC);
-            $triangle->bisectorBL = $triangle->bisectorFromSidesAndAngleCos($triangle->sideAB, $triangle->sideBC, $triangle->angleB);
+            $triangle->triangleParameters[self::BISECTOR_AL] = number_format($triangle->bisectorFromSidesAndAngleCos($triangle->triangleParameters[self::SIDE_AC], $triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::ANGLE_A]), 3);
+            $triangle->triangleParameters[self::BISECTOR_CL] = number_format($triangle->bisectorFromSidesAndAngleCos($triangle->triangleParameters[self::SIDE_AC], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::ANGLE_C]), 3);
+            $triangle->triangleParameters[self::BISECTOR_BL] = number_format($triangle->bisectorFromSidesAndAngleCos($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::ANGLE_B]), 3);
 
-            $triangle->perimeter = $triangle->perimeterFromSides($triangle->sideAB, $triangle->sideBC, $triangle->sideAC);
-            $triangle->surface = $triangle->surfaceFromSides($triangle->sideAB, $triangle->sideBC, $triangle->sideAC);
+            $triangle->triangleParameters[self::PERIMETER] = number_format($triangle->perimeterFromSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
+            $triangle->triangleParameters[self::SURFACE] = number_format($triangle->surfaceFromSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
 
-            $triangle->innerRadius = $triangle->smallRadiusFromSides($triangle->sideAB, $triangle->sideBC, $triangle->sideAC);
-            $triangle->outerRadius = $triangle->largeRadiusFromSides($triangle->sideAB, $triangle->sideBC, $triangle->sideAC);
+            $triangle->triangleParameters[self::INNER_RADIUS] = number_format($triangle->smallRadiusFromSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
+            $triangle->triangleParameters[self::OUTER_RADIUS] = number_format($triangle->largeRadiusFromSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
 
-            $triangle->heightCH = $triangle->heightFromSides($triangle->sideAC, $triangle->sideBC, $triangle->sideAB);
-            $triangle->heightBH = $triangle->heightFromSides($triangle->sideAB, $triangle->sideBC, $triangle->sideAC);
-            $triangle->heightAH = $triangle->heightFromSides($triangle->sideAC, $triangle->sideAB, $triangle->sideBC);
+            $triangle->triangleParameters[self::HEIGHT_CH] = number_format($triangle->heightFromSides($triangle->triangleParameters[self::SIDE_AC], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AB]), 3);
+            $triangle->triangleParameters[self::HEIGHT_BH] = number_format($triangle->heightFromSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
+            $triangle->triangleParameters[self::HEIGHT_AH] = number_format($triangle->heightFromSides($triangle->triangleParameters[self::SIDE_AC], $triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC]), 3);
         }
         View::render('main');
-        echo json_encode($triangle->angleA); echo json_encode($triangle->angleB); echo json_encode($triangle->angleC);echo PHP_EOL;
-        echo json_encode($triangle->medianAM); echo json_encode($triangle->medianBM); echo json_encode($triangle->medianCM);echo PHP_EOL;
-        echo json_encode($triangle->bisectorAL); echo json_encode($triangle->bisectorBL); echo json_encode($triangle->bisectorCL);echo PHP_EOL;
-        echo json_encode($triangle->heightAH); echo json_encode($triangle->heightBH); echo json_encode($triangle->heightCH);echo PHP_EOL;
+        echo json_encode($triangle->triangleParameters[self::ANGLE_A]); echo json_encode($triangle->triangleParameters[self::ANGLE_B]); echo json_encode($triangle->triangleParameters[self::ANGLE_C]);
+        echo json_encode($triangle->triangleParameters[self::MEDIAN_AM]); echo json_encode($triangle->triangleParameters[self::MEDIAN_BM]); echo json_encode($triangle->triangleParameters[self::MEDIAN_CM]);
+        echo json_encode($triangle->triangleParameters[self::BISECTOR_AL]); echo json_encode($triangle->triangleParameters[self::BISECTOR_BL]); echo json_encode($triangle->triangleParameters[self::BISECTOR_CL]);
+        echo json_encode($triangle->triangleParameters[self::HEIGHT_AH]); echo json_encode($triangle->triangleParameters[self::HEIGHT_BH]); echo json_encode($triangle->triangleParameters[self::HEIGHT_CH]);
     }
 
     public function validateNumber($number){
         return $number > 0;
+    }
+
+    public function validateSides($a, $b, $c){
+        if(($a + $b < $c) || ($a + $c < $b) || ($b + $c < $a)){
+            return false;
+        }
+        return true;
     }
 }
