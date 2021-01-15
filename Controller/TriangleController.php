@@ -143,27 +143,7 @@ class TriangleController
         }
         //find everything else based on sides;
         if($triangle->triangleParameters[self::SIDE_AB] && $triangle->triangleParameters[self::SIDE_AC] && $triangle->triangleParameters[self::SIDE_BC]) {
-            $triangle->triangleParameters[self::ANGLE_C] = number_format($triangle->cosTheoremForAngle($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
-            $triangle->triangleParameters[self::ANGLE_B] = number_format($triangle->cosTheoremForAngle($triangle->triangleParameters[self::SIDE_AC], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AB]), 3);
-            $triangle->triangleParameters[self::ANGLE_A] = number_format($triangle->cosTheoremForAngle($triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_AC]), 3);
-
-            $triangle->triangleParameters[self::MEDIAN_CM] = number_format($triangle->medianFromSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
-            $triangle->triangleParameters[self::MEDIAN_BM] = number_format($triangle->medianFromSides($triangle->triangleParameters[self::SIDE_AC], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AB]), 3);
-            $triangle->triangleParameters[self::MEDIAN_AM] = number_format($triangle->medianFromSides($triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_AC]), 3);
-
-            $triangle->triangleParameters[self::BISECTOR_AL] = number_format($triangle->bisectorFromSidesAndAngleCos($triangle->triangleParameters[self::SIDE_AC], $triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::ANGLE_A]), 3);
-            $triangle->triangleParameters[self::BISECTOR_CL] = number_format($triangle->bisectorFromSidesAndAngleCos($triangle->triangleParameters[self::SIDE_AC], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::ANGLE_C]), 3);
-            $triangle->triangleParameters[self::BISECTOR_BL] = number_format($triangle->bisectorFromSidesAndAngleCos($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::ANGLE_B]), 3);
-
-            $triangle->triangleParameters[self::PERIMETER] = number_format($triangle->perimeterFromSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
-            $triangle->triangleParameters[self::SURFACE] = number_format($triangle->surfaceFromSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
-
-            $triangle->triangleParameters[self::INNER_RADIUS] = number_format($triangle->smallRadiusFromSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
-            $triangle->triangleParameters[self::OUTER_RADIUS] = number_format($triangle->largeRadiusFromSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
-
-            $triangle->triangleParameters[self::HEIGHT_CH] = number_format($triangle->heightFromSides($triangle->triangleParameters[self::SIDE_AC], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AB]), 3);
-            $triangle->triangleParameters[self::HEIGHT_BH] = number_format($triangle->heightFromSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC]), 3);
-            $triangle->triangleParameters[self::HEIGHT_AH] = number_format($triangle->heightFromSides($triangle->triangleParameters[self::SIDE_AC], $triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC]), 3);
+            $triangle->setEverythingFromSides();
         }
         View::render('main');
         echo json_encode($triangle->triangleParameters[self::ANGLE_A]); echo json_encode($triangle->triangleParameters[self::ANGLE_B]); echo json_encode($triangle->triangleParameters[self::ANGLE_C]);

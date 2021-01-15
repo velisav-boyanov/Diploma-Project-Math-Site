@@ -1,6 +1,8 @@
 <?php
 
 namespace FigureContainers;
+use Controller\TriangleController;
+
 class FigureTriangle
 {
     public array $triangleParameters;
@@ -11,24 +13,24 @@ class FigureTriangle
 
     /**
      * FigureTriangle constructor.
-     * @param $triangleFill
+     * @param $thisFill
      */
 
-    public function __construct($triangleFill)
+    public function __construct($thisFill)
     {
-        for($i = 0; $i < sizeof($triangleFill); $i++){
-            $this->triangleParameters[$i] = $triangleFill[$i];
+        for($i = 0; $i < sizeof($thisFill); $i++){
+            $this->triangleParameters[$i] = $thisFill[$i];
         }
 
-        if(($triangleFill[1] == $triangleFill[2]) && ($triangleFill[3] == $triangleFill[2])){
+        if(($thisFill[TriangleController::SIDE_AB] == $thisFill[TriangleController::SIDE_AC]) && ($thisFill[TriangleController::SIDE_BC] == $thisFill[TriangleController::SIDE_AC])){
             $this->isEquilateral = true;
         }
 
-        if($triangleFill[4] == 90 || $triangleFill[5] == 90 || $triangleFill[6] == 90){
+        if($thisFill[TriangleController::ANGLE_A] == 90 || $thisFill[TriangleController::ANGLE_B] == 90 || $thisFill[TriangleController::ANGLE_C] == 90){
             $this->isRight = true;
         }
 
-        if(($triangleFill[1] == $triangleFill[2]) || ($triangleFill[3] == $triangleFill[2]) || ($triangleFill[1] == $triangleFill[3])) {
+        if(($thisFill[TriangleController::SIDE_AB] == $thisFill[TriangleController::SIDE_AC]) || ($thisFill[TriangleController::SIDE_BC] == $thisFill[TriangleController::SIDE_AC]) || ($thisFill[TriangleController::SIDE_AB] == $thisFill[TriangleController::SIDE_BC])) {
             $this->isIsosceles = true;
         }
     }
@@ -222,6 +224,30 @@ class FigureTriangle
         $result['x1'] = ($b+(sqrt($t))) / (2*$a);
         $result['x2'] = ($b-(sqrt($t))) / (2*$a);
         return $result;
+    }
+
+    public function setEverythingFromSides(){
+        $this->triangleParameters[TriangleController::ANGLE_C] = number_format($this->cosTheoremForAngle($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
+        $this->triangleParameters[TriangleController::ANGLE_B] = number_format($this->cosTheoremForAngle($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AB]), 3);
+        $this->triangleParameters[TriangleController::ANGLE_A] = number_format($this->cosTheoremForAngle($this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
+
+        $this->triangleParameters[TriangleController::MEDIAN_CM] = number_format($this->medianFromSides($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
+        $this->triangleParameters[TriangleController::MEDIAN_BM] = number_format($this->medianFromSides($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AB]), 3);
+        $this->triangleParameters[TriangleController::MEDIAN_AM] = number_format($this->medianFromSides($this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
+
+        $this->triangleParameters[TriangleController::BISECTOR_AL] = number_format($this->bisectorFromSidesAndAngleCos($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::ANGLE_A]), 3);
+        $this->triangleParameters[TriangleController::BISECTOR_CL] = number_format($this->bisectorFromSidesAndAngleCos($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::ANGLE_C]), 3);
+        $this->triangleParameters[TriangleController::BISECTOR_BL] = number_format($this->bisectorFromSidesAndAngleCos($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::ANGLE_B]), 3);
+
+        $this->triangleParameters[TriangleController::PERIMETER] = number_format($this->perimeterFromSides($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
+        $this->triangleParameters[TriangleController::SURFACE] = number_format($this->surfaceFromSides($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
+
+        $this->triangleParameters[TriangleController::INNER_RADIUS] = number_format($this->smallRadiusFromSides($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
+        $this->triangleParameters[TriangleController::OUTER_RADIUS] = number_format($this->largeRadiusFromSides($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
+
+        $this->triangleParameters[TriangleController::HEIGHT_CH] = number_format($this->heightFromSides($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AB]), 3);
+        $this->triangleParameters[TriangleController::HEIGHT_BH] = number_format($this->heightFromSides($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
+        $this->triangleParameters[TriangleController::HEIGHT_AH] = number_format($this->heightFromSides($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC]), 3);
     }
 
 }
