@@ -1,0 +1,21 @@
+{
+  "name": "qa/math",
+  "description": "description",
+  "minimum-stability": "stable",
+  "license": "proprietary",
+  "authors": [
+    {
+      "name": "0NZ1T4M"
+    }
+  ],
+  "require": {
+    "mockery/mockery": "0.9.6",
+    "phpunit/phpunit": "6.*",
+    "squizlabs/php_codesniffer": "3.5.8",
+    "tracy/tracy": "2.7.*",
+    "mpdf/qrcode": "1.1.*"
+  },
+
+  "require-dev": {
+  }
+}
