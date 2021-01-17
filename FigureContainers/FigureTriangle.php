@@ -277,18 +277,18 @@ class FigureTriangle
         setcookie('P' ,$this->triangleParameters[TriangleController::PERIMETER], time()+3600);
         setcookie('S' ,$this->triangleParameters[TriangleController::SURFACE], time()+3600);
 
-        $Ak = $this->triangleParameters[TriangleController::SIDE_AB];
-        $Ck = $this->triangleParameters[TriangleController::SIDE_AC];
-        $Bk = $this->triangleParameters[TriangleController::SIDE_BC];
+        $Ck = $this->triangleParameters[TriangleController::SIDE_AB];
+        $Bk = $this->triangleParameters[TriangleController::SIDE_AC];
+        $Ak = $this->triangleParameters[TriangleController::SIDE_BC];
         $Hk = $this->triangleParameters[TriangleController::HEIGHT_CH];
 
         for($i = 1; $i < 51; $i++){
-            if($Ak >= 14*$i || $Bk >= 14*$i || $Ck >= 14*$i){
+            if($Ak >= 12*$i || $Bk >= 12*$i || $Ck >= 12*$i){
                 $Ak = $Ak / 2;
                 $Bk = $Bk / 2;
                 $Ck = $Ck / 2;
                 $Hk = $Hk / 2;
-            }elseif($Ak <= 14 || $Bk <= 14 || $Ck <= 14){
+            }elseif($Ak <= 4 || $Bk <= 4 || $Ck <= 4){
                 $Ak = $Ak * 1.5;
                 $Bk = $Bk * 1.5;
                 $Ck = $Ck * 1.5;
