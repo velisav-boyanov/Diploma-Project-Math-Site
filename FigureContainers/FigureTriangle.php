@@ -250,4 +250,59 @@ class FigureTriangle
         $this->triangleParameters[TriangleController::HEIGHT_AH] = number_format($this->heightFromSides($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC]), 3);
     }
 
+    public function sendCookies(){
+        setcookie('AB' ,$this->triangleParameters[TriangleController::SIDE_AB], time()+3600);
+        setcookie('AC' ,$this->triangleParameters[TriangleController::SIDE_AC], time()+3600);
+        setcookie('BC' ,$this->triangleParameters[TriangleController::SIDE_BC], time()+3600);
+
+        setcookie('A' ,$this->triangleParameters[TriangleController::ANGLE_A], time()+3600);
+        setcookie('B' ,$this->triangleParameters[TriangleController::ANGLE_B], time()+3600);
+        setcookie('C' ,$this->triangleParameters[TriangleController::ANGLE_C], time()+3600);
+
+        setcookie('AM' ,$this->triangleParameters[TriangleController::MEDIAN_AM], time()+3600);
+        setcookie('BM' ,$this->triangleParameters[TriangleController::MEDIAN_BM], time()+3600);
+        setcookie('CM' ,$this->triangleParameters[TriangleController::MEDIAN_CM], time()+3600);
+
+        setcookie('AL' ,$this->triangleParameters[TriangleController::BISECTOR_AL], time()+3600);
+        setcookie('BL' ,$this->triangleParameters[TriangleController::BISECTOR_BL], time()+3600);
+        setcookie('CL' ,$this->triangleParameters[TriangleController::BISECTOR_CL], time()+3600);
+
+        setcookie('AH' ,$this->triangleParameters[TriangleController::HEIGHT_AH], time()+3600);
+        setcookie('BH' ,$this->triangleParameters[TriangleController::HEIGHT_BH], time()+3600);
+        setcookie('CH' ,$this->triangleParameters[TriangleController::HEIGHT_CH], time()+3600);
+
+        setcookie('IR' ,$this->triangleParameters[TriangleController::INNER_RADIUS], time()+3600);
+        setcookie('OR' ,$this->triangleParameters[TriangleController::OUTER_RADIUS], time()+3600);
+
+        setcookie('P' ,$this->triangleParameters[TriangleController::PERIMETER], time()+3600);
+        setcookie('S' ,$this->triangleParameters[TriangleController::SURFACE], time()+3600);
+
+        $Ak = $this->triangleParameters[TriangleController::SIDE_AB];
+        $Ck = $this->triangleParameters[TriangleController::SIDE_AC];
+        $Bk = $this->triangleParameters[TriangleController::SIDE_BC];
+        $Hk = $this->triangleParameters[TriangleController::HEIGHT_CH];
+
+        for($i = 1; $i < 51; $i++){
+            if($Ak >= 14*$i || $Bk >= 14*$i || $Ck >= 14*$i){
+                $Ak = $Ak / 2;
+                $Bk = $Bk / 2;
+                $Ck = $Ck / 2;
+                $Hk = $Hk / 2;
+            }elseif($Ak <= 14 || $Bk <= 14 || $Ck <= 14){
+                $Ak = $Ak * 1.5;
+                $Bk = $Bk * 1.5;
+                $Ck = $Ck * 1.5;
+                $Hk = $Hk * 1.5;
+                break;
+            }else{
+                break;
+            }
+        }
+
+        setcookie('Ak', $Ak, time()+3600);
+        setcookie('Ck', $Ck, time()+3600);
+        setcookie('Bk', $Bk, time()+3600);
+        setcookie('Hk', $Hk, time()+3600);
+    }
+
 }

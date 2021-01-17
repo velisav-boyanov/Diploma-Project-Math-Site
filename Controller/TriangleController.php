@@ -145,11 +145,10 @@ class TriangleController
         if($triangle->triangleParameters[self::SIDE_AB] && $triangle->triangleParameters[self::SIDE_AC] && $triangle->triangleParameters[self::SIDE_BC]) {
             $triangle->setEverythingFromSides();
         }
-        View::render('main');
-        echo json_encode($triangle->triangleParameters[self::ANGLE_A]); echo json_encode($triangle->triangleParameters[self::ANGLE_B]); echo json_encode($triangle->triangleParameters[self::ANGLE_C]);
-        echo json_encode($triangle->triangleParameters[self::MEDIAN_AM]); echo json_encode($triangle->triangleParameters[self::MEDIAN_BM]); echo json_encode($triangle->triangleParameters[self::MEDIAN_CM]);
-        echo json_encode($triangle->triangleParameters[self::BISECTOR_AL]); echo json_encode($triangle->triangleParameters[self::BISECTOR_BL]); echo json_encode($triangle->triangleParameters[self::BISECTOR_CL]);
-        echo json_encode($triangle->triangleParameters[self::HEIGHT_AH]); echo json_encode($triangle->triangleParameters[self::HEIGHT_BH]); echo json_encode($triangle->triangleParameters[self::HEIGHT_CH]);
+
+        $triangle->sendCookies();
+
+        View::redirect('View/triangleResult.php', 301);
     }
 
     public function validateNumber($number){
@@ -157,6 +156,9 @@ class TriangleController
     }
 
     public function validateSides($a, $b, $c){
+        if($a == "" || $b == "" || $c == ""){
+            return false;
+        }
         if(($a + $b < $c) || ($a + $c < $b) || ($b + $c < $a)){
             return false;
         }

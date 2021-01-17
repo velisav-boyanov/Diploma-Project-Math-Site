@@ -4,7 +4,6 @@
 <body>
 
 <div class="navbar">
-    <a href="View/triangle.php">Triangle</a>
     <a href="#rectangle">Rectangle</a>
     <a href="#circle">Circle</a>
     <div class="dropdown">
@@ -18,8 +17,10 @@
     </div>
 </div>
 
-<h3>Info about the site.</h3>
-
+<h3>Calculated values.</h3>
+<form action="http://localhost/Diploma-Project-Math-Site/View/triangle.php">
+    <input type = "submit" value="Go back to input screen."/>
+</form>
 <script src = "JavaScript/three.js"></script>
 <script>
     //scene set up
@@ -30,29 +31,30 @@
         antialias: true
     });
 
-    renderer.setSize((window.innerWidth/5), (window.innerHeight/3));
+    renderer.setSize((window.innerWidth/4), (window.innerHeight/4));
 
     document.body.appendChild(renderer.domElement);
-
-    window.addEventListener('resize', () => {
-        renderer.setSize((window.innerWidth/5), (window.innerHeight/3));
-        camera.aspect = (window.innerWidth/window.innerHeight);
-
-        camera.updateProjectionMatrix();
-    })
 
     //triangle
     const geom = new THREE.Geometry();
 
-    geom.vertices.push(new THREE.Vector3(0, 0, 0));//side ac
-    geom.vertices.push(new THREE.Vector3(9, 0, 0));//side bc
-    geom.vertices.push(new THREE.Vector3(6, 3, 0));//side ab
+    let ak = <?php  echo json_encode($_COOKIE['Ak']) ?>;
+    let bk = <?php  echo json_encode($_COOKIE['Bk']) ?>;
+    let ck = <?php  echo json_encode($_COOKIE['Ck']) ?>;
+    let hk = <?php  echo json_encode($_COOKIE['Hk']) ?>;
+    let alk = Math.sqrt(Math.pow(bk, 2) - Math.pow(hk, 2));
+
+    geom.vertices.push(new THREE.Vector3(-(ak/2), -3, 0));//base point(A) dose not change
+    geom.vertices.push(new THREE.Vector3(ak/2, -3, 0));//base point B, dont change this point
+    geom.vertices.push(new THREE.Vector3(alk-(ak/2), hk-3, 0));//point C
 
     geom.faces.push(new THREE.Face3(0, 1, 2));
     const material = new THREE.MeshBasicMaterial({
-        color: 0x0000ff
+        color: 0xffffff
     });
     const mesh = new THREE.Mesh(geom, material);
+
+
     scene.add(mesh);
 
     camera.position.z = 5;
@@ -66,6 +68,39 @@
 
     animate();
 </script>
+
+<ul>
+    <li>Side AB: <?php echo $_COOKIE['AB'];?></li>
+    <li>Side AC: <?php echo $_COOKIE['AC'];?></li>
+    <li>Side BC: <?php echo $_COOKIE['BC'];?></li>
+</ul>
+<ul>
+    <li>Angle A Cosine: <?php echo $_COOKIE['A'];?></li>
+    <li>Angle B Cosine: <?php echo $_COOKIE['B'];?></li>
+    <li>Angle C Cosine: <?php echo $_COOKIE['C'];?></li>
+</ul>
+<ul>
+    <li>Median AM: <?php echo $_COOKIE['AM'];?></li>
+    <li>Median BM: <?php echo $_COOKIE['BM'];?></li>
+    <li>Median CM: <?php echo $_COOKIE['CM'];?></li>
+</ul>
+<ul>
+    <li>Bisector AL: <?php echo $_COOKIE['AL'];?></li>
+    <li>Bisector BL: <?php echo $_COOKIE['BL'];?></li>
+    <li>Bisector CL: <?php echo $_COOKIE['CL'];?></li>
+</ul>
+<ul>
+    <li>Height AH: <?php echo $_COOKIE['AH'];?></li>
+    <li>Height BH: <?php echo $_COOKIE['BH'];?></li>
+    <li>Height CH: <?php echo $_COOKIE['CH'];?></li>
+</ul>
+<ul>
+    <li>Perimeter: <?php echo $_COOKIE['P'];?></li>
+    <li>Surface: <?php echo $_COOKIE['S'];?></li>
+    <li>Inner Radius: <?php echo $_COOKIE['IR'];?></li>
+    <li>Outer Radius: <?php echo $_COOKIE['OR'];?></li>
+</ul>
+
 <style>
 body {
     font-family: Arial, Helvetica, sans-serif;
@@ -133,6 +168,5 @@ canvas {
     display: block;
 
     </style>
-
 </body>
 </html>
