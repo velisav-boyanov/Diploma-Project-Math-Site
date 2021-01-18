@@ -245,8 +245,8 @@ class FigureTriangle
         $this->triangleParameters[TriangleController::INNER_RADIUS] = number_format($this->smallRadiusFromSides($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
         $this->triangleParameters[TriangleController::OUTER_RADIUS] = number_format($this->largeRadiusFromSides($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
 
-        $this->triangleParameters[TriangleController::HEIGHT_CH] = number_format($this->heightFromSides($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AB]), 3);
         $this->triangleParameters[TriangleController::HEIGHT_BH] = number_format($this->heightFromSides($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
+        $this->triangleParameters[TriangleController::HEIGHT_CH] = number_format($this->heightFromSides($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AB]), 3);
         $this->triangleParameters[TriangleController::HEIGHT_AH] = number_format($this->heightFromSides($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC]), 3);
     }
 
@@ -283,12 +283,12 @@ class FigureTriangle
         $Hk = $this->triangleParameters[TriangleController::HEIGHT_CH];
 
         for($i = 1; $i < 51; $i++){
-            if($Ak >= 12*$i || $Bk >= 12*$i || $Ck >= 12*$i){
+            if($Ak >= 13*$i || $Bk >= 13*$i || $Ck >= 13*$i){
                 $Ak = $Ak / 2;
                 $Bk = $Bk / 2;
                 $Ck = $Ck / 2;
                 $Hk = $Hk / 2;
-            }elseif($Ak <= 4 || $Bk <= 4 || $Ck <= 4){
+            }elseif($Ak <= 7 && $Bk <= 7 && $Ck <= 7){
                 $Ak = $Ak * 1.5;
                 $Bk = $Bk * 1.5;
                 $Ck = $Ck * 1.5;

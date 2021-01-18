@@ -43,10 +43,19 @@
     let ck = <?php  echo json_encode($_COOKIE['Ck']) ?>;
     let hk = <?php  echo json_encode($_COOKIE['Hk']) ?>;
     let alk = Math.sqrt(Math.pow(bk, 2) - Math.pow(hk, 2));
+    let c1;
+    ak = parseInt(ak, 10);
+    bk = parseInt(bk, 10);
+    ck = parseInt(ck, 10);
+    if((ak>bk) && (ak>ck)){
+        c1 = -alk;
+    }else {
+        c1 = alk-(ck/2);
+    }
 
     geom.vertices.push(new THREE.Vector3(-(ck/2), -3, 0));//base point(A) dose not change
     geom.vertices.push(new THREE.Vector3(ck/2, -3, 0));//base point B, dont change this point
-    geom.vertices.push(new THREE.Vector3(alk-(ck/2), hk-3, 0));//point C
+    geom.vertices.push(new THREE.Vector3(c1, hk-3, 0));//point C
 
     geom.faces.push(new THREE.Face3(0, 1, 2));
     const material = new THREE.MeshBasicMaterial({

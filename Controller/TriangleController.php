@@ -157,7 +157,7 @@ class TriangleController
 
     public function validateSides($a, $b, $c){
         if($a == "" || $b == "" || $c == ""){
-            return false;
+            return true;
         }
         if(($a + $b < $c) || ($a + $c < $b) || ($b + $c < $a)){
             return false;
