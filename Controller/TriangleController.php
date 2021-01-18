@@ -130,6 +130,8 @@ class TriangleController
         $result = false;
 
         $stuck = true;
+        //what formulas were used to find the sides.
+        $text = "";
         $triangle = new FigureTriangle($triangleFill);
         //finds sides based on given parameters
 //        do {
@@ -144,6 +146,7 @@ class TriangleController
         //find everything else based on sides;
         if($triangle->triangleParameters[self::SIDE_AB] && $triangle->triangleParameters[self::SIDE_AC] && $triangle->triangleParameters[self::SIDE_BC]) {
             $triangle->setEverythingFromSides();
+            setcookie("HowWasItSolved", $text . "Using the sides we can find everything else using the analogous formulas(you can find them on the main page)." ,time()+3600);
         }
 
         $triangle->sendCookies();

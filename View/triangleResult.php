@@ -78,6 +78,8 @@
     animate();
 </script>
 
+<p><?php echo $_COOKIE['HowWasItSolved']?></p>
+
 <ul>
     <li>Side AB: <?php echo $_COOKIE['AB'];?></li>
     <li>Side AC: <?php echo $_COOKIE['AC'];?></li>
@@ -175,6 +177,8 @@ canvas {
 
     .dropdown:hover .dropdown-content {
     display: block;
+
+}
 
     </style>
 </body>
