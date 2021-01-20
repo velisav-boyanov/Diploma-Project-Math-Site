@@ -80,6 +80,10 @@
 
 <p><?php echo $_COOKIE['HowWasItSolved']?></p>
 
+<form action="../index.php?target=triangleSave&action=add" method="post">
+    <input type = "submit" value="Add to user library."/>
+</form>
+
 <ul>
     <li>Side AB: <?php echo $_COOKIE['AB'];?></li>
     <li>Side AC: <?php echo $_COOKIE['AC'];?></li>

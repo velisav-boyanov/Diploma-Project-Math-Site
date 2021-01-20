@@ -6,7 +6,7 @@ use Model\Repository\TriangleSaveRepository;
 
 class TriangleSaveService
 {
-    public function saveUser($given, $found, $solvingText, $parameters, $userId)
+    public function saveTriangle($given, $solvingText, $parameters, $userId)
     {
         $result = ['success' => false];
 
@@ -14,7 +14,6 @@ class TriangleSaveService
 
         $triangleToInsert = [
             'Given' => $given,
-            'Found' => $found,
             'SolvingText' => $solvingText,
             'Parameters' => $parameters,
             'UserId' => $userId

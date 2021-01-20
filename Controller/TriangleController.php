@@ -5,7 +5,6 @@ namespace Controller;
 
 use FigureContainers\FigureTriangle;
 use Core\View;
-use mysql_xdevapi\BaseResult;
 
 class TriangleController
 {

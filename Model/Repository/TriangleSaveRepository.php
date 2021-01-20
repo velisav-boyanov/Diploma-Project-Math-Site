@@ -9,8 +9,8 @@ class TriangleSaveRepository
     {
         $pdo = DBManager::getInstance()->getConnection();
 
-        $sql = 'INSERT INTO `Saved_Triangles` (`Given`, `Found`, `SolvingText`, `Parameters`, `User_Id`)
-               VALUES (:Given, :Found, :SolvingText, :Parameters, :UserId)';
+        $sql = 'INSERT INTO `Saved_Triangles` (`Given`, `SolvingText`, `Parameters`, `User_Id`)
+               VALUES (:Given, :SolvingText, :Parameters, :UserId)';
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute($triangleToInsert);

@@ -9,7 +9,7 @@ class FigureTriangle
     public bool $isEquilateral;
     public bool $isRight;
     public bool $isIsosceles;
-    //public $valuesAreSet;
+    public array $givenValues;
 
     /**
      * FigureTriangle constructor.
@@ -18,8 +18,13 @@ class FigureTriangle
 
     public function __construct($thisFill)
     {
+        $var = 0;
         for($i = 0; $i < sizeof($thisFill); $i++){
             $this->triangleParameters[$i] = $thisFill[$i];
+            if($thisFill[$i] != ""){
+                $this->givenValues[$var] = $i;
+                $var++;
+            }
         }
 
         if(($thisFill[TriangleController::SIDE_AB] == $thisFill[TriangleController::SIDE_AC]) && ($thisFill[TriangleController::SIDE_BC] == $thisFill[TriangleController::SIDE_AC])){
@@ -303,6 +308,8 @@ class FigureTriangle
         setcookie('Ck', $Ck, time()+3600);
         setcookie('Bk', $Bk, time()+3600);
         setcookie('Hk', $Hk, time()+3600);
+        setcookie('Parameters', json_encode($this->triangleParameters), time()+3600);
+        setcookie('Given', json_encode($this->givenValues), time()+3600);
     }
 
 }
