@@ -5,11 +5,99 @@ use Controller\TriangleController;
 
 class FigureTriangle
 {
-    public array $triangleParameters;
-    public bool $isEquilateral;
-    public bool $isRight;
-    public bool $isIsosceles;
-    public array $givenValues;
+    private array $triangleParameters;
+
+    /**
+     * @return array
+     */
+    public function getTriangleParameters(): array
+    {
+        return $this->triangleParameters;
+    }
+
+    /**
+     * @param array $triangleParameters
+     */
+    public function setTriangleParameters(array $triangleParameters): void
+    {
+        $this->triangleParameters = $triangleParameters;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEquilateral(): bool
+    {
+        return $this->isEquilateral;
+    }
+
+    /**
+     * @param bool $isEquilateral
+     */
+    public function setIsEquilateral(bool $isEquilateral): void
+    {
+        $this->isEquilateral = $isEquilateral;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRight(): bool
+    {
+        return $this->isRight;
+    }
+
+    /**
+     * @param bool $isRight
+     */
+    public function setIsRight(bool $isRight): void
+    {
+        $this->isRight = $isRight;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isIsosceles(): bool
+    {
+        return $this->isIsosceles;
+    }
+
+    /**
+     * @param bool $isIsosceles
+     */
+    public function setIsIsosceles(bool $isIsosceles): void
+    {
+        $this->isIsosceles = $isIsosceles;
+    }
+
+    /**
+     * @return array
+     */
+    public function getGivenValues(): array
+    {
+        return $this->givenValues;
+    }
+
+    /**
+     * @param array $givenValues
+     */
+    public function setGivenValues(array $givenValues): void
+    {
+        $this->givenValues = $givenValues;
+    }
+    private bool $isEquilateral;
+    private bool $isRight;
+    private bool $isIsosceles;
+    private array $givenValues;
+
+    public function setTriangleElement($i, $value){
+        $this->triangleParameters[$i] = $value;
+    }
+
+    public function getTriangle($i){
+        return $this->triangleParameters[$i];
+    }
 
     /**
      * FigureTriangle constructor.
