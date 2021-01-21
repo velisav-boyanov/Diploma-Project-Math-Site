@@ -42,12 +42,15 @@
     let bk = <?php  echo json_encode($_COOKIE['Bk']) ?>;
     let ck = <?php  echo json_encode($_COOKIE['Ck']) ?>;
     let hk = <?php  echo json_encode($_COOKIE['Hk']) ?>;
+    let right = <?php echo json_encode($_COOKIE['Right'])?>;
     let alk = Math.sqrt(Math.pow(bk, 2) - Math.pow(hk, 2));
     let c1;
     ak = parseInt(ak, 10);
     bk = parseInt(bk, 10);
     ck = parseInt(ck, 10);
-    if((ak>bk) && (ak>ck)){
+    right = parseInt(right, 10);
+
+    if((ak>bk) && (ak>ck) && (right===0)){
         c1 = -alk;
     }else {
         c1 = alk-(ck/2);
@@ -80,8 +83,14 @@
 
 <p><?php echo $_COOKIE['HowWasItSolved']?></p>
 
+<script type="text/javascript">
+    function disableButton(btn){
+        document.getElementById(btn.id).disabled = true;
+    }
+</script>
+
 <form action="../index.php?target=triangleSave&action=add" method="post">
-    <input type = "submit" value="Add to user library."/>
+    <input type = "submit" value="Add to user library." id="bt2" onclick="disableButton(this)"/>
 </form>
 
 <ul>

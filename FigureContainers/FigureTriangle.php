@@ -6,21 +6,13 @@ use Controller\TriangleController;
 class FigureTriangle
 {
     private array $triangleParameters;
+    private bool $isEquilateral;
+    private bool $isRight;
+    private bool $isIsosceles;
+    private array $givenValues;
 
-    /**
-     * @return array
-     */
-    public function getTriangleParameters(): array
-    {
-        return $this->triangleParameters;
-    }
-
-    /**
-     * @param array $triangleParameters
-     */
-    public function setTriangleParameters(array $triangleParameters): void
-    {
-        $this->triangleParameters = $triangleParameters;
+    public function getParameter($i){
+        return $this->triangleParameters[$i];
     }
 
     /**
@@ -69,34 +61,6 @@ class FigureTriangle
     public function setIsIsosceles(bool $isIsosceles): void
     {
         $this->isIsosceles = $isIsosceles;
-    }
-
-    /**
-     * @return array
-     */
-    public function getGivenValues(): array
-    {
-        return $this->givenValues;
-    }
-
-    /**
-     * @param array $givenValues
-     */
-    public function setGivenValues(array $givenValues): void
-    {
-        $this->givenValues = $givenValues;
-    }
-    private bool $isEquilateral;
-    private bool $isRight;
-    private bool $isIsosceles;
-    private array $givenValues;
-
-    public function setTriangleElement($i, $value){
-        $this->triangleParameters[$i] = $value;
-    }
-
-    public function getTriangle($i){
-        return $this->triangleParameters[$i];
     }
 
     /**
@@ -298,6 +262,12 @@ class FigureTriangle
                 sqrt(pow($median, 2) - pow($height, 2)));
     }
 
+    public function setRight(){
+        if($this->triangleParameters[TriangleController::ANGLE_A] == 0 || $this->triangleParameters[TriangleController::ANGLE_B] == 0 || $this->triangleParameters[TriangleController::ANGLE_C] == 0){
+            $this->isRight = true;
+        }
+    }
+
     public function sideFromOppositeHeightSmallRadiusLargeRadius($height, $r, $R){
         $pWithoutC = ($height/(2*$r)-1);
         $sumOfSidesDividedByOtherSide = ($height - $r)/$r;
@@ -374,24 +344,26 @@ class FigureTriangle
         $Bk = $this->triangleParameters[TriangleController::SIDE_AC];
         $Ak = $this->triangleParameters[TriangleController::SIDE_BC];
         $Hk = $this->triangleParameters[TriangleController::HEIGHT_CH];
+        $this->setRight();
+        $right = (int)$this->isRight;
 
         for($i = 1; $i < 51; $i++){
-            if($Ak >= 13*$i || $Bk >= 13*$i || $Ck >= 13*$i){
+            if($Ak >= 11*$i || $Bk >= 11*$i || $Ck >= 11*$i){
                 $Ak = $Ak / 2;
                 $Bk = $Bk / 2;
                 $Ck = $Ck / 2;
                 $Hk = $Hk / 2;
             }elseif($Ak <= 7 && $Bk <= 7 && $Ck <= 7){
-                $Ak = $Ak * 1.5;
-                $Bk = $Bk * 1.5;
-                $Ck = $Ck * 1.5;
-                $Hk = $Hk * 1.5;
-                break;
+                $Ak = $Ak * 1.25;
+                $Bk = $Bk * 1.25;
+                $Ck = $Ck * 1.25;
+                $Hk = $Hk * 1.25;
             }else{
                 break;
             }
         }
 
+        setcookie('Right', $right, time()+3600);
         setcookie('Ak', $Ak, time()+3600);
         setcookie('Ck', $Ck, time()+3600);
         setcookie('Bk', $Bk, time()+3600);

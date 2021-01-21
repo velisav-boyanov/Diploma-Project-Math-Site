@@ -137,13 +137,13 @@ class TriangleController
 //            break;
 //        } while ($stuck != true);
 
-        if(!$this->validateSides($triangle->getTriangle([self::SIDE_AB]), $triangle->getTriangle([self::SIDE_BC]), $triangle->getTriangle([self::SIDE_AC]))){
+        if(!$this->validateSides($triangle->getParameter(self::SIDE_AB), $triangle->getParameter(self::SIDE_BC), $triangle->getParameter(self::SIDE_AC))){
             View::render('triangle');
             echo json_encode("Impossible side proportions.");
             return $result;
         }
         //find everything else based on sides;
-        if($triangle->getTriangle([self::SIDE_AB]) && $triangle->getTriangle([self::SIDE_AC]) && $triangle->getTriangle([self::SIDE_BC])) {
+        if($triangle->getParameter(self::SIDE_AB) && $triangle->getParameter(self::SIDE_AC) && $triangle->getParameter(self::SIDE_BC)) {
             $triangle->setEverythingFromSides();
             setcookie("HowWasItSolved", $text . "Using the sides we can find everything else using the analogous formulas(you can find them on the main page)." ,time()+3600);
         }
