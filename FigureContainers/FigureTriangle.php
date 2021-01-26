@@ -265,6 +265,8 @@ class FigureTriangle
     public function setRight(){
         if($this->triangleParameters[TriangleController::ANGLE_A] == 0 || $this->triangleParameters[TriangleController::ANGLE_B] == 0 || $this->triangleParameters[TriangleController::ANGLE_C] == 0){
             $this->isRight = true;
+        }else{
+            $this->isRight = false;
         }
     }
 
@@ -348,7 +350,7 @@ class FigureTriangle
         $right = (int)$this->isRight;
 
         for($i = 1; $i < 51; $i++){
-            if($Ak >= 11*$i || $Bk >= 11*$i || $Ck >= 11*$i){
+            if($Ak >= 11 || $Bk >= 11 || $Ck >= 11){
                 $Ak = $Ak / 2;
                 $Bk = $Bk / 2;
                 $Ck = $Ck / 2;

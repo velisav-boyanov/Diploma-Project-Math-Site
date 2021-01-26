@@ -1,10 +1,12 @@
+<?php namespace View;
+use Controller\TriangleSaveController;?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <body>
 
 <div class="navbar">
-    <a href="View/user.php">User</a>
     <a href="View/triangle.php">Triangle</a>
     <a href="#rectangle">Rectangle</a>
     <a href="#circle">Circle</a>
@@ -13,13 +15,29 @@
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-            <a href="View/login.php">Login</a>
-            <a href="View/register.php">Register</a>
+            <a href="login.php">Login</a>
+            <a href="register.php">Register</a>
         </div>
     </div>
 </div>
 
-<h3>Info about the site.</h3>
+<h3>User library:</h3>
+<?php
+$user = new TriangleSaveController();
+$userSaves = $user->getByUserId($_SESSION["UserId"]);
+?>
+<div class="row">
+    <?php foreach($userSaves as $i) {?>
+        <div>
+            <div class = "card-body">
+                <h4 class = "card-title"><?php echo $i['Type'];?></h4>
+                <p class = "card-text"><?php echo $i['Given']?></p>
+                <p class = "card-text"><?php echo $i['SolvingText']?></p>
+                <a href="" class = "btn-light">Show More<span class = "text-danger">&rarr;</span></a>
+            </div>
+        </div>
+    <?php }?>
+</div>
 
 <style>
     body {
@@ -89,3 +107,4 @@
 
 </body>
 </html>
+

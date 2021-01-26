@@ -2,17 +2,18 @@
 
 
 namespace Model\Services;
-use Model\Repository\TriangleSaveRepository;
+use Model\Repository\SaveRepository;
 
-class TriangleSaveService
+class SaveService
 {
-    public function saveTriangle($given, $solvingText, $parameters, $userId)
+    public function saveTriangle($type, $given, $solvingText, $parameters, $userId)
     {
         $result = ['success' => false];
 
-        $repo = new TriangleSaveRepository();
+        $repo = new SaveRepository();
 
         $triangleToInsert = [
+            'Type' => $type,
             'Given' => $given,
             'SolvingText' => $solvingText,
             'Parameters' => $parameters,
@@ -35,7 +36,7 @@ class TriangleSaveService
             'success' => false
         ];
 
-        $repo = new TriangleSaveRepository();
+        $repo = new SaveRepository();
         $triangle = $repo->getTriangleById($triangleId);
 
         if (!$triangle) {
@@ -49,18 +50,7 @@ class TriangleSaveService
     }
 
     public function getTriangleByUserId($userId){
-        $result = [
-            'success' => false
-        ];
-
-        $repo = new TriangleSaveRepository();
-        $triangle = $repo->getTriangleByUserId($userId);
-
-        if(!$triangle){
-            return $result;
-        }
-
-        $result['success'] = true;
-        return $result;
+        $repo = new SaveRepository();
+        return $repo->getTriangleByUserId($userId);
     }
 }

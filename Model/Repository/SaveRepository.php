@@ -3,14 +3,14 @@
 namespace Model\Repository;
 
 
-class TriangleSaveRepository
+class SaveRepository
 {
     public function saveTriangle($triangleToInsert)
     {
         $pdo = DBManager::getInstance()->getConnection();
 
-        $sql = 'INSERT INTO `Saved_Triangles` (`Given`, `SolvingText`, `Parameters`, `User_Id`)
-               VALUES (:Given, :SolvingText, :Parameters, :UserId)';
+        $sql = 'INSERT INTO `Saved_Triangles` (`Type`, `Given`, `SolvingText`, `Parameters`, `User_Id`)
+               VALUES (:Type, :Given, :SolvingText, :Parameters, :UserId)';
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute($triangleToInsert);
@@ -35,13 +35,11 @@ class TriangleSaveRepository
     {
         $pdo = DBManager::getInstance()->getConnection();
 
-        $sql = 'SELECT Id FROM `Saved_Triangles` 
+        $sql = 'SELECT * FROM `Saved_Triangles`
                 WHERE `User_Id` = :userId';
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['userId' => $userId]);
-
-        $result = $stmt->fetch(\PDO::FETCH_ASSOC);
-        return $result;
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

@@ -15,7 +15,8 @@
     "tracy/tracy": "2.7.*",
     "mpdf/qrcode": "1.1.*",
     "ext-json": "*",
-    "ext-openssl": "*"
+    "ext-openssl": "*",
+    "ext-pdo": "*"
   },
 
   "require-dev": {
