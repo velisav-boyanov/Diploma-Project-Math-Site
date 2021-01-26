@@ -4,7 +4,7 @@
 <body>
 
 <div class="navbar">
-    <a href="user.php">User</a>
+    <a href="../index.php?target=triangleSave&action=renderSaves">User</a>
     <a href="triangle.php">Triangle</a>
     <a href="#rectangle">Rectangle</a>
     <a href="#circle">Circle</a>
