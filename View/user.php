@@ -7,6 +7,7 @@ use Controller\TriangleSaveController;?>
 <body>
 
 <div class="navbar">
+    <a href="View/main.php">Main</a>
     <a href="View/triangle.php">Triangle</a>
     <a href="#rectangle">Rectangle</a>
     <a href="#circle">Circle</a>

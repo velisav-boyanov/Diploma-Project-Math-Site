@@ -24,6 +24,10 @@ class TriangleSaveController
         $service = new SaveService();
 
         $result1 = $service->saveTriangle($type, $given, $how, $param, $userId);
+        View::redirect('index.php?target=triangleSave&action=renderSaves');
+    }
+
+    public function renderSaves(){
         View::render('user');
     }
 
