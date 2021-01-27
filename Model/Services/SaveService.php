@@ -17,7 +17,7 @@ class SaveService
             'Given' => $given,
             'SolvingText' => $solvingText,
             'Parameters' => $parameters,
-            'UserId' => $userId
+            'UserId' => $userId['Id']
         ];
 
         if($userId = $repo->saveTriangle($triangleToInsert))

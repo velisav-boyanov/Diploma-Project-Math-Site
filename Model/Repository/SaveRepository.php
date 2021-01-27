@@ -39,7 +39,7 @@ class SaveRepository
                 WHERE `User_Id` = :userId';
 
         $stmt = $pdo->prepare($sql);
-        $stmt->execute(['userId' => $userId]);
+        $stmt->execute(['userId' => $userId['Id']]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

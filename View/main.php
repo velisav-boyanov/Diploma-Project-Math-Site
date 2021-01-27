@@ -5,7 +5,7 @@
 
 <div class="navbar">
     <a href="../index.php?target=triangleSave&action=renderSaves">User</a>
-    <a href="triangle.php">Triangle</a>
+    <a href="View/triangle.php">Triangle</a>
     <a href="#rectangle">Rectangle</a>
     <a href="#circle">Circle</a>
     <div class="dropdown">

@@ -1,5 +1,8 @@
 <?php namespace View;
-use Controller\TriangleSaveController;?>
+use Controller\TriangleSaveController;
+use FigureContainers\FigureTriangle;
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +37,11 @@ $userSaves = $user->getByUserId($_SESSION["UserId"]);
                 <h4 class = "card-title"><?php echo $i['Type'];?></h4>
                 <p class = "card-text"><?php echo $i['Given']?></p>
                 <p class = "card-text"><?php echo $i['SolvingText']?></p>
-                <a href="" class = "btn-light">Show More<span class = "text-danger">&rarr;</span></a>
+                <?php
+                $triangle = new FigureTriangle(json_decode($i['Parameters']));
+                $triangle->sendCookies();
+                ?>
+                <a href="View/triangleResult.php" class = "btn-light">Show More</a>
             </div>
         </div>
     <?php }?>
