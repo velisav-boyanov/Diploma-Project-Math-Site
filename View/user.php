@@ -10,8 +10,8 @@ use FigureContainers\FigureTriangle;
 <body>
 
 <div class="navbar">
-    <a href="View/main.php">Main</a>
-    <a href="View/triangle.php">Triangle</a>
+    <a href="../../Diploma-Project-Math-Site/View/main.php">Main</a>
+    <a href="../../Diploma-Project-Math-Site/View/triangle.php">Triangle</a>
     <a href="#rectangle">Rectangle</a>
     <a href="#circle">Circle</a>
     <div class="dropdown">
@@ -19,8 +19,8 @@ use FigureContainers\FigureTriangle;
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-            <a href="login.php">Login</a>
-            <a href="register.php">Register</a>
+            <a href="../../Diploma-Project-Math-Site/View/login.php">Login</a>
+            <a href="../../Diploma-Project-Math-Site/View/register.php">Register</a>
         </div>
     </div>
 </div>
@@ -40,6 +40,7 @@ $userSaves = $user->getByUserId($_SESSION["UserId"]);
                 <?php
                 $triangle = new FigureTriangle(json_decode($i['Parameters']));
                 $triangle->sendCookies();
+                setcookie("HowWasItSolved", json_decode($i['SolvingText']),time()+3600);
                 ?>
                 <a href="View/triangleResult.php" class = "btn-light">Show More</a>
             </div>
