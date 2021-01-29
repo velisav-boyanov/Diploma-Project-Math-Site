@@ -6,7 +6,7 @@ use Model\Repository\SaveRepository;
 
 class SaveService
 {
-    public function saveTriangle($type, $given, $solvingText, $parameters, $userId)
+    public function saveTriangle($type, $given, $solvingText, $parameters, $userId, $isBlog): array
     {
         $result = ['success' => false];
 
@@ -17,7 +17,8 @@ class SaveService
             'Given' => $given,
             'SolvingText' => $solvingText,
             'Parameters' => $parameters,
-            'UserId' => $userId['Id']
+            'UserId' => $userId['Id'],
+            'IsBlog' => $isBlog
         ];
 
         if($userId = $repo->saveTriangle($triangleToInsert))
@@ -30,7 +31,7 @@ class SaveService
         return $result;
     }
 
-    public function getTriangle($triangleId)
+    public function getTriangle($triangleId): array
     {
         $result = [
             'success' => false
@@ -49,7 +50,8 @@ class SaveService
         return $result;
     }
 
-    public function getTriangleByUserId($userId){
+    public function getTriangleByUserId($userId): array
+    {
         $repo = new SaveRepository();
         return $repo->getTriangleByUserId($userId);
     }

@@ -4,7 +4,7 @@
 <body>
 
 <div class="navbar">
-    <a href="../View/main.php">Main Page</a>
+    <a href="../../Diploma-Project-Math-Site/View/main.php">Main Page</a>
     <a href="#rectangle">Rectangle</a>
     <a href="#circle">Circle</a>
     <div class="dropdown">
@@ -12,8 +12,8 @@
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-            <a href="../View/login.php">Login</a>
-            <a href="../View/register.php">Register</a>
+            <a href="../../Diploma-Project-Math-Site/View/login.php">Login</a>
+            <a href="../../Diploma-Project-Math-Site/View/register.php">Register</a>
         </div>
     </div>
 </div>
@@ -90,8 +90,12 @@
     }
 </script>
 
-<form action="../index.php?target=triangleSave&action=add" method="post">
+<form action="../index.php?target=triangleSave&action=add&argument=0" method="post">
     <input type = "submit" value="Add to user library." id="bt2" onclick="disableButton(this)"/>
+</form>
+
+<form action="../index.php?target=triangleSave&action=add&argument=1" method="post">
+    <input type = "submit" value="Add to blog." id="bt3" onclick="disableButton(this)" />
 </form>
 
 <ul>
@@ -172,7 +176,7 @@ canvas {
     position: absolute;
     background-color: #f9f9f9;
         min-width: 160px;
-        box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+        box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
         z-index: 1;
     }
 

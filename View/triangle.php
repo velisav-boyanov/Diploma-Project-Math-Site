@@ -4,7 +4,7 @@
 <body>
 
 <div class="navbar">
-    <a href="../View/main.php">Main Page</a>
+    <a href="../../Diploma-Project-Math-Site/View/main.php">Main Page</a>
     <a href="#rectangle">Rectangle</a>
     <a href="#circle">Circle</a>
     <div class="dropdown">
@@ -12,15 +12,15 @@
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-            <a href="../View/login.php">Login</a>
-            <a href="../View/register.php">Register</a>
+            <a href="../../Diploma-Project-Math-Site/View/login.php">Login</a>
+            <a href="../../Diploma-Project-Math-Site/View/register.php">Register</a>
         </div>
     </div>
 </div>
 
 <h3>Fill in the blank spots and press run.</h3>
 
-<form name = "triangle" action="../index.php?target=triangle&action=fillTriangle" method="post">
+<form name = "triangle" action="../../Diploma-Project-Math-Site/index.php?target=triangle&action=fillTriangle" method="post">
     <div class="form-group">
         <label>Side AB:</label>
         <input type="number" name = "AB" class="form-control" >

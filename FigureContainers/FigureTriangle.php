@@ -355,7 +355,7 @@ class FigureTriangle
                 $Bk = $Bk / 2;
                 $Ck = $Ck / 2;
                 $Hk = $Hk / 2;
-            }elseif($Ak <= 7 && $Bk <= 7 && $Ck <= 7){
+            }elseif($Ak <= 5.5 && $Bk <= 5.5 && $Ck <= 5.5){
                 $Ak = $Ak * 1.25;
                 $Bk = $Bk * 1.25;
                 $Ck = $Ck * 1.25;

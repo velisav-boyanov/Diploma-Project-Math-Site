@@ -125,7 +125,8 @@ class TriangleController
 
     }
 
-    public function run($triangleFill){
+    public function run($triangleFill): bool
+    {
         $result = false;
 
         $stuck = true;
@@ -150,18 +151,20 @@ class TriangleController
 
         $triangle->sendCookies();
 
-        View::redirect('View/triangleResult.php', 301);
+        View::redirect('../../Diploma-Project-Math-Site/View/triangleResult.php', 301);
     }
 
-    public function validateNumber($number){
+    public function validateNumber($number): bool
+    {
         return $number > 0;
     }
 
-    public function validateSides($a, $b, $c){
+    public function validateSides($a, $b, $c): bool
+    {
         if($a == "" || $b == "" || $c == ""){
             return true;
         }
-        if(($a + $b < $c) || ($a + $c < $b) || ($b + $c < $a)){
+        if(($a + $b <= $c) || ($a + $c <= $b) || ($b + $c <= $a)){
             return false;
         }
         return true;

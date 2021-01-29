@@ -5,12 +5,12 @@ namespace Model\Repository;
 
 class SaveRepository
 {
-    public function saveTriangle($triangleToInsert)
+    public function saveTriangle($triangleToInsert): string
     {
         $pdo = DBManager::getInstance()->getConnection();
 
-        $sql = 'INSERT INTO `Saved_Triangles` (`Type`, `Given`, `SolvingText`, `Parameters`, `User_Id`)
-               VALUES (:Type, :Given, :SolvingText, :Parameters, :UserId)';
+        $sql = 'INSERT INTO `Saved_Triangles` (`Type`, `Given`, `SolvingText`, `Parameters`, `User_Id`, `Is_Blog`)
+               VALUES (:Type, :Given, :SolvingText, :Parameters, :UserId, :IsBlog)';
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute($triangleToInsert);
@@ -31,7 +31,7 @@ class SaveRepository
         return $result;
     }
 
-    public function getTriangleByUserId($userId)
+    public function getTriangleByUserId($userId): array
     {
         $pdo = DBManager::getInstance()->getConnection();
 

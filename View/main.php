@@ -13,8 +13,8 @@
             <i class="fa fa-caret-down"></i>
         </button>
         <div class="dropdown-content">
-            <a href="../View/login.php">Login</a>
-            <a href="../View/register.php">Register</a>
+            <a href="../../Diploma-Project-Math-Site/View/login.php">Login</a>
+            <a href="../../Diploma-Project-Math-Site/View/register.php">Register</a>
         </div>
     </div>
 </div>

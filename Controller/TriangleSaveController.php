@@ -9,21 +9,26 @@ use Model\Services\UserService;
 
 class TriangleSaveController
 {
-    public function add()
+    public function add($argument)
     {
         $result = [
             'success' => false
         ];
+
+
 
         $given = $_COOKIE['Given'] ?? '';
         $how = $_COOKIE['HowWasItSolved'] ?? '';
         $param = $_COOKIE['Parameters'] ?? '';
         $userId = $_SESSION['UserId'] ?? '';
         $type = "Triangle";
+        $isBlog = $argument;
 
+        //unset doesn't delete the cookie from storage
+        setcookie('Blog', '', 1);
         $service = new SaveService();
 
-        $result1 = $service->saveTriangle($type, $given, $how, $param, $userId);
+        $result1 = $service->saveTriangle($type, $given, $how, $param, $userId, $isBlog);
         View::redirect('index.php?target=triangleSave&action=renderSaves');
     }
 
@@ -31,7 +36,7 @@ class TriangleSaveController
         View::render('user');
     }
 
-    public function getByUserId($userId)
+    public function getByUserId($userId): array
     {
         if (!$this->validateSize($userId)) {
             $result['msg'] = 'Invalid user id';
