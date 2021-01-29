@@ -39,7 +39,19 @@ class SaveRepository
                 WHERE `User_Id` = :userId';
 
         $stmt = $pdo->prepare($sql);
-        $stmt->execute(['userId' => $userId['Id']]);
+        $stmt->execute(['userId' => $userId['Id'] ?? $userId]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+    public function getBlogs(): array
+    {
+        $pdo = DBManager::getInstance()->getConnection();
+
+        $sql = 'SELECT * FROM `Saved_Triangles`
+                WHERE `Is_Blog` = :blog';
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['blog' => 1]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 }

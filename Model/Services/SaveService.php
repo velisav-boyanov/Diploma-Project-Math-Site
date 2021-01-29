@@ -17,7 +17,7 @@ class SaveService
             'Given' => $given,
             'SolvingText' => $solvingText,
             'Parameters' => $parameters,
-            'UserId' => $userId['Id'],
+            'UserId' => $userId['Id'] ?? $userId,
             'IsBlog' => $isBlog
         ];
 
@@ -54,5 +54,11 @@ class SaveService
     {
         $repo = new SaveRepository();
         return $repo->getTriangleByUserId($userId);
+    }
+
+    public function getBlogs(): array
+    {
+        $repo = new SaveRepository();
+        return $repo->getBlogs();
     }
 }

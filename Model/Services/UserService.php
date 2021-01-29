@@ -32,10 +32,6 @@ class UserService
 
     public function getUser($userId): array
     {
-        $result = [
-            'success' => false
-        ];
-
         $repo = new UserRepository();
         $user = $repo->getUserById($userId);
 

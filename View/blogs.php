@@ -1,5 +1,6 @@
 <?php namespace View;
 use Controller\TriangleSaveController;
+use Controller\UserController;
 use FigureContainers\FigureTriangle;
 
 ?>
@@ -25,24 +26,27 @@ use FigureContainers\FigureTriangle;
     </div>
 </div>
 
-<h3>User library:</h3>
+<h3>Here you can discuss other users :</h3>
 <?php
 $user = new TriangleSaveController();
-$userSaves = $user->getByUserId($_SESSION["UserId"]);
+$userSaves = $user->getBlogs();
 ?>
 <div class="row">
     <?php foreach($userSaves as $i) {?>
         <div>
             <div class = "card-body">
                 <h4 class = "card-title"><?php echo $i['Type'];?></h4>
-                <p class = "card-text">Given:<?php echo $i['Given']?></p>
-                <p class = "card-text"><?php echo $i['SolvingText']?></p>
+                <p class = "card-text"><?php echo $i['Given']?></p>
                 <?php
                 $triangle = new FigureTriangle(json_decode($i['Parameters']));
                 $triangle->sendCookies();
                 setcookie("HowWasItSolved", json_decode($i['SolvingText']),time()+3600);
+                $userId = $i['User_Id'];
+                $user = new UserController();
+                $userName = $user->getById($userId);
                 ?>
-                <a href="../../Diploma-Project-Math-Site/View/triangleResult.php" class = "btn-light">Show More</a>
+                <p class = "card-text">User: <?php echo $userName['user']['Username']?></p>
+                <a href="../../Diploma-Project-Math-Site/View/blog.php" class = "btn-light">Show More</a>
             </div>
         </div>
     <?php }?>

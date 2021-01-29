@@ -15,8 +15,6 @@ class TriangleSaveController
             'success' => false
         ];
 
-
-
         $given = $_COOKIE['Given'] ?? '';
         $how = $_COOKIE['HowWasItSolved'] ?? '';
         $param = $_COOKIE['Parameters'] ?? '';
@@ -36,6 +34,10 @@ class TriangleSaveController
         View::render('user');
     }
 
+    public function renderBlogs(){
+        View::render('blogs');
+    }
+
     public function getByUserId($userId): array
     {
         if (!$this->validateSize($userId)) {
@@ -48,7 +50,13 @@ class TriangleSaveController
         return $result;
     }
 
-    public function getById($triangleId)
+    public function getBlogs(): array
+    {
+        $service = new SaveService();
+        return $service->getBlogs();
+    }
+
+    public function getById($triangleId): array
     {
         $result = [
             'success' => false
