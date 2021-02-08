@@ -56,4 +56,17 @@ class CommentRepository
         return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
+    public function removeComment($commentId)
+    {
+        $pdo = DBManager::getInstance()->getConnection();
+
+        $sql = 'DELETE FROM `Message` 
+                WHERE `Message`.`Id` = :commentId';
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['commentId' => $commentId]);
+
+        return $stmt->fetch(\PDO::FETCH_ASSOC);
+    }
+
 }

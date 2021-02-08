@@ -75,4 +75,19 @@ class CommentService
         $result['comment'] = $cmt;
         return $result;
     }
+
+    public function removeComment($commentId): array
+    {
+        $repo = new CommentRepository();
+        $cmt = $repo->removeComment($commentId);
+
+        if (!$cmt) {
+            $result['msg'] = 'User with id ' . $commentId . ' was not found!';
+            return $result;
+        }
+
+        $result['success'] = true;
+        $result['comment'] = $cmt;
+        return $result;
+    }
 }

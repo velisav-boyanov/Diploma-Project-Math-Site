@@ -62,21 +62,27 @@ $postSaves = $comment->getByPostId($_COOKIE['PostId']);
 ?>
 <div class="row">
     <?php
-    if($postSaves['msg'] != "User with id 45 was not found!"){
+    if(!array_key_exists("msg", $postSaves)){
         foreach($postSaves as $i) {?>
             <div>
                 <div class = "card-body">
                     <h4 class = "card-text">User: <?php echo $i['Username']; ?></h4>
                     <p class = "card-title"><?php echo $i['Created_At'];?></p>
                     <p class = "card-text"><?php echo $i['Message']?></p>
-                    <form action="../../Diploma-Project-Math-Site/index.php?target=comment&action=renderBlog" id="form">
-                        <input type="button" value="Click" onclick="beforeSubmit(<?php echo $i['Id'] ?>)">
+                    <?php $userId = $_SESSION['UserId']['Id'] ?? $_SESSION['UserId']; if($userId == $i['User_Id']){?>
+                    <form action="../../Diploma-Project-Math-Site/index.php?target=comment&action=removeComment" id="form">
+                        <input type="button" value="Delete Comment" onclick="getCommentId(<?php echo $i['Id'] ?>)">
                     </form>
+                    <?php }?>
                 </div>
             </div>
     <?php }}else{?> <h5>No comments.</h5> <?php } ?>
 </div>
 <script type="text/javascript">
+    getCommentId = function (id){
+        document.cookie = "CommentId=" + String(id);
+        $("#form").submit();
+    }
 </script>
 
 <style>

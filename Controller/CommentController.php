@@ -16,13 +16,12 @@ class CommentController
         ];
 
         $user = new UserController();
-        $userName = $user->getById($_SESSION['UserId']['Id']);
 
         $userId = $_SESSION['UserId']['Id'] ?? $_SESSION['UserId'];
+        $userName = $user->getById($userId);
         $postId = $_COOKIE['PostId'] ?? '';
         $username = $userName['user']['Username'];
         $message = $_POST['Message'] ?? '';
-        echo json_encode($_SESSION['UserId']['Id']);
         $service = new CommentService();
 
         $result1 = $service->saveComment($userId, $postId, $username, $message);
@@ -81,6 +80,23 @@ class CommentController
         $result = $service->getCommentByParentCommentId($parentId);
 
         return $result;
+    }
+
+    public function removeComment($commentId): array
+    {
+        $result = [
+            'success' => false
+        ];
+
+        if (!$this->validateSize($commentId)) {
+            $result['msg'] = 'Invalid comment id';
+            return $result;
+        }
+
+        $service = new CommentService();
+        $result = $service->removeComment($commentId);
+
+        View::redirect('index.php?target=comment&action=renderBlog');
     }
 
     public function validateSize($number): bool
