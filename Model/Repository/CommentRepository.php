@@ -17,7 +17,7 @@ class CommentRepository
         return $pdo->lastInsertId();
     }
 
-    public function getCommentById($commentId)
+    public function getCommentById($commentId): array
     {
         $pdo = DBManager::getInstance()->getConnection();
 
@@ -27,10 +27,10 @@ class CommentRepository
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['commentId' => $commentId]);
 
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
-    public function getCommentByPostId($postId)
+    public function getCommentByPostId($postId): array
     {
         $pdo = DBManager::getInstance()->getConnection();
 
@@ -40,7 +40,7 @@ class CommentRepository
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['postId' => $postId]);
 
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
 
     public function getCommentByParentCommentId($commentId)

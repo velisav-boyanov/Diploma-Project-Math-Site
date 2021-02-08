@@ -34,10 +34,6 @@ class TriangleSaveController
         View::render('user');
     }
 
-    public function renderBlogs(){
-        View::render('blogs');
-    }
-
     public function getByUserId($userId): array
     {
         if (!$this->validateSize($userId)) {

@@ -26,13 +26,14 @@ use FigureContainers\FigureTriangle;
     </div>
 </div>
 
-<h3>Here you can discuss other users :</h3>
+<h3>Here you can discuss other users posts:</h3>
 <?php
 $user = new TriangleSaveController();
 $userSaves = $user->getBlogs();
 ?>
 <div class="row">
-    <?php foreach($userSaves as $i) {?>
+    <?php
+    foreach($userSaves as $i) {?>
         <div>
             <div class = "card-body">
                 <h4 class = "card-title"><?php echo $i['Type'];?></h4>
@@ -46,11 +47,20 @@ $userSaves = $user->getBlogs();
                 $userName = $user->getById($userId);
                 ?>
                 <p class = "card-text">User: <?php echo $userName['user']['Username']?></p>
-                <a href="../../Diploma-Project-Math-Site/View/blog.php" class = "btn-light">Show More</a>
+                <form action="../../Diploma-Project-Math-Site/index.php?target=comment&action=renderBlog" method="post">
+                    <button type="submit" onclick="beforeSubmit(<?php echo $i['Id']?>)">View Comments</button>
+                </form>
             </div>
         </div>
     <?php }?>
 </div>
+
+<script type="text/javascript">
+    beforeSubmit = function (id){
+        document.cookie = "PostId=" + String(id);
+        $("#form").submit();
+    }
+</script>
 
 <style>
     body {

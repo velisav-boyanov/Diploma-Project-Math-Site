@@ -58,7 +58,7 @@ class CommentService
 
         $result['success'] = true;
         $result['comment'] = $cmt;
-        return $result;
+        return $cmt;
     }
 
     public function getCommentByParentCommentId($commentId): array
