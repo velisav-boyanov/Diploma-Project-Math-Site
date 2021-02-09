@@ -65,8 +65,6 @@ class CommentRepository
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['commentId' => $commentId]);
-
-        return $stmt->fetch(\PDO::FETCH_ASSOC);
     }
 
 }

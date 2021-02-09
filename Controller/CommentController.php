@@ -82,11 +82,13 @@ class CommentController
         return $result;
     }
 
-    public function removeComment($commentId): array
+    public function removeComment(): array
     {
         $result = [
             'success' => false
         ];
+
+        $commentId = $_COOKIE["CommentId"];
 
         if (!$this->validateSize($commentId)) {
             $result['msg'] = 'Invalid comment id';
