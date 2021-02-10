@@ -30,6 +30,23 @@ class TriangleSaveController
         View::redirect('index.php?target=triangleSave&action=renderSaves');
     }
 
+    public function addCustom(){
+        $result = [
+            'success' => false
+        ];
+
+        $given = $_POST['Given'] ?? '';
+        $how = '';
+        $param = $_POST['Find'] ?? '';
+        $userId = $_SESSION['UserId'] ?? '';
+        $type = $_POST['options'];
+
+        $service = new SaveService();
+
+        $result1 = $service->saveTriangle($type, $given, $how, $param, $userId, 0);
+        View::redirect('index.php?target=triangleSave&action=renderSaves');
+    }
+
     public function renderSaves(){
         View::render('user');
     }
