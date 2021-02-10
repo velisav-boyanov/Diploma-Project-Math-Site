@@ -28,8 +28,8 @@ use FigureContainers\FigureTriangle;
 
 <h3>Here you can discuss other users posts:</h3>
 <?php
-$user = new TriangleSaveController();
-$userSaves = $user->getBlogs();
+$saveController = new TriangleSaveController();
+$userSaves = $saveController->getBlogs();
 ?>
 <div class="row">
     <?php

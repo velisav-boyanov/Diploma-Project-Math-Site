@@ -190,7 +190,8 @@ class FigureTriangle
         return $p = ($side2+$side3+$side1)/2;
     }
 
-    public function surfaceFromSides($side1, $side2, $side3){
+    public function surfaceFromSides($side1, $side2, $side3): float
+    {
         $p = $this->pFromSides($side1, $side2, $side3);
         return $s = sqrt($p*($p-$side1)*
             ($p-$side3)*
@@ -233,7 +234,8 @@ class FigureTriangle
             /(2*$side3);
     }
 
-    public function smallRadiusFromSides($side1, $side2, $side3){
+    public function smallRadiusFromSides($side1, $side2, $side3): float
+    {
         return $r = sqrt(($side1+$side2-$side3)*
             ($side1-$side2+$side3)*
             ($side2+$side3-$side1)
@@ -262,7 +264,7 @@ class FigureTriangle
                 sqrt(pow($median, 2) - pow($height, 2)));
     }
 
-    public function setRight(){
+    public function setRightAfterInit(){
         if($this->triangleParameters[TriangleController::ANGLE_A] == 0 || $this->triangleParameters[TriangleController::ANGLE_B] == 0 || $this->triangleParameters[TriangleController::ANGLE_C] == 0){
             $this->isRight = true;
         }else{
@@ -346,7 +348,7 @@ class FigureTriangle
         $Bk = $this->triangleParameters[TriangleController::SIDE_AC];
         $Ak = $this->triangleParameters[TriangleController::SIDE_BC];
         $Hk = $this->triangleParameters[TriangleController::HEIGHT_CH];
-        $this->setRight();
+        $this->setRightAfterInit();
         $right = (int)$this->isRight;
 
         for($i = 1; $i < 51; $i++){

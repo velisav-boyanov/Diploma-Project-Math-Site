@@ -58,7 +58,7 @@ class UserService
             return $result;
         }
 
-        $result['id'] = $user;
+        $result['id'] = $user['Id'];
         $result['success'] = true;
         return $result;
     }

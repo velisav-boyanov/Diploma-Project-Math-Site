@@ -15,12 +15,12 @@ class CommentController
             'success' => false
         ];
 
-        $user = new UserController();
+        $userController = new UserController();
 
-        $userId = $_SESSION['UserId']['Id'] ?? $_SESSION['UserId'];
-        $userName = $user->getById($userId);
+        $userId = $_SESSION['UserId'] ?? '';
+        $user = $userController->getById($userId);
         $postId = $_COOKIE['PostId'] ?? '';
-        $username = $userName['user']['Username'];
+        $username = $user['user']['Username'] ?? '';
         $message = $_POST['Message'] ?? '';
         $service = new CommentService();
 

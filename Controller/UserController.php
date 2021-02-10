@@ -66,7 +66,7 @@ class UserController
         }else{
             //Session id added.
             $_SESSION["UserId"] = $result['id'];
-            echo json_encode($_SESSION["UserId"], JSON_PRETTY_PRINT);
+            //echo json_encode($_SESSION["UserId"], JSON_PRETTY_PRINT);
             View::redirect('index.php?target=user&action=loadMain');
         }
 
