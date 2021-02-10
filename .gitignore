@@ -1,2 +1,4 @@
 /Model/Repository/config.php
 /.idea
+/vendor
+/node_modules

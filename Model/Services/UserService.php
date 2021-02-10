@@ -7,7 +7,7 @@ use Model\Repository\UserRepository;
 
 class UserService
 {
-    public function saveUser($username, $email, $password)
+    public function saveUser($username, $email, $password): array
     {
         $result = ['success' => false];
 
@@ -30,12 +30,8 @@ class UserService
         return $result;
     }
 
-    public function getUser($userId)
+    public function getUser($userId): array
     {
-        $result = [
-            'success' => false
-        ];
-
         $repo = new UserRepository();
         $user = $repo->getUserById($userId);
 
@@ -49,7 +45,7 @@ class UserService
         return $result;
     }
 
-    public function getUserByNameAndPassword($userName, $userPassword)
+    public function getUserByNameAndPassword($userName, $userPassword): array
     {
         $result = [
             'success' => false
@@ -62,12 +58,12 @@ class UserService
             return $result;
         }
 
-        $result['id'] = $user;
+        $result['id'] = $user['Id'];
         $result['success'] = true;
         return $result;
     }
 
-    public function getAllUsers()
+    public function getAllUsers(): array
     {
         $result = [
             'success' => false
@@ -86,7 +82,8 @@ class UserService
         return $result;
     }
 
-    public function getUserByName($userName){
+    public function getUserByName($userName): array
+    {
         $result = [
             'success' => false
         ];

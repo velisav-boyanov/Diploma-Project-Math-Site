@@ -6,7 +6,7 @@ use Controller\UserController;
 
 class UserRepository
 {
-    public function saveUser($userToInsert)
+    public function saveUser($userToInsert): string
     {
         $pdo = DBManager::getInstance()->getConnection();
 
@@ -46,7 +46,7 @@ class UserRepository
         return $result;
     }
 
-    public function getAllUsers()
+    public function getAllUsers(): array
     {
         $pdo = DBManager::getInstance()->getConnection();
 

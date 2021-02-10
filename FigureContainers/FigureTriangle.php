@@ -5,11 +5,63 @@ use Controller\TriangleController;
 
 class FigureTriangle
 {
-    public array $triangleParameters;
-    public bool $isEquilateral;
-    public bool $isRight;
-    public bool $isIsosceles;
-    //public $valuesAreSet;
+    private array $triangleParameters;
+    private bool $isEquilateral;
+    private bool $isRight;
+    private bool $isIsosceles;
+    private array $givenValues;
+
+    public function getParameter($i){
+        return $this->triangleParameters[$i];
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEquilateral(): bool
+    {
+        return $this->isEquilateral;
+    }
+
+    /**
+     * @param bool $isEquilateral
+     */
+    public function setIsEquilateral(bool $isEquilateral): void
+    {
+        $this->isEquilateral = $isEquilateral;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isRight(): bool
+    {
+        return $this->isRight;
+    }
+
+    /**
+     * @param bool $isRight
+     */
+    public function setIsRight(bool $isRight): void
+    {
+        $this->isRight = $isRight;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isIsosceles(): bool
+    {
+        return $this->isIsosceles;
+    }
+
+    /**
+     * @param bool $isIsosceles
+     */
+    public function setIsIsosceles(bool $isIsosceles): void
+    {
+        $this->isIsosceles = $isIsosceles;
+    }
 
     /**
      * FigureTriangle constructor.
@@ -18,8 +70,13 @@ class FigureTriangle
 
     public function __construct($thisFill)
     {
+        $var = 0;
         for($i = 0; $i < sizeof($thisFill); $i++){
             $this->triangleParameters[$i] = $thisFill[$i];
+            if($thisFill[$i] != ""){
+                $this->givenValues[$var] = $i;
+                $var++;
+            }
         }
 
         if(($thisFill[TriangleController::SIDE_AB] == $thisFill[TriangleController::SIDE_AC]) && ($thisFill[TriangleController::SIDE_BC] == $thisFill[TriangleController::SIDE_AC])){
@@ -133,7 +190,8 @@ class FigureTriangle
         return $p = ($side2+$side3+$side1)/2;
     }
 
-    public function surfaceFromSides($side1, $side2, $side3){
+    public function surfaceFromSides($side1, $side2, $side3): float
+    {
         $p = $this->pFromSides($side1, $side2, $side3);
         return $s = sqrt($p*($p-$side1)*
             ($p-$side3)*
@@ -176,7 +234,8 @@ class FigureTriangle
             /(2*$side3);
     }
 
-    public function smallRadiusFromSides($side1, $side2, $side3){
+    public function smallRadiusFromSides($side1, $side2, $side3): float
+    {
         return $r = sqrt(($side1+$side2-$side3)*
             ($side1-$side2+$side3)*
             ($side2+$side3-$side1)
@@ -203,6 +262,14 @@ class FigureTriangle
             sqrt(4*pow($median, 2) + pow($side, 2) +
                 $side*4*
                 sqrt(pow($median, 2) - pow($height, 2)));
+    }
+
+    public function setRightAfterInit(){
+        if($this->triangleParameters[TriangleController::ANGLE_A] == 0 || $this->triangleParameters[TriangleController::ANGLE_B] == 0 || $this->triangleParameters[TriangleController::ANGLE_C] == 0){
+            $this->isRight = true;
+        }else{
+            $this->isRight = false;
+        }
     }
 
     public function sideFromOppositeHeightSmallRadiusLargeRadius($height, $r, $R){
@@ -245,9 +312,68 @@ class FigureTriangle
         $this->triangleParameters[TriangleController::INNER_RADIUS] = number_format($this->smallRadiusFromSides($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
         $this->triangleParameters[TriangleController::OUTER_RADIUS] = number_format($this->largeRadiusFromSides($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
 
-        $this->triangleParameters[TriangleController::HEIGHT_CH] = number_format($this->heightFromSides($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AB]), 3);
         $this->triangleParameters[TriangleController::HEIGHT_BH] = number_format($this->heightFromSides($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
+        $this->triangleParameters[TriangleController::HEIGHT_CH] = number_format($this->heightFromSides($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AB]), 3);
         $this->triangleParameters[TriangleController::HEIGHT_AH] = number_format($this->heightFromSides($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC]), 3);
+    }
+
+    public function sendCookies(){
+        setcookie('AB' ,$this->triangleParameters[TriangleController::SIDE_AB], time()+3600);
+        setcookie('AC' ,$this->triangleParameters[TriangleController::SIDE_AC], time()+3600);
+        setcookie('BC' ,$this->triangleParameters[TriangleController::SIDE_BC], time()+3600);
+
+        setcookie('A' ,$this->triangleParameters[TriangleController::ANGLE_A], time()+3600);
+        setcookie('B' ,$this->triangleParameters[TriangleController::ANGLE_B], time()+3600);
+        setcookie('C' ,$this->triangleParameters[TriangleController::ANGLE_C], time()+3600);
+
+        setcookie('AM' ,$this->triangleParameters[TriangleController::MEDIAN_AM], time()+3600);
+        setcookie('BM' ,$this->triangleParameters[TriangleController::MEDIAN_BM], time()+3600);
+        setcookie('CM' ,$this->triangleParameters[TriangleController::MEDIAN_CM], time()+3600);
+
+        setcookie('AL' ,$this->triangleParameters[TriangleController::BISECTOR_AL], time()+3600);
+        setcookie('BL' ,$this->triangleParameters[TriangleController::BISECTOR_BL], time()+3600);
+        setcookie('CL' ,$this->triangleParameters[TriangleController::BISECTOR_CL], time()+3600);
+
+        setcookie('AH' ,$this->triangleParameters[TriangleController::HEIGHT_AH], time()+3600);
+        setcookie('BH' ,$this->triangleParameters[TriangleController::HEIGHT_BH], time()+3600);
+        setcookie('CH' ,$this->triangleParameters[TriangleController::HEIGHT_CH], time()+3600);
+
+        setcookie('IR' ,$this->triangleParameters[TriangleController::INNER_RADIUS], time()+3600);
+        setcookie('OR' ,$this->triangleParameters[TriangleController::OUTER_RADIUS], time()+3600);
+
+        setcookie('P' ,$this->triangleParameters[TriangleController::PERIMETER], time()+3600);
+        setcookie('S' ,$this->triangleParameters[TriangleController::SURFACE], time()+3600);
+
+        $Ck = $this->triangleParameters[TriangleController::SIDE_AB];
+        $Bk = $this->triangleParameters[TriangleController::SIDE_AC];
+        $Ak = $this->triangleParameters[TriangleController::SIDE_BC];
+        $Hk = $this->triangleParameters[TriangleController::HEIGHT_CH];
+        $this->setRightAfterInit();
+        $right = (int)$this->isRight;
+
+        for($i = 1; $i < 51; $i++){
+            if($Ak >= 11 || $Bk >= 11 || $Ck >= 11){
+                $Ak = $Ak / 2;
+                $Bk = $Bk / 2;
+                $Ck = $Ck / 2;
+                $Hk = $Hk / 2;
+            }elseif($Ak <= 5.5 && $Bk <= 5.5 && $Ck <= 5.5){
+                $Ak = $Ak * 1.25;
+                $Bk = $Bk * 1.25;
+                $Ck = $Ck * 1.25;
+                $Hk = $Hk * 1.25;
+            }else{
+                break;
+            }
+        }
+
+        setcookie('Right', $right, time()+3600);
+        setcookie('Ak', $Ak, time()+3600);
+        setcookie('Ck', $Ck, time()+3600);
+        setcookie('Bk', $Bk, time()+3600);
+        setcookie('Hk', $Hk, time()+3600);
+        setcookie('Parameters', json_encode($this->triangleParameters), time()+3600);
+        setcookie('Given', json_encode($this->givenValues), time()+3600);
     }
 
 }

@@ -14,7 +14,8 @@ class UserController
     const IV = '8565825542115032';
     const MAX_PASSWORD = 32;
 
-    public function add(){
+    public function add(): array
+    {
         $result = [
             'success' => false
         ];
@@ -65,7 +66,7 @@ class UserController
         }else{
             //Session id added.
             $_SESSION["UserId"] = $result['id'];
-            echo json_encode($_SESSION["UserId"], JSON_PRETTY_PRINT);
+            //echo json_encode($_SESSION["UserId"], JSON_PRETTY_PRINT);
             View::redirect('index.php?target=user&action=loadMain');
         }
 
@@ -77,10 +78,6 @@ class UserController
 
     public function getById($userId)
     {
-        $result = [
-            'success' => false
-        ];
-
         if (!$this->validateSize($userId)) {
             $result['msg'] = 'Invalid player id';
             return $result;
@@ -99,12 +96,12 @@ class UserController
 
     }
 
-    private function validateSize($userId)
+    private function validateSize($userId): bool
     {
         return $userId>=self::ID_MIN;
     }
 
-    private function validateUserName($userName)
+    private function validateUserName($userName): bool
     {
         $service = new UserService();
         $result = $service->getUserByName($userName);
@@ -112,7 +109,7 @@ class UserController
         return $result['success'] == 'false';
     }
 
-    private function validatePassword($userPassword)
+    private function validatePassword($userPassword): bool
     {
         return strlen($userPassword) > self::MAX_PASSWORD;
     }

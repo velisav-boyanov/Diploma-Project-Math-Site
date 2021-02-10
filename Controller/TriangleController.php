@@ -5,7 +5,6 @@ namespace Controller;
 
 use FigureContainers\FigureTriangle;
 use Core\View;
-use mysql_xdevapi\BaseResult;
 
 class TriangleController
 {
@@ -126,38 +125,46 @@ class TriangleController
 
     }
 
-    public function run($triangleFill){
+    public function run($triangleFill): bool
+    {
         $result = false;
 
         $stuck = true;
+        //what formulas were used to find the sides.
+        $text = "";
         $triangle = new FigureTriangle($triangleFill);
         //finds sides based on given parameters
 //        do {
 //            break;
 //        } while ($stuck != true);
 
-        if(!$this->validateSides($triangle->triangleParameters[self::SIDE_AB], $triangle->triangleParameters[self::SIDE_BC], $triangle->triangleParameters[self::SIDE_AC])){
+        if(!$this->validateSides($triangle->getParameter(self::SIDE_AB), $triangle->getParameter(self::SIDE_BC), $triangle->getParameter(self::SIDE_AC))){
             View::render('triangle');
             echo json_encode("Impossible side proportions.");
             return $result;
         }
         //find everything else based on sides;
-        if($triangle->triangleParameters[self::SIDE_AB] && $triangle->triangleParameters[self::SIDE_AC] && $triangle->triangleParameters[self::SIDE_BC]) {
+        if($triangle->getParameter(self::SIDE_AB) && $triangle->getParameter(self::SIDE_AC) && $triangle->getParameter(self::SIDE_BC)) {
             $triangle->setEverythingFromSides();
+            setcookie("HowWasItSolved", $text . "Using the sides we can find everything else using the analogous formulas(you can find them on the main page)." ,time()+3600);
         }
-        View::render('main');
-        echo json_encode($triangle->triangleParameters[self::ANGLE_A]); echo json_encode($triangle->triangleParameters[self::ANGLE_B]); echo json_encode($triangle->triangleParameters[self::ANGLE_C]);
-        echo json_encode($triangle->triangleParameters[self::MEDIAN_AM]); echo json_encode($triangle->triangleParameters[self::MEDIAN_BM]); echo json_encode($triangle->triangleParameters[self::MEDIAN_CM]);
-        echo json_encode($triangle->triangleParameters[self::BISECTOR_AL]); echo json_encode($triangle->triangleParameters[self::BISECTOR_BL]); echo json_encode($triangle->triangleParameters[self::BISECTOR_CL]);
-        echo json_encode($triangle->triangleParameters[self::HEIGHT_AH]); echo json_encode($triangle->triangleParameters[self::HEIGHT_BH]); echo json_encode($triangle->triangleParameters[self::HEIGHT_CH]);
+
+        $triangle->sendCookies();
+
+        View::redirect('../../Diploma-Project-Math-Site/View/triangleResult.php', 301);
     }
 
-    public function validateNumber($number){
+    public function validateNumber($number): bool
+    {
         return $number > 0;
     }
 
-    public function validateSides($a, $b, $c){
-        if(($a + $b < $c) || ($a + $c < $b) || ($b + $c < $a)){
+    public function validateSides($a, $b, $c): bool
+    {
+        if($a == "" || $b == "" || $c == ""){
+            return true;
+        }
+        if(($a + $b <= $c) || ($a + $c <= $b) || ($b + $c <= $a)){
             return false;
         }
         return true;
