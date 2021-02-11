@@ -40,10 +40,11 @@ class TriangleSaveController
         $param = $_POST['Find'] ?? '';
         $userId = $_SESSION['UserId'] ?? '';
         $type = $_POST['options'];
+        $isBlog = (int)$_POST['blog'];
 
         $service = new SaveService();
 
-        $result1 = $service->saveTriangle($type, $given, $how, $param, $userId, 0);
+        $result1 = $service->saveTriangle($type, $given, $how, $param, $userId, $isBlog);
         View::redirect('index.php?target=triangleSave&action=renderSaves');
     }
 

@@ -33,6 +33,10 @@ use FigureContainers\FigureTriangle;
             <option value="Rectangle">Rectangle</option>
             <option value="Circle">Circle</option>
         </select>
+        <label for="options">Personal or post:</label><select id="options" name="blog">
+            <option value="1">Blog</option>
+            <option value="0">Personal</option>
+        </select>
         <div class="form-group">
             <label>Given</label>
             <input type="text" name = "Given" class="form-control" required>

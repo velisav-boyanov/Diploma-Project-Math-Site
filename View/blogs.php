@@ -39,9 +39,11 @@ $userSaves = $saveController->getBlogs();
                 <h4 class = "card-title"><?php echo $i['Type'];?></h4>
                 <p class = "card-text"><?php echo $i['Given']?></p>
                 <?php
-                $triangle = new FigureTriangle(json_decode($i['Parameters']));
-                $triangle->sendCookies();
-                setcookie("HowWasItSolved", json_decode($i['SolvingText']),time()+3600);
+                if($i['SolvingText'] != '') {
+                    $triangle = new FigureTriangle(json_decode($i['Parameters']));
+                    $triangle->sendCookies();
+                    setcookie("HowWasItSolved", json_decode($i['SolvingText']), time() + 3600);
+                }
                 $userId = $i['User_Id'];
                 $user = new UserController();
                 $userName = $user->getById($userId);
