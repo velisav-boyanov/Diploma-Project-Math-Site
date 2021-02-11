@@ -74,6 +74,9 @@ $userSaves = $user->getByUserId($_SESSION["UserId"]);
                     setcookie("HowWasItSolved", json_decode($i['SolvingText']), time() + 3600);
                 }
                 ?>
+                <form action="../../Diploma-Project-Math-Site/index.php?target=triangleSave&action=remove" method="post">
+                    <button type="submit" onclick="getSaveId(<?php echo $i['Id']?>)">Delete</button>
+                </form>
                 <?php if($i['SolvingText'] != ''){?>
                 <a href="../View/triangleResult.php" class = "btn-light">Show More</a>
                 <?php }?>
@@ -85,6 +88,13 @@ $userSaves = $user->getByUserId($_SESSION["UserId"]);
 <style>
     <?php include 'Styles/navbar.css' ?>
 </style>
+
+<script type="text/javascript">
+    getSaveId = function (id){
+        document.cookie = "PostId=" + String(id);
+        $("#form").submit();
+    }
+</script>
 
 </body>
 </html>

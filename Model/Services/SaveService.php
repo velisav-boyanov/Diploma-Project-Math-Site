@@ -50,6 +50,12 @@ class SaveService
         return $result;
     }
 
+    public function removePost($postId)
+    {
+        $repo = new SaveRepository();
+        $repo->removePost($postId);
+    }
+
     public function getTriangleByUserId($userId): array
     {
         $repo = new SaveRepository();

@@ -4,6 +4,7 @@
 namespace Controller;
 
 use Core\View;
+use Model\Services\CommentService;
 use Model\Services\SaveService;
 use Model\Services\UserService;
 
@@ -64,6 +65,30 @@ class TriangleSaveController
         return $result;
     }
 
+    public function remove(): array
+    {
+        $result = [
+            'success' => false
+        ];
+
+        $postId = $_COOKIE["PostId"];
+
+        $controllerComment = new CommentController();
+        $serviceComment = new CommentService();
+        $commentsOnPost = $controllerComment->getByPostId($postId);
+        foreach($commentsOnPost as $i) {
+            $serviceComment->removeComment($i['Id']);
+        }
+
+        if (!$this->validateSize($postId)) {
+            $result['msg'] = 'Invalid comment id';
+            return $result;
+        }
+        $serviceSave = new SaveService();
+        $serviceSave->removePost($postId);
+        View::redirect('index.php?target=triangleSave&action=renderSaves');
+    }
+
     public function getBlogs(): array
     {
         $service = new SaveService();
@@ -87,7 +112,8 @@ class TriangleSaveController
         return $result;
     }
 
-    public function validateSize($number){
+    public function validateSize($number): bool
+    {
         return $number >= 0;
     }
 

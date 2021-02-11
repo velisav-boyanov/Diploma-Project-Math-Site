@@ -54,4 +54,15 @@ class SaveRepository
         $stmt->execute(['blog' => 1]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function removePost($postId)
+    {
+        $pdo = DBManager::getInstance()->getConnection();
+
+        $sql = 'DELETE FROM `Saved_Triangles` 
+                WHERE `Saved_Triangles`.`Id` = :postId';
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['postId' => $postId]);
+    }
 }

@@ -30,7 +30,6 @@ use FigureContainers\FigureTriangle;
 <?php
 $user = new TriangleSaveController();
 $userSaves = $user->getBlogs();
-//$postIds = array_column($userSaves, 'PostId');
 $id = array_search($_COOKIE['PostId'], array_column($userSaves, 'Id'));
 ?>
 
