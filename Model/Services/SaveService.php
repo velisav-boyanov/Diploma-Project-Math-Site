@@ -56,6 +56,12 @@ class SaveService
         $repo->removePost($postId);
     }
 
+    public function markAsAdded($postId, $isAdded)
+    {
+        $repo = new SaveRepository();
+        $repo->markAsAdded($postId, $isAdded);
+    }
+
     public function getTriangleByUserId($userId): array
     {
         $repo = new SaveRepository();

@@ -15,7 +15,7 @@ class TestController
         ];
 
         $userId = $_SESSION['UserId'] ?? '';
-        $exercises = $_POST['Username'] ?? '';
+        $exercises = $_COOKIE['Exercises'] ?? '';
 
         $service = new TestService();
 

@@ -6,7 +6,7 @@
 <div class="navbar">
     <a href="../../Diploma-Project-Math-Site/index.php?target=comment&action=renderBlogs">Discussion</a>
     <a href="../../Diploma-Project-Math-Site/index.php?target=triangleSave&action=renderSaves">User</a>
-    <a href="../../Diploma-Project-Math-Site/View/test.php">Tests</a>
+    <a href="../../Diploma-Project-Math-Site/View/testcreater.php">Tests</a>
     <a href="../../Diploma-Project-Math-Site/View/triangle.php">Triangle</a>
     <a href="#rectangle">Rectangle</a>
     <a href="#circle">Circle</a>

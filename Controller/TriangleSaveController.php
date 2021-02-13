@@ -95,6 +95,20 @@ class TriangleSaveController
         return $service->getBlogs();
     }
 
+    public function markAsUnAdded(): void
+    {
+        $service = new SaveService();
+        $service->markAsAdded($_COOKIE['PostId'], 0);
+    }
+
+    public function addToSaveArray(){
+        $exercises = json_decode($_COOKIE['Exercises']) ?? (array) null;
+        array_push($exercises, $_COOKIE['PostId']);
+        $service = new SaveService();
+        $service->markAsAdded($_COOKIE['PostId'], 1);
+        setcookie('Exercises', $exercises, time()+3600);
+    }
+
     public function getById($triangleId): array
     {
         $result = [

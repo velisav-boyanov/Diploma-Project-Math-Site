@@ -65,4 +65,17 @@ class SaveRepository
         $stmt = $pdo->prepare($sql);
         $stmt->execute(['postId' => $postId]);
     }
+
+    public function markAsAdded($postId, $isAdded)
+    {
+        $pdo = DBManager::getInstance()->getConnection();
+
+        $sql = 'UPDATE `Saved_Triangles`
+                SET  `Test_Added` = :isAdded
+                WHERE `Saved_Triangles`.`Id` = :postId';
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['postId' => $postId, 'isAdded' => $isAdded]);
+    }
+
 }
