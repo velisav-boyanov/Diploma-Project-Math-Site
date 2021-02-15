@@ -1,7 +1,7 @@
 <?php namespace View;
 use Controller\TriangleSaveController;
 use FigureContainers\FigureTriangle;
-
+ob_start();
 ?>
 
 <!DOCTYPE html>
@@ -89,7 +89,9 @@ $userSaves = $user->getByUserId($_SESSION["UserId"]);
 </div>
 
 <style>
-    <?php include 'Styles/navbar.css' ?>
+    <?php include 'Styles/navbar.css';
+    ob_end_flush();
+    ?>
 </style>
 
 <script type="text/javascript">

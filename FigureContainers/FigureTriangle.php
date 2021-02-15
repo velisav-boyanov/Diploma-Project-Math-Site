@@ -293,6 +293,12 @@ class FigureTriangle
         return $result;
     }
 
+    public function evenOut(){
+        foreach($this->triangleParameters as $i){
+            $i = round($i, 2);
+        }
+    }
+
     public function setEverythingFromSides(){
         $this->triangleParameters[TriangleController::ANGLE_C] = number_format($this->cosTheoremForAngle($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
         $this->triangleParameters[TriangleController::ANGLE_B] = number_format($this->cosTheoremForAngle($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AB]), 3);
@@ -367,6 +373,9 @@ class FigureTriangle
             }
         }
 
+        $this->evenOut();
+
+        var_dump($this->triangleParameters);
         setcookie('Right', $right, time()+3600);
         setcookie('Ak', $Ak, time()+3600);
         setcookie('Ck', $Ck, time()+3600);
