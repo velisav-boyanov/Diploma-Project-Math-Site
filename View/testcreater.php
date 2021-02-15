@@ -1,6 +1,7 @@
 <?php
 namespace View;
 use Controller\TriangleSaveController;
+use Controller\TriangleController;
 ?>
 
 <!DOCTYPE html>

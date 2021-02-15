@@ -31,6 +31,28 @@ class TriangleSaveController
         View::redirect('index.php?target=triangleSave&action=renderSaves');
     }
 
+    ///////////////////////////////
+    public function generateSimilar(): bool
+    {
+        $triangle = new TriangleController();
+        $postId = $_COOKIE['PostId'];
+        $post = $this->getById($postId);
+        $givenCount = json_decode($post['$post']['triangle']['Given']);
+        $givenValues = json_decode($post['$post']['triangle']['Parameters']);
+        $generatedValues = (array) null;
+        $sign = rand(0, 1) == 1;
+        $sign = $sign ? 1 : -1;
+        $coefficient = $sign*mt_rand(0, 20)/100;
+
+        //THIS NEEDS A REWORK
+        foreach($givenCount as $i){
+            $generatedValues[$i] = abs($givenValues[$givenCount[$i]] - $givenValues[$givenCount[$i]]*$coefficient);
+        }
+        $_SESSION['Given'] = json_encode($generatedValues);
+        $_SESSION['Generating'] = 1;
+        $triangle->fillTriangle();
+    }
+
     public function addCustom(){
         $result = [
             'success' => false
@@ -121,7 +143,7 @@ class TriangleSaveController
         }
 
         $service = new SaveService();
-        $result = $service->getTriangle($triangleId);
+        $result['$post'] = $service->getTriangle($triangleId);
 
         return $result;
     }

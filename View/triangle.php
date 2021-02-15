@@ -111,6 +111,7 @@
 
 <style>
     <?php include 'Styles/navbar.css' ?>
+    <?php include '../Styles/navbar.css' ?>
 </style>
 
 </body>

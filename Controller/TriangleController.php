@@ -56,38 +56,44 @@ class TriangleController
             'success' => false
         ];
 
-        $AB = $_POST['AB'] ?? '';
-        $AC = $_POST['AC'] ?? '';
-        $BC = $_POST['BC'] ?? '';
+        $given = json_decode($_SESSION['Given']);
 
-        $A = $_POST['A'] ?? '';
-        $B = $_POST['B'] ?? '';
-        $C = $_POST['C'] ?? '';
+        $AB = $_POST['AB'] ?? $given[self::SIDE_AB] ?? '';
+        $AC = $_POST['AC'] ?? $given[self::SIDE_AC] ?? '';
+        $BC = $_POST['BC'] ?? $given[self::SIDE_BC] ?? '';
 
-        $AL = $_POST['AL'] ?? '';
-        $BL = $_POST['BL'] ?? '';
-        $CL = $_POST['CL'] ?? '';
+        $A = $_POST['A'] ?? $given[self::ANGLE_A] ?? '';
+        $B = $_POST['B'] ?? $given[self::ANGLE_B] ?? '';
+        $C = $_POST['C'] ?? $given[self::ANGLE_C] ?? '';
 
-        $AM = $_POST['AM'] ?? '';
-        $CM = $_POST['CM'] ?? '';
-        $BM = $_POST['BM'] ?? '';
+        $AL = $_POST['AL'] ?? $given[self::BISECTOR_AL] ?? '';
+        $BL = $_POST['BL'] ?? $given[self::BISECTOR_BL] ?? '';
+        $CL = $_POST['CL'] ?? $given[self::BISECTOR_CL] ?? '';
 
-        $AH = $_POST['AH'] ?? '';
-        $BH = $_POST['BH'] ?? '';
-        $CH = $_POST['CH'] ?? '';
+        $AM = $_POST['AM'] ?? $given[self::MEDIAN_AM] ?? '';
+        $CM = $_POST['CM'] ?? $given[self::MEDIAN_BM] ?? '';
+        $BM = $_POST['BM'] ?? $given[self::MEDIAN_CM] ?? '';
 
-        $P = $_POST['P'] ?? '';
-        $S = $_POST['S'] ?? '';
+        $AH = $_POST['AH'] ?? $given[self::HEIGHT_AH] ?? '';
+        $BH = $_POST['BH'] ?? $given[self::HEIGHT_BH] ?? '';
+        $CH = $_POST['CH'] ?? $given[self::HEIGHT_CH] ?? '';
 
-        $R = $_POST['RLarge'] ?? '';
-        $r = $_POST['RSmall'] ?? '';
+        $P = $_POST['P'] ?? $given[self::PERIMETER] ?? '';
+        $S = $_POST['S'] ?? $given[self::SURFACE] ?? '';
 
-        $ALFromB = $_POST['ALFromB'] ?? '';
-        $CLFromB = $_POST['CLFromB'] ?? '';
-        $ALFromC = $_POST['ALFromC'] ?? '';
-        $BLFromC = $_POST['BLFromC'] ?? '';
-        $BLFromA = $_POST['BLFromA'] ?? '';
-        $CLFromA = $_POST['CLFromA'] ?? '';
+        $R = $_POST['RLarge'] ?? $given[self::OUTER_RADIUS] ?? '';
+        $r = $_POST['RSmall'] ?? $given[self::INNER_RADIUS] ?? '';
+
+        $ALFromB = $_POST['ALFromB'] ?? $given[self::SIDE_AL_FROM_B] ?? '';
+        $CLFromB = $_POST['CLFromB'] ?? $given[self::SIDE_CL_FROM_B] ?? '';
+        $ALFromC = $_POST['ALFromC'] ?? $given[self::SIDE_AL_FROM_C] ?? '';
+        $BLFromC = $_POST['BLFromC'] ?? $given[self::SIDE_BL_FROM_C] ?? '';
+        $BLFromA = $_POST['BLFromA'] ?? $given[self::SIDE_BL_FROM_A] ?? '';
+        $CLFromA = $_POST['CLFromA'] ?? $given[self::SIDE_CL_FROM_A] ?? '';
+
+        //clean POST AND SESSION GIVEN
+        $_POST = array();
+        unset($_SESSION['Given']);
 
         if(!$this->validateNumber($AB) &&
             !$this->validateNumber($AC) &&
@@ -151,8 +157,11 @@ class TriangleController
 
         $triangle->sendCookies();
 
+
         View::redirect('../../Diploma-Project-Math-Site/View/triangleResult.php', 301);
+        return true;
     }
+
 
     public function validateNumber($number): bool
     {

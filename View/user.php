@@ -79,6 +79,9 @@ $userSaves = $user->getByUserId($_SESSION["UserId"]);
                 </form>
                 <?php if($i['SolvingText'] != ''){?>
                 <a href="../View/triangleResult.php" class = "btn-light">Show More</a>
+                    <form action="../../Diploma-Project-Math-Site/index.php?target=triangleSave&action=generateSimilar" method="post">
+                        <button type="submit" onclick="getSaveId(<?php echo $i['Id']?>)">Generate similar exercise</button>
+                    </form>
                 <?php }?>
             </div>
         </div>
