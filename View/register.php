@@ -9,6 +9,13 @@
 </head>
 <body>
 <h1>Register.</h1>
+
+<p>
+    <?php if(isset($_COOKIE['Status'])){
+        echo $_COOKIE['Status'];
+    } ?>
+</p>
+
 <form action="../index.php?target=user&action=add" method="post">
     <div class="form-group">
         <label>Username:</label>

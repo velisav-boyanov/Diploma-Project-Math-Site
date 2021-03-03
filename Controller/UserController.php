@@ -29,14 +29,18 @@ class UserController
         if (
         $this->validateUserName($name)
         || $this->validateUserName($mail)){
-            View::render('register');
-            echo json_encode("Name or Mail is already in use.");
+            $url = 'http://localhost/Diploma-Project-Math-Site/View/register.php';
+            header( "Location: " . $url);
+
+            setcookie('Status', "Mail or username already in use.", time()+3600);
             return $result;
         }
 
         if ($this->validatePassword($password)){
-            View::render('register');
-            echo json_encode("Password is too long, try less than 32 character.");
+            $url = 'http://localhost/Diploma-Project-Math-Site/View/register.php';
+            header( "Location: " . $url);
+
+            setcookie('Status', "Password too long.", time()+3600);
             return $result;
         }
 
@@ -61,12 +65,15 @@ class UserController
 
         $result = $service->getUserByNameAndPassword($name, $hash);
         if($result['success'] == false){
-            View::render('login');
-            echo json_encode("Wrong credentials");
+            $url = 'http://localhost/Diploma-Project-Math-Site/View/login.php';
+            header( "Location: " . $url);
+
+            setcookie('Status', "Wrong credentials.", time()+3600);
         }else{
             //Session id added.
             $_SESSION["UserId"] = $result['id'];
             //echo json_encode($_SESSION["UserId"], JSON_PRETTY_PRINT);
+            setcookie('Status', 0, time()-3600);
             View::redirect('index.php?target=user&action=loadMain');
         }
 
@@ -74,6 +81,10 @@ class UserController
 
     public function loadMain(){
         View::render('main');
+    }
+
+    public function loadLogin(){
+        View::render('login');
     }
 
     public function getById($userId)
