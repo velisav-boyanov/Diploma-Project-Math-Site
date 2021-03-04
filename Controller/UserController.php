@@ -7,13 +7,6 @@ use Model\Services\UserService;
 
 class UserController
 {
-    const ID_MIN = 0;
-    const CYPHER = "AES-128-CTR";
-    const KEY = "Na1Lud1tP1|_|_|atN@PHP";
-    const OPTIONS = 0;
-    const IV = '8565825542115032';
-    const MAX_PASSWORD = 32;
-
     public function add(): array
     {
         $result = [
@@ -44,12 +37,13 @@ class UserController
             return $result;
         }
 
-        $hash = openssl_encrypt($password, self::CYPHER, self::KEY, self::OPTIONS, self::IV);
+        $hash = openssl_encrypt($password, \PassInfo::CYPHER, \PassInfo::KEY, \PassInfo::OPTIONS, \PassInfo::IV);
 
         $result1 = $service->saveUser($name, $mail, $hash);
 
         //Session id added.
         $_SESSION["UserId"] = $result1['id'];
+        setcookie('Status', 0, time()-3600);
         View::redirect('index.php?target=user&action=loadMain');
         //echo json_encode($_SESSION["UserId"], JSON_PRETTY_PRINT);
     }
@@ -61,7 +55,7 @@ class UserController
 
         $service = new UserService();
 
-        $hash = openssl_encrypt($password, self::CYPHER, self::KEY, self::OPTIONS, self::IV);
+        $hash = openssl_encrypt($password, \PassInfo::CYPHER, \PassInfo::KEY, \PassInfo::OPTIONS, \PassInfo::IV);
 
         $result = $service->getUserByNameAndPassword($name, $hash);
         if($result['success'] == false){
@@ -109,7 +103,7 @@ class UserController
 
     private function validateSize($userId): bool
     {
-        return $userId>=self::ID_MIN;
+        return $userId>=\PassInfo::ID_MIN;
     }
 
     private function validateUserName($userName): bool
@@ -122,6 +116,6 @@ class UserController
 
     private function validatePassword($userPassword): bool
     {
-        return strlen($userPassword) > self::MAX_PASSWORD;
+        return strlen($userPassword) > \PassInfo::MAX_PASSWORD;
     }
 }

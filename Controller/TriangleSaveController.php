@@ -18,7 +18,7 @@ class TriangleSaveController
 
         $given = $_COOKIE['Given'] ?? '';
         $how = $_COOKIE['HowWasItSolved'] ?? '';
-        $param = $_COOKIE['Parameters'] ?? '';
+        $param = json_encode(array_map('strval', json_decode($_COOKIE['Parameters']))) ?? '';
         $userId = $_SESSION['UserId'] ?? '';
         $type = "Triangle";
         $isBlog = $argument;

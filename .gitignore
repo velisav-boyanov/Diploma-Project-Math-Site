@@ -1,4 +1,5 @@
 /Model/Repository/config.php
 /.idea
 /vendor
+PassInfo.php
 /node_modules
