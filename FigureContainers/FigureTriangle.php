@@ -374,7 +374,7 @@ class FigureTriangle
         }
 
         $this->evenOut();
-        
+
         setcookie('Right', $right, time()+3600);
         setcookie('Ak', $Ak, time()+3600);
         setcookie('Ck', $Ck, time()+3600);
