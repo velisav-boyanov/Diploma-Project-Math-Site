@@ -126,6 +126,7 @@ class TriangleSaveController
     public function addToSaveArray(){
         $exercises = json_decode($_COOKIE['Exercises']) ?? (array) null;
         array_push($exercises, $_COOKIE['PostId']);
+        $exercises = json_encode($exercises);
         $service = new SaveService();
         $service->markAsAdded($_COOKIE['PostId'], 1);
         setcookie('Exercises', $exercises, time()+3600);

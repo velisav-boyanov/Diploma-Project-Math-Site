@@ -88,11 +88,43 @@ $userSaves = $user->getByUserId($_SESSION["UserId"]);
     <?php }?>
 </div>
 
+<h4>User test creation:</h4>
+<div class="row">
+    <?php foreach($userSaves as $i) {?>
+        <div>
+            <div class = "card-body">
+                <h4 class = "card-title"><?php echo $i['Type'];?></h4>
+                <p class = "card-text">Given:<?php echo $i['Given']?></p>
+                <p class = "card-text"><?php
+                    if($i['SolvingText'] != '') {
+                        echo $i['SolvingText'];
+                    }else{
+                        echo "Find:" . $i['Parameters'];
+                    }
+                    ?></p>
+                <form action="../../Diploma-Project-Math-Site/index.php?target=triangleSave&action=addToSaveArray" method="post">
+                    <button type="submit" onclick="getSaveId(<?php echo $i['Id']?>)">Add exercise</button>
+                </form>
+                <?php if($i['Test_Added'] == 1){?>
+                    <h6>Exercises was added.</h6>
+                    <form action="../../Diploma-Project-Math-Site/index.php?target=triangleSave&action=markAsUnAdded" method="post">
+                        <button type="submit" onclick="getSaveId(<?php echo $i['Id']?>)">Remove exercise</button>
+                    </form>
+                <?php }?>
+            </div>
+        </div>
+    <?php }?>
+</div>
+
 <style>
     <?php include 'Styles/navbar.css';
     ob_end_flush();
     ?>
 </style>
+
+<form action="../../Diploma-Project-Math-Site/index.php?target=test&action=add" method="post">
+    <button type="submit">Finalize test</button>
+</form>
 
 <script type="text/javascript">
     getSaveId = function (id){

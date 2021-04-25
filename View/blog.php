@@ -69,7 +69,7 @@ $postSaves = $comment->getByPostId($_COOKIE['PostId']);
                     <h4 class = "card-text">User: <?php echo $i['Username']; ?></h4>
                     <p class = "card-title"><?php echo $i['Created_At'];?></p>
                     <p class = "card-text"><?php echo $i['Message']?></p>
-                    <?php $userId = $_SESSION['UserId']; if($userId == $i['User_Id']){?>
+                    <?php $userId = $_SESSION['UserId'] ?? ""; if($userId == $i['User_Id']){?>
                     <form action="../../Diploma-Project-Math-Site/index.php?target=comment&action=removeComment" method="post">
                         <button type="submit" onclick="getCommentId(<?php echo $i['Id'] ?>)">Delete Comment</button>
                     </form>
