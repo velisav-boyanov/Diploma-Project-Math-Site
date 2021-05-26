@@ -1,6 +1,8 @@
 <?php namespace View;
+
 use Controller\TriangleSaveController;
 use FigureContainers\FigureTriangle;
+
 ob_start();
 ?>
 
@@ -12,8 +14,6 @@ ob_start();
 <div class="navbar">
     <a href="../../Diploma-Project-Math-Site/View/main.php">Main</a>
     <a href="../../Diploma-Project-Math-Site/View/triangle.php">Triangle</a>
-    <a href="#rectangle">Rectangle</a>
-    <a href="#circle">Circle</a>
     <div class="dropdown">
         <button class="dropbtn">Authentication
             <i class="fa fa-caret-down"></i>
@@ -55,20 +55,33 @@ $user = new TriangleSaveController();
 $userSaves = $user->getByUserId($_SESSION["UserId"]);
 ?>
 <div class="row">
-    <?php foreach($userSaves as $i) {?>
+    <?php foreach ($userSaves as $i) {?>
         <div>
             <div class = "card-body">
                 <h4 class = "card-title"><?php echo $i['Type'];?></h4>
-                <p class = "card-text">Given:<?php echo $i['Given']?></p>
-                <p class = "card-text"><?php
-                    if($i['SolvingText'] != '') {
-                        echo $i['SolvingText'];
-                    }else{
-                        echo "Find:" . $i['Parameters'];
+                <p class = "card-text">
+                    <?php
+                    if ($i['SolvingText']) {
+                        $given = array();
+                        foreach (json_decode($i['Given']) as $f) {
+                            array_push($given, TriangleSaveController::PARAMETERS[$f]);
+                        }
+                        $given = implode(",", $given);
+                        echo $given;
+                    } else {
+                        echo $i['Given'];
                     }
-                    ?></p>
+                    ?>
+                </p>
+                <p class = "card-text"><?php
+                if ($i['SolvingText'] != '') {
+                    echo $i['SolvingText'];
+                } else {
+                    echo "Find:" . $i['Parameters'];
+                }
+                ?></p>
                 <?php
-                if($i['SolvingText'] != '') {
+                if ($i['SolvingText'] != '') {
                     $triangle = new FigureTriangle(json_decode($i['Parameters']));
                     $triangle->sendCookies();
                     setcookie("HowWasItSolved", json_decode($i['SolvingText']), time() + 3600);
@@ -77,7 +90,7 @@ $userSaves = $user->getByUserId($_SESSION["UserId"]);
                 <form action="../../Diploma-Project-Math-Site/index.php?target=triangleSave&action=remove" method="post">
                     <button type="submit" onclick="getSaveId(<?php echo $i['Id']?>)">Delete</button>
                 </form>
-                <?php if($i['SolvingText'] != ''){?>
+                <?php if ($i['SolvingText'] != '') {?>
                 <a href="../View/triangleResult.php" class = "btn-light">Show More</a>
                     <form action="../../Diploma-Project-Math-Site/index.php?target=triangleSave&action=generateSimilar" method="post">
                         <button type="submit" onclick="getSaveId(<?php echo $i['Id']?>)">Generate similar exercise</button>
@@ -90,25 +103,40 @@ $userSaves = $user->getByUserId($_SESSION["UserId"]);
 
 <h4>User test creation:</h4>
 <div class="row">
-    <?php foreach($userSaves as $i) {?>
+    <?php foreach ($userSaves as $i) {?>
         <div>
             <div class = "card-body">
                 <h4 class = "card-title"><?php echo $i['Type'];?></h4>
-                <p class = "card-text">Given:<?php echo $i['Given']?></p>
-                <p class = "card-text"><?php
-                    if($i['SolvingText'] != '') {
-                        echo $i['SolvingText'];
-                    }else{
-                        echo "Find:" . $i['Parameters'];
+                <p class = "card-text">
+                    <?php
+                    if ($i['SolvingText']) {
+                        $given = array();
+                        foreach (json_decode($i['Given']) as $f) {
+                            array_push($given, TriangleSaveController::PARAMETERS[$f]);
+                        }
+                        $given = implode(",", $given);
+                        echo $given;
+                    } else {
+                        echo $i['Given'];
                     }
-                    ?></p>
-                <form action="../../Diploma-Project-Math-Site/index.php?target=triangleSave&action=addToSaveArray" method="post">
-                    <button type="submit" onclick="getSaveId(<?php echo $i['Id']?>)">Add exercise</button>
-                </form>
-                <?php if($i['Test_Added'] == 1){?>
+
+                    ?>
+                </p>
+                <p class = "card-text"><?php
+                if ($i['SolvingText'] != '') {
+                    echo $i['SolvingText'];
+                } else {
+                    echo "Find:" . $i['Parameters'];
+                }
+                ?></p>
+                <?php if ($i['Test_Added'] == 1) {?>
                     <h6>Exercises was added.</h6>
                     <form action="../../Diploma-Project-Math-Site/index.php?target=triangleSave&action=markAsUnAdded" method="post">
                         <button type="submit" onclick="getSaveId(<?php echo $i['Id']?>)">Remove exercise</button>
+                    </form>
+                <?php } else {?>
+                    <form action="../../Diploma-Project-Math-Site/index.php?target=triangleSave&action=addToSaveArray" method="post">
+                        <button type="submit" onclick="getSaveId(<?php echo $i['Id']?>)">Add exercise</button>
                     </form>
                 <?php }?>
             </div>
@@ -118,7 +146,6 @@ $userSaves = $user->getByUserId($_SESSION["UserId"]);
 
 <style>
     <?php include 'Styles/navbar.css';
-    ob_end_flush();
     ?>
 </style>
 

@@ -5,8 +5,6 @@
 
 <div class="navbar">
     <a href="../../Diploma-Project-Math-Site/View/main.php">Main Page</a>
-    <a href="#rectangle">Rectangle</a>
-    <a href="#circle">Circle</a>
     <div class="dropdown">
         <button class="dropbtn">Authentication
             <i class="fa fa-caret-down"></i>

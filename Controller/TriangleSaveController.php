@@ -10,6 +10,31 @@ use Model\Services\UserService;
 
 class TriangleSaveController
 {
+    const PARAMETERS = array(
+    "AB",
+    "AC",
+    "BC",
+    "A",
+    "B",
+    "C",
+    "S",
+    "P",
+    "r",
+    "R",
+    "AM",
+    "BM",
+    "CM",
+    "AL2",
+    "CL2",
+    "AL3",
+    "BL3",
+    "BL2",
+    "CL2",
+    "AH",
+    "BH",
+    "CH"
+    );
+
     public function add($argument)
     {
         $result = [
@@ -31,7 +56,6 @@ class TriangleSaveController
         View::redirect('index.php?target=triangleSave&action=renderSaves');
     }
 
-    ///////////////////////////////
     public function generateSimilar(): bool
     {
         $triangle = new TriangleController();
@@ -44,8 +68,7 @@ class TriangleSaveController
         $sign = $sign ? 1 : -1;
         $coefficient = $sign*mt_rand(0, 20)/100;
 
-        //THIS NEEDS A REWORK
-        foreach($givenCount as $i){
+        foreach ($givenCount as $i) {
             $generatedValues[$i] = abs($givenValues[$givenCount[$i]] - $givenValues[$givenCount[$i]]*$coefficient);
         }
         $_SESSION['Given'] = json_encode($generatedValues);
@@ -53,7 +76,8 @@ class TriangleSaveController
         $triangle->fillTriangle();
     }
 
-    public function addCustom(){
+    public function addCustom()
+    {
         $result = [
             'success' => false
         ];
@@ -71,7 +95,8 @@ class TriangleSaveController
         View::redirect('index.php?target=triangleSave&action=renderSaves');
     }
 
-    public function renderSaves(){
+    public function renderSaves()
+    {
         View::render('user');
     }
 
@@ -98,7 +123,7 @@ class TriangleSaveController
         $controllerComment = new CommentController();
         $serviceComment = new CommentService();
         $commentsOnPost = $controllerComment->getByPostId($postId);
-        foreach($commentsOnPost as $i) {
+        foreach ($commentsOnPost as $i) {
             $serviceComment->removeComment($i['Id']);
         }
 
@@ -121,15 +146,23 @@ class TriangleSaveController
     {
         $service = new SaveService();
         $service->markAsAdded($_COOKIE['PostId'], 0);
+        $this->renderSaves();
+
+        $exercises = json_decode($_COOKIE['Exercises']);
+        array_splice($exercises, array_search($_COOKIE['PostId'], $exercises));
+        $exercises = json_encode($exercises);
+        setcookie('Exercises', $exercises, time()+3600);
     }
 
-    public function addToSaveArray(){
+    public function addToSaveArray()
+    {
         $exercises = json_decode($_COOKIE['Exercises']) ?? (array) null;
         array_push($exercises, $_COOKIE['PostId']);
         $exercises = json_encode($exercises);
         $service = new SaveService();
         $service->markAsAdded($_COOKIE['PostId'], 1);
         setcookie('Exercises', $exercises, time()+3600);
+        $this->renderSaves();
     }
 
     public function getById($triangleId): array
@@ -153,5 +186,4 @@ class TriangleSaveController
     {
         return $number >= 0;
     }
-
 }

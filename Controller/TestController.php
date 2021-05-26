@@ -4,12 +4,15 @@
 namespace Controller;
 use Core\View;
 use Model\Repository\TestRepository;
+use Model\Services\SaveService;
 use Model\Services\TestService;
+use Dompdf\Dompdf;
 
 class TestController
 {
-    public function add(): array
+    public function add()
     {
+        ob_start();
         $result = [
             'success' => false
         ];
@@ -19,14 +22,32 @@ class TestController
 
         $service = new TestService();
 
-        $result1 = $service->saveTest($userId, $exercises);
+        $saveService = new SaveService();
+        $saveService->cleanOldTests();
 
-        View::redirect('index.php?target=user&action=loadMain');
+        $result1 = $service->saveTest((int)$userId, $exercises);
+        setcookie("Exercises", json_encode((array) null), time()+3600);
 
+        $_SESSION['TestId'] = $result1['id'];
+
+        $this->loadTest();
     }
 
-    public function loadTest(){
-        View::render('tests');
+    public function getById($testId): array
+    {
+        $result = [
+            'success' => false
+        ];
+
+        $service = new TestService();
+        $result = $service->getById($testId);
+
+        return $result;
+    }
+
+    public function loadTest()
+    {
+        View::render('exam');
     }
 
 }

@@ -1,8 +1,11 @@
 <?php
 
 namespace Controller;
+
 use Core\View;
+use Model\Services\SaveService;
 use Model\Services\UserService;
+
 //session_start();
 
 class UserController
@@ -19,19 +22,18 @@ class UserController
 
         $service = new UserService();
 
-        if (
-        $this->validateUserName($name)
-        || $this->validateUserName($mail)){
+        if ($this->validateUserName($name)
+        || $this->validateUserName($mail)) {
             $url = 'http://localhost/Diploma-Project-Math-Site/View/register.php';
-            header( "Location: " . $url);
+            header("Location: " . $url);
 
             setcookie('Status', "Mail or username already in use.", time()+3600);
             return $result;
         }
 
-        if ($this->validatePassword($password)){
+        if ($this->validatePassword($password)) {
             $url = 'http://localhost/Diploma-Project-Math-Site/View/register.php';
-            header( "Location: " . $url);
+            header("Location: " . $url);
 
             setcookie('Status', "Password too long.", time()+3600);
             return $result;
@@ -44,11 +46,13 @@ class UserController
         //Session id added.
         $_SESSION["UserId"] = $result1['id'];
         setcookie('Status', 0, time()-3600);
+        setcookie("Exercises", json_encode((array) null), time()+3600);
         View::redirect('index.php?target=user&action=loadMain');
         //echo json_encode($_SESSION["UserId"], JSON_PRETTY_PRINT);
     }
 
-    public function authenticate(){
+    public function authenticate()
+    {
         $password = $_POST['Pass'] ?? '';
         $name = $_POST['Name'] ?? '';
 
@@ -58,30 +62,40 @@ class UserController
         $hash = openssl_encrypt($password, \PassInfo::CYPHER, \PassInfo::KEY, \PassInfo::OPTIONS, \PassInfo::IV);
 
         $result = $service->getUserByNameAndPassword($name, $hash);
-        if($result['success'] == false){
+        if ($result['success'] == false) {
             $url = 'http://localhost/Diploma-Project-Math-Site/View/login.php';
-            header( "Location: " . $url);
+            header("Location: " . $url);
 
             setcookie('Status', "Wrong credentials.", time()+3600);
-        }else{
+        } else {
             //Session id added.
             $_SESSION["UserId"] = $result['id'];
-            //echo json_encode($_SESSION["UserId"], JSON_PRETTY_PRINT);
             setcookie('Status', 0, time()-3600);
-            View::redirect('index.php?target=user&action=loadMain');
+            $this->loadOldTests($result['id']);
         }
-
     }
 
-    public function loadMain(){
+    public function loadOldTests($id)
+    {
+        $service = new SaveService();
+
+        $result = $service->getOldTests($id);
+
+        setcookie("Exercises", json_encode(array_values($result)), time()+3600);
+        View::redirect('index.php?target=user&action=loadMain');
+    }
+
+    public function loadMain()
+    {
         View::render('main');
     }
 
-    public function loadLogin(){
+    public function loadLogin()
+    {
         View::render('login');
     }
 
-    public function getById($userId)
+    public function getById($userId): array
     {
         if (!$this->validateSize($userId)) {
             $result['msg'] = 'Invalid player id';
@@ -98,7 +112,12 @@ class UserController
     {
         $service = new UserService();
         $result = $service->getAllUsers();
+    }
 
+    public function logout()
+    {
+        unset($_SESSION['UserId']);
+        $this->loadMain();
     }
 
     private function validateSize($userId): bool

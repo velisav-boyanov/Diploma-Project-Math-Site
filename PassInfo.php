@@ -8,4 +8,5 @@ class PassInfo
     const OPTIONS = 0;
     const IV = '8565825542115032';
     const MAX_PASSWORD = 32;
+
 }

@@ -28,4 +28,10 @@ class TestService
 
         return $result;
     }
+
+    public function getById($testId)
+    {
+        $repo = new TestRepository();
+        return $result = $repo->getById($testId);
+    }
 }

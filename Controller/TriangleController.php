@@ -10,8 +10,8 @@ class TriangleController
 {
     //Sides
     const SIDE_AB = 0;
-    const SIDE_AC = 1;
-    const SIDE_BC = 2;
+    const SIDE_AC = 2;
+    const SIDE_BC = 1;
 
     //Angles THE ANGLES SHOULD ALWAYS BE TURNED IN TO COS, IMPORTANT !!!!!!!!!!!!!
     const ANGLE_A = 3;
@@ -51,7 +51,8 @@ class TriangleController
     //Empty
     const EMPTY = "";
 
-    public function fillTriangle(){
+    public function fillTriangle()
+    {
         $result = [
             'success' => false
         ];
@@ -95,7 +96,7 @@ class TriangleController
         $_POST = array();
         unset($_SESSION['Given']);
 
-        if(!$this->validateNumber($AB) &&
+        if (!$this->validateNumber($AB) &&
             !$this->validateNumber($AC) &&
             !$this->validateNumber($A) &&
             !$this->validateNumber($B) &&
@@ -119,44 +120,60 @@ class TriangleController
             !$this->validateNumber($BLFromC) &&
             !$this->validateNumber($CLFromA) &&
             !$this->validateNumber($BLFromA)
-        ){
+        ) {
             View::render('triangle');
             echo json_encode("No negative values.");
             return $result;
-        }else{
-            $triangle =  [$AB, $AC, $BC, $A, $B, $C, $S, $P, $r, $R, $AM, $BM, $CM, $AL, $BL, $CL, $ALFromB, $CLFromB, $ALFromC, $BLFromC, $BLFromA, $CLFromA, $AH, $BH, $CH];
+        } else {
+            $triangle =  [$AB, $AC, $BC, $A,
+                $B, $C, $S, $P,
+                $r, $R, $AM, $BM,
+                $CM, $AL, $BL, $CL,
+                $ALFromB, $CLFromB,
+                $ALFromC, $BLFromC,
+                $BLFromA, $CLFromA,
+                $AH, $BH, $CH];
             $this->run($triangle);
             return true;
         }
-
     }
 
     public function run($triangleFill): bool
     {
         $result = false;
 
-        $stuck = true;
+        $stuck = false;
         //what formulas were used to find the sides.
         $text = "";
         $triangle = new FigureTriangle($triangleFill);
+        var_dump($triangleFill);
         //finds sides based on given parameters
-//        do {
-//            break;
-//        } while ($stuck != true);
+        do {
+            $newText = $triangle->iterate();
+            $text = $text . "</br>" . $newText;
+            //$newText = "";
+            if ($newText == "") {
+                $stuck = true;
+            }
+        } while ($stuck != true);
 
-        if(!$this->validateSides($triangle->getParameter(self::SIDE_AB), $triangle->getParameter(self::SIDE_BC), $triangle->getParameter(self::SIDE_AC))){
+//        if ($triangle->fullSet()) {
+//            View::render('triangle');
+//            echo json_encode("The exercises couldn't be solved, try posting it in the blog section.");
+//        }
+
+        if (!$this->validateSides($triangle->getParameter(self::SIDE_AB), $triangle->getParameter(self::SIDE_BC), $triangle->getParameter(self::SIDE_AC))) {
             View::render('triangle');
             echo json_encode("Impossible side proportions.");
             return $result;
         }
         //find everything else based on sides;
-        if($triangle->getParameter(self::SIDE_AB) && $triangle->getParameter(self::SIDE_AC) && $triangle->getParameter(self::SIDE_BC)) {
+        if ($triangle->getParameter(self::SIDE_AB) && $triangle->getParameter(self::SIDE_AC) && $triangle->getParameter(self::SIDE_BC)) {
             $triangle->setEverythingFromSides();
-            setcookie("HowWasItSolved", $text . "Using the sides we can find everything else using the analogous formulas(you can find them on the main page)." ,time()+3600);
+            setcookie("HowWasItSolved", $text . "Using the sides we can find everything else using the analogous formulas(you can find them on the main page).", time()+3600);
         }
 
         $triangle->sendCookies();
-
 
         View::redirect('../../Diploma-Project-Math-Site/View/triangleResult.php', 301);
         return true;
@@ -170,10 +187,10 @@ class TriangleController
 
     public function validateSides($a, $b, $c): bool
     {
-        if($a == "" || $b == "" || $c == ""){
+        if ($a == "" || $b == "" || $c == "") {
             return true;
         }
-        if(($a + $b <= $c) || ($a + $c <= $b) || ($b + $c <= $a)){
+        if (($a + $b <= $c) || ($a + $c <= $b) || ($b + $c <= $a)) {
             return false;
         }
         return true;
