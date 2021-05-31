@@ -57,7 +57,9 @@ class TriangleController
             'success' => false
         ];
 
-        $given = json_decode($_SESSION['Given']);
+        if (!empty($_SESSION['Given'])) {
+            $given = json_decode($_SESSION['Given']);
+        }
 
         $AB = $_POST['AB'] ?? $given[self::SIDE_AB] ?? '';
         $AC = $_POST['AC'] ?? $given[self::SIDE_AC] ?? '';
@@ -146,7 +148,6 @@ class TriangleController
         //what formulas were used to find the sides.
         $text = "";
         $triangle = new FigureTriangle($triangleFill);
-        var_dump($triangleFill);
         //finds sides based on given parameters
         do {
             $newText = $triangle->iterate();
@@ -157,16 +158,18 @@ class TriangleController
             }
         } while ($stuck != true);
 
-//        if ($triangle->fullSet()) {
-//            View::render('triangle');
-//            echo json_encode("The exercises couldn't be solved, try posting it in the blog section.");
-//        }
+        if($triangle->getParameter(self::SIDE_AB) == "" || $triangle->getParameter(self::SIDE_BC) == "" || $triangle->getParameter(self::SIDE_AC) == ""){
+            View::render('triangle');
+            echo json_encode("Impossible side proportions.");
+            return $result;
+        }
 
         if (!$this->validateSides($triangle->getParameter(self::SIDE_AB), $triangle->getParameter(self::SIDE_BC), $triangle->getParameter(self::SIDE_AC))) {
             View::render('triangle');
             echo json_encode("Impossible side proportions.");
             return $result;
         }
+
         //find everything else based on sides;
         if ($triangle->getParameter(self::SIDE_AB) && $triangle->getParameter(self::SIDE_AC) && $triangle->getParameter(self::SIDE_BC)) {
             $triangle->setEverythingFromSides();
@@ -187,7 +190,7 @@ class TriangleController
 
     public function validateSides($a, $b, $c): bool
     {
-        if ($a == "" || $b == "" || $c == "") {
+        if ($a == null || $b == null || $c == null) {
             return true;
         }
         if (($a + $b <= $c) || ($a + $c <= $b) || ($b + $c <= $a)) {
