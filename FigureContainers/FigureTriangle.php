@@ -341,8 +341,10 @@ class FigureTriangle
     public function setEverythingFromSides()
     {
         $this->triangleParameters[TriangleController::SIDE_AB] = number_format($this->triangleParameters[TriangleController::SIDE_AB], 3);
-        $this->triangleParameters[TriangleController::SIDE_AC] = number_format($this->triangleParameters[TriangleController::SIDE_AC], 3);;
-        $this->triangleParameters[TriangleController::SIDE_BC] = number_format($this->triangleParameters[TriangleController::SIDE_BC], 3);;
+        $this->triangleParameters[TriangleController::SIDE_AC] = number_format($this->triangleParameters[TriangleController::SIDE_AC], 3);
+        ;
+        $this->triangleParameters[TriangleController::SIDE_BC] = number_format($this->triangleParameters[TriangleController::SIDE_BC], 3);
+        ;
 
         $this->triangleParameters[TriangleController::ANGLE_C] = number_format($this->cosTheoremForAngle($this->triangleParameters[TriangleController::SIDE_AB], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AC]), 3);
         $this->triangleParameters[TriangleController::ANGLE_B] = number_format($this->cosTheoremForAngle($this->triangleParameters[TriangleController::SIDE_AC], $this->triangleParameters[TriangleController::SIDE_BC], $this->triangleParameters[TriangleController::SIDE_AB]), 3);
@@ -601,7 +603,6 @@ class FigureTriangle
                     $this->triangleParameters[9]
                 );
             return "Sine theorem using angle C,  and the outer radius to find the side BC.";
-
         }
 
         if ($this->triangleParameters[0]!=""
@@ -682,7 +683,7 @@ class FigureTriangle
                     $this->triangleParameters[1],
                     $this->triangleParameters[10]
                 );
-            return "text";
+            return "Median theorem using the sides AB, BC and median AM to find the side AC";
         }
         if ($this->triangleParameters[10]!=""
             && $this->triangleParameters[1]!=""
@@ -694,7 +695,7 @@ class FigureTriangle
                     $this->triangleParameters[2],
                     $this->triangleParameters[10]
                 );
-            return "text";
+            return "Median theorem using the sides AC, BC and median AM to find the side AB";
         }
         if ($this->triangleParameters[11]!=""
             && $this->triangleParameters[2]!=""
@@ -706,7 +707,7 @@ class FigureTriangle
                     $this->triangleParameters[0],
                     $this->triangleParameters[11]
                 );
-            return "text";
+            return "Median theorem using the sides AB, AC and median BM to find the side BC";
         }
         if ($this->triangleParameters[11]!=""
             && $this->triangleParameters[2]!=""
@@ -718,7 +719,7 @@ class FigureTriangle
                     $this->triangleParameters[1],
                     $this->triangleParameters[11]
                 );
-            return "text";
+            return "Median theorem using the sides AC, BC and median BM to find the side AB";
         }
         if ($this->triangleParameters[12]!=""
             && $this->triangleParameters[0]!=""
@@ -730,7 +731,7 @@ class FigureTriangle
                     $this->triangleParameters[1],
                     $this->triangleParameters[12]
                 );
-            return "text";
+            return "Median theorem using the sides AB, BC and median CM to find the side AC";
         }
         if ($this->triangleParameters[12]!=""
             && $this->triangleParameters[0]!=""
@@ -742,7 +743,7 @@ class FigureTriangle
                     $this->triangleParameters[2],
                     $this->triangleParameters[12]
                 );
-            return "text";
+            return "Median theorem using the sides AB, AC and median CM to find the side BC";
         }
 
         if ($this->triangleParameters[20]!=""
@@ -757,7 +758,7 @@ class FigureTriangle
                     $this->triangleParameters[1],
                     $this->triangleParameters[2]
                 );
-            return "text";
+            return "Bisector theorem using the sides BA1, AC1, AC, BC to find the bisector AA1";
         }
         if ($this->triangleParameters[16]!=""
             && $this->triangleParameters[17]!=""
@@ -771,7 +772,7 @@ class FigureTriangle
                     $this->triangleParameters[0],
                     $this->triangleParameters[2]
                 );
-            return "text";
+            return "Bisector theorem using the sides AB1, CB1, AB, BC to find the bisector BB1";
         }
         if ($this->triangleParameters[18]!=""
             && $this->triangleParameters[19]!=""
@@ -785,84 +786,11 @@ class FigureTriangle
                     $this->triangleParameters[1],
                     $this->triangleParameters[0]
                 );
-            return "text";
+            return "Bisector theorem using the sides CA1, CB1, AB, BC to find the bisector CC1";
         }
 
         if ($this->triangleParameters[20]!=""
-            && $this->triangleParameters[1]!=""
-            && $this->triangleParameters[2]!=""
-            && $this->triangleParameters[21]=="") {
-            $this->triangleParameters[21]=
-                $this->sideFragmentFromSide(
-                    $this->triangleParameters[20],
-                    $this->triangleParameters[1],
-                    $this->triangleParameters[2]
-                );
-            return "text";
-        }
-        if ($this->triangleParameters[21]!=""
-            && $this->triangleParameters[1]!=""
-            && $this->triangleParameters[2]!=""
-            && $this->triangleParameters[20]=="") {
-            $this->triangleParameters[20]=
-                $this->sideFragmentFromSide(
-                    $this->triangleParameters[21],
-                    $this->triangleParameters[1],
-                    $this->triangleParameters[2]
-                );
-            return "text";
-        }
-        if ($this->triangleParameters[16]!=""
-            && $this->triangleParameters[0]!=""
-            && $this->triangleParameters[2]!=""
-            && $this->triangleParameters[17]=="") {
-            $this->triangleParameters[17]=
-                $this->sideFragmentFromSide(
-                    $this->triangleParameters[16],
-                    $this->triangleParameters[0],
-                    $this->triangleParameters[2]
-                );
-            return "text";
-        }
-        if ($this->triangleParameters[17]!=""
-            && $this->triangleParameters[0]!=""
-            && $this->triangleParameters[2]!=""
-            && $this->triangleParameters[16]=="") {
-            $this->triangleParameters[16]=
-                $this->sideFragmentFromSide(
-                    $this->triangleParameters[17],
-                    $this->triangleParameters[0],
-                    $this->triangleParameters[2]
-                );
-            return "text";
-        }
-        if ($this->triangleParameters[18]!=""
-            && $this->triangleParameters[0]!=""
-            && $this->triangleParameters[1]!=""
-            && $this->triangleParameters[19]=="") {
-            $this->triangleParameters[19]=
-                $this->sideFragmentFromSide(
-                    $this->triangleParameters[18],
-                    $this->triangleParameters[0],
-                    $this->triangleParameters[1]
-                );
-            return "text";
-        }
-        if ($this->triangleParameters[19]!=""
-            && $this->triangleParameters[0]!=""
-            && $this->triangleParameters[1]!=""
-            && $this->triangleParameters[18]=="") {
-            $this->triangleParameters[18]=
-                $this->sideFragmentFromSide(
-                    $this->triangleParameters[19],
-                    $this->triangleParameters[0],
-                    $this->triangleParameters[1]
-                );
-            return "text";
-        }
-
-        if ($this->triangleParameters[20]!=""
-            && $this->triangleParameters[19]!=""
+            && $this->triangleParameters[21]!=""
             && $this->triangleParameters[1]!=""
             && $this->triangleParameters[0]=="") {
             $this->triangleParameters[0]=
@@ -871,10 +799,10 @@ class FigureTriangle
                     $this->triangleParameters[20],
                     $this->triangleParameters[1]
                 );
-            return "text";
+            return "Bisector theorem using the sides AB1, AC1, BC to find the side AB.";
         }
         if ($this->triangleParameters[20]!=""
-            && $this->triangleParameters[19]!=""
+            && $this->triangleParameters[21]!=""
             && $this->triangleParameters[0]!=""
             && $this->triangleParameters[1]=="") {
             $this->triangleParameters[1]=
@@ -883,19 +811,19 @@ class FigureTriangle
                     $this->triangleParameters[20],
                     $this->triangleParameters[0]
                 );
-            return "text";
+            return "Bisector theorem using the sides AB1, AC1, AB to find the side BC.";
         }
         if ($this->triangleParameters[16]!=""
             && $this->triangleParameters[17]!=""
             && $this->triangleParameters[1]!=""
             && $this->triangleParameters[0]=="") {
-            $this->triangleParameters[2]=
+            $this->triangleParameters[0]=
                 $this->sideFromBisectorFragments(
                     $this->triangleParameters[16],
                     $this->triangleParameters[17],
                     $this->triangleParameters[1]
                 );
-            return "text";
+            return "Bisector theorem using the sides BA1, BC1, BC to find the side AB.";
         }
         if ($this->triangleParameters[16]!=""
             && $this->triangleParameters[17]!=""
@@ -907,7 +835,7 @@ class FigureTriangle
                     $this->triangleParameters[17],
                     $this->triangleParameters[2]
                 );
-            return "text";
+            return "Bisector theorem using the sides BA1, BC1, AC to find the side BC.";
         }
         if ($this->triangleParameters[18]!=""
             && $this->triangleParameters[19]!=""
@@ -919,7 +847,7 @@ class FigureTriangle
                     $this->triangleParameters[19],
                     $this->triangleParameters[2]
                 );
-            return "text";
+            return "Bisector theorem using the sides CA1, CB1, AC to find the side AB.";
         }
         if ($this->triangleParameters[18]!=""
             && $this->triangleParameters[19]!=""
@@ -931,7 +859,7 @@ class FigureTriangle
                     $this->triangleParameters[19],
                     $this->triangleParameters[0]
                 );
-            return "text";
+            return "Bisector theorem using the sides CA1, CB1, AB to find the side BC.";
         }
 
         if ($this->triangleParameters[0]!=""
@@ -944,7 +872,7 @@ class FigureTriangle
                     $this->triangleParameters[0],
                     $this->triangleParameters[4]
                 );
-            return "text";
+            return "Bisector theorem using the sides AB, AC and angle B to find the bisector BL.";
         }
         if ($this->triangleParameters[0]!=""
             && $this->triangleParameters[2]!=""
@@ -956,7 +884,7 @@ class FigureTriangle
                     $this->triangleParameters[0],
                     $this->triangleParameters[3]
                 );
-            return "text";
+            return "Bisector theorem using the sides AB, BC and angle A to find the bisector AL.";
         }
         if ($this->triangleParameters[1]!=""
             && $this->triangleParameters[2]!=""
@@ -968,7 +896,7 @@ class FigureTriangle
                     $this->triangleParameters[1],
                     $this->triangleParameters[5]
                 );
-            return "text";
+            return "Bisector theorem using the sides AC, BC and angle C to find the bisector CL.";
         }
 
         if ($this->triangleParameters[0]!=""
@@ -981,236 +909,173 @@ class FigureTriangle
                     $this->triangleParameters[1],
                     $this->triangleParameters[14]
                 );
-            return "text";
+            return "Bisector theorem using the sides AB, BC the bisector BL to find the angle B.";
         }
         if ($this->triangleParameters[0]!=""
             && $this->triangleParameters[2]!=""
             && $this->triangleParameters[13]!=""
             && $this->triangleParameters[3]=="") {
             $this->triangleParameters[3]=
-                $this->bisectorFromSidesAndAngleCos(
+                $this->angleFromBisectorAndSide(
                     $this->triangleParameters[2],
                     $this->triangleParameters[0],
                     $this->triangleParameters[13]
                 );
-            return "text";
+            return "Bisector theorem using the sides AB, AC the bisector AL to find the angle A.";
         }
         if ($this->triangleParameters[1]!=""
             && $this->triangleParameters[2]!=""
             && $this->triangleParameters[15]!=""
             && $this->triangleParameters[5]=="") {
             $this->triangleParameters[5]=
-                $this->bisectorFromSidesAndAngleCos(
+                $this->angleFromBisectorAndSide(
                     $this->triangleParameters[2],
                     $this->triangleParameters[1],
                     $this->triangleParameters[15]
                 );
-            return "text";
+            return "Bisector theorem using the sides AC, BC the bisector CL to find the angle C.";
         }
 
         if ($this->triangleParameters[0]!=""
-            && $this->triangleParameters[1]!=""
-            && $this->triangleParameters[2]!=""
-            && $this->triangleParameters[7]=="") {
-            $this->triangleParameters[7]=
-                $this->perimeterFromSides(
-                    $this->triangleParameters[0],
-                    $this->triangleParameters[1],
-                    $this->triangleParameters[2]
-                );
-            return "text";
-        }
-
-        if ($this->triangleParameters[0]!=""
-            && $this->triangleParameters[1]!=""
-            && $this->triangleParameters[2]!=""
-            && $this->triangleParameters[8]=="") {
-            $this->triangleParameters[8]=
-                $this->surfaceFromSides(
-                    $this->triangleParameters[0],
-                    $this->triangleParameters[1],
-                    $this->triangleParameters[2]
-                );
-            return "text";
-        }
-
-        if ($this->triangleParameters[0]!=""
-            && $this->triangleParameters[22]!=""
-            && $this->triangleParameters[7]=="") {
-            $this->triangleParameters[7]=
-                $this->surfaceFromSideAndHeight(
-                    $this->triangleParameters[0],
-                    $this->triangleParameters[22]
-                );
-            return "text";
-        }
-        if ($this->triangleParameters[1]!=""
-            && $this->triangleParameters[23]!=""
-            && $this->triangleParameters[7]=="") {
-            $this->triangleParameters[7]=
-                $this->surfaceFromSideAndHeight(
-                    $this->triangleParameters[1],
-                    $this->triangleParameters[23]
-                );
-            return "text";
-        }
-        if ($this->triangleParameters[2]!=""
             && $this->triangleParameters[24]!=""
             && $this->triangleParameters[7]=="") {
             $this->triangleParameters[7]=
                 $this->surfaceFromSideAndHeight(
-                    $this->triangleParameters[2],
+                    $this->triangleParameters[0],
                     $this->triangleParameters[24]
                 );
-            return "text";
+            return "Using the side AB, height CH we can find the surface.";
         }
-
-        if ($this->triangleParameters[0]!=""
-            && $this->triangleParameters[1]!=""
-            && $this->triangleParameters[4]!=""
+        if ($this->triangleParameters[1]!=""
+            && $this->triangleParameters[22]!=""
             && $this->triangleParameters[7]=="") {
             $this->triangleParameters[7]=
-                $this->surfaceFromSidesAndAngle(
-                    $this->triangleParameters[4],
-                    $this->triangleParameters[0],
-                    $this->triangleParameters[1]
+                $this->surfaceFromSideAndHeight(
+                    $this->triangleParameters[1],
+                    $this->triangleParameters[22]
                 );
-            return "text";
-        }
-        if ($this->triangleParameters[0]!=""
-            && $this->triangleParameters[2]!=""
-            && $this->triangleParameters[3]!=""
-            && $this->triangleParameters[7]=="") {
-            $this->triangleParameters[7]=
-                $this->surfaceFromSidesAndAngle(
-                    $this->triangleParameters[3],
-                    $this->triangleParameters[0],
-                    $this->triangleParameters[2]
-                );
-            return "text";
+            return "Using the side CB, height AH we can find the surface.";
         }
         if ($this->triangleParameters[2]!=""
-            && $this->triangleParameters[1]!=""
-            && $this->triangleParameters[5]!=""
+            && $this->triangleParameters[23]!=""
             && $this->triangleParameters[7]=="") {
             $this->triangleParameters[7]=
-                $this->surfaceFromSidesAndAngle(
-                    $this->triangleParameters[5],
+                $this->surfaceFromSideAndHeight(
                     $this->triangleParameters[2],
-                    $this->triangleParameters[1]
+                    $this->triangleParameters[23]
                 );
-            return "text";
+            return "Using the side AC, height BH we can find the surface.";
         }
 
         if ($this->triangleParameters[10]!=""
             && $this->triangleParameters[13]!=""
             && $this->triangleParameters[22]!=""
-            && $this->triangleParameters[0]=="") {
-            $this->triangleParameters[0]=
+            && $this->triangleParameters[1]=="") {
+            $this->triangleParameters[1]=
                 $this->sideFromBisectorHeightMedian(
                     $this->triangleParameters[13],
                     $this->triangleParameters[10],
                     $this->triangleParameters[22]
                 );
-            return "text";
+            return "Using the median AM, height AH, bisector AL we can find the side BC.";
         }
         if ($this->triangleParameters[11]!=""
             && $this->triangleParameters[14]!=""
             && $this->triangleParameters[23]!=""
-            && $this->triangleParameters[1]=="") {
-            $this->triangleParameters[1]=
+            && $this->triangleParameters[2]=="") {
+            $this->triangleParameters[2]=
                 $this->sideFromBisectorHeightMedian(
                     $this->triangleParameters[14],
                     $this->triangleParameters[11],
                     $this->triangleParameters[23]
                 );
-            return "text";
+            return "Using the median BM, height BH, bisector BL we can find the side AC.";
         }
         if ($this->triangleParameters[12]!=""
             && $this->triangleParameters[15]!=""
             && $this->triangleParameters[24]!=""
-            && $this->triangleParameters[2]=="") {
-            $this->triangleParameters[2]=
+            && $this->triangleParameters[0]=="") {
+            $this->triangleParameters[0]=
                 $this->sideFromBisectorHeightMedian(
                     $this->triangleParameters[15],
                     $this->triangleParameters[12],
                     $this->triangleParameters[24]
                 );
-            return "text";
+            return "Using the median CM, height CH, bisector CL we can find the side AB.";
         }
 
-        if ($this->triangleParameters[0]!=""
-            && $this->triangleParameters[13]!=""
-            && $this->triangleParameters[22]!=""
-            && $this->triangleParameters[1]=="") {
-            $this->triangleParameters[1]=
-                $this->side2FromMedianHeightAndSide(
-                    $this->triangleParameters[13],
-                    $this->triangleParameters[22],
-                    $this->triangleParameters[0]
-                );
-            return "text";
-        }
         if ($this->triangleParameters[1]!=""
-            && $this->triangleParameters[14]!=""
-            && $this->triangleParameters[23]!=""
-            && $this->triangleParameters[2]=="") {
-            $this->triangleParameters[2]=
-                $this->side2FromMedianHeightAndSide(
-                    $this->triangleParameters[14],
-                    $this->triangleParameters[23],
-                    $this->triangleParameters[1]
-                );
-            return "text";
-        }
-        if ($this->triangleParameters[2]!=""
-            && $this->triangleParameters[15]!=""
-            && $this->triangleParameters[24]!=""
-            && $this->triangleParameters[0]=="") {
-            $this->triangleParameters[0]=
-                $this->side2FromMedianHeightAndSide(
-                    $this->triangleParameters[15],
-                    $this->triangleParameters[24],
-                    $this->triangleParameters[2]
-                );
-            return "text";
-        }
-
-        if ($this->triangleParameters[0]!=""
             && $this->triangleParameters[13]!=""
             && $this->triangleParameters[22]!=""
             && $this->triangleParameters[2]=="") {
             $this->triangleParameters[2]=
-                $this->side3FromMedianHeightAndSide(
+                $this->side2FromMedianHeightAndSide(
                     $this->triangleParameters[13],
                     $this->triangleParameters[22],
-                    $this->triangleParameters[0]
+                    $this->triangleParameters[1]
                 );
-            return "text";
+            return "Using the side BC, height AH, bisector AL we can find the side AC.";
         }
-        if ($this->triangleParameters[1]!=""
+        if ($this->triangleParameters[2]!=""
             && $this->triangleParameters[14]!=""
             && $this->triangleParameters[23]!=""
             && $this->triangleParameters[0]=="") {
             $this->triangleParameters[0]=
-                $this->side3FromMedianHeightAndSide(
+                $this->side2FromMedianHeightAndSide(
                     $this->triangleParameters[14],
                     $this->triangleParameters[23],
-                    $this->triangleParameters[1]
+                    $this->triangleParameters[2]
                 );
-            return "text";
+            return "Using the side AC, height BH, bisector BL we can find the side AB.";
         }
-        if ($this->triangleParameters[2]!=""
+        if ($this->triangleParameters[0]!=""
             && $this->triangleParameters[15]!=""
             && $this->triangleParameters[24]!=""
             && $this->triangleParameters[1]=="") {
             $this->triangleParameters[1]=
+                $this->side2FromMedianHeightAndSide(
+                    $this->triangleParameters[15],
+                    $this->triangleParameters[24],
+                    $this->triangleParameters[0]
+                );
+            return "Using the side AB, height CH, bisector CL we can find the side BC.";
+        }
+
+        if ($this->triangleParameters[1]!=""
+            && $this->triangleParameters[13]!=""
+            && $this->triangleParameters[22]!=""
+            && $this->triangleParameters[0]=="") {
+            $this->triangleParameters[0]=
+                $this->side3FromMedianHeightAndSide(
+                    $this->triangleParameters[13],
+                    $this->triangleParameters[22],
+                    $this->triangleParameters[1]
+                );
+            return "Using the side BC, height AH, bisector AL we can find the side AB.";
+        }
+        if ($this->triangleParameters[2]!=""
+            && $this->triangleParameters[14]!=""
+            && $this->triangleParameters[23]!=""
+            && $this->triangleParameters[1]=="") {
+            $this->triangleParameters[1]=
+                $this->side3FromMedianHeightAndSide(
+                    $this->triangleParameters[14],
+                    $this->triangleParameters[23],
+                    $this->triangleParameters[2]
+                );
+            return "Using the side AC, height BH, bisector BL we can find the side BC.";
+        }
+        if ($this->triangleParameters[0]!=""
+            && $this->triangleParameters[15]!=""
+            && $this->triangleParameters[24]!=""
+            && $this->triangleParameters[2]=="") {
+            $this->triangleParameters[2]=
                 $this->side3FromMedianHeightAndSide(
                     $this->triangleParameters[15],
                     $this->triangleParameters[24],
-                    $this->triangleParameters[2]
+                    $this->triangleParameters[0]
                 );
-            return "text";
+            return "Using the side AB, height CH, bisector CL we can find the side AC.";
         }
 
         if ($this->triangleParameters[9]!=""
@@ -1223,7 +1088,7 @@ class FigureTriangle
                     $this->triangleParameters[8],
                     $this->triangleParameters[9]
                 );
-            return "text";
+            return "Using the height CH, R and r we can find the side AC.";
         }
         if ($this->triangleParameters[9]!=""
             && $this->triangleParameters[23]!=""
@@ -1231,11 +1096,11 @@ class FigureTriangle
             && $this->triangleParameters[1]=="") {
             $this->triangleParameters[1]=
                 $this->sideFromOppositeHeightSmallRadiusLargeRadius(
-                    $this->triangleParameters[24],
+                    $this->triangleParameters[23],
                     $this->triangleParameters[8],
                     $this->triangleParameters[9]
                 );
-            return "text";
+            return "Using the height BH, R and r we can find the side BC.";
         }
         if ($this->triangleParameters[9]!=""
             && $this->triangleParameters[22]!=""
@@ -1243,11 +1108,11 @@ class FigureTriangle
             && $this->triangleParameters[0]=="") {
             $this->triangleParameters[0]=
                 $this->sideFromOppositeHeightSmallRadiusLargeRadius(
-                    $this->triangleParameters[24],
+                    $this->triangleParameters[22],
                     $this->triangleParameters[8],
                     $this->triangleParameters[9]
                 );
-            return "text";
+            return "Using the height AH, R and r we can find the side AB.";
         }
         return "";
     }
