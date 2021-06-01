@@ -10,8 +10,8 @@ class TriangleController
 {
     //Sides
     const SIDE_AB = 0;
-    const SIDE_AC = 1;
-    const SIDE_BC = 2;
+    const SIDE_AC = 2;
+    const SIDE_BC = 1;
 
     //Angles THE ANGLES SHOULD ALWAYS BE TURNED IN TO COS, IMPORTANT !!!!!!!!!!!!!
     const ANGLE_A = 3;
@@ -51,45 +51,54 @@ class TriangleController
     //Empty
     const EMPTY = "";
 
-    public function fillTriangle(){
+    public function fillTriangle()
+    {
         $result = [
             'success' => false
         ];
 
-        $AB = $_POST['AB'] ?? '';
-        $AC = $_POST['AC'] ?? '';
-        $BC = $_POST['BC'] ?? '';
+        if (!empty($_SESSION['Given'])) {
+            $given = json_decode($_SESSION['Given']);
+        }
 
-        $A = $_POST['A'] ?? '';
-        $B = $_POST['B'] ?? '';
-        $C = $_POST['C'] ?? '';
+        $AB = $_POST['AB'] ?? $given[self::SIDE_AB] ?? '';
+        $AC = $_POST['AC'] ?? $given[self::SIDE_AC] ?? '';
+        $BC = $_POST['BC'] ?? $given[self::SIDE_BC] ?? '';
 
-        $AL = $_POST['AL'] ?? '';
-        $BL = $_POST['BL'] ?? '';
-        $CL = $_POST['CL'] ?? '';
+        $A = $_POST['A'] ?? $given[self::ANGLE_A] ?? '';
+        $B = $_POST['B'] ?? $given[self::ANGLE_B] ?? '';
+        $C = $_POST['C'] ?? $given[self::ANGLE_C] ?? '';
 
-        $AM = $_POST['AM'] ?? '';
-        $CM = $_POST['CM'] ?? '';
-        $BM = $_POST['BM'] ?? '';
+        $AL = $_POST['AL'] ?? $given[self::BISECTOR_AL] ?? '';
+        $BL = $_POST['BL'] ?? $given[self::BISECTOR_BL] ?? '';
+        $CL = $_POST['CL'] ?? $given[self::BISECTOR_CL] ?? '';
 
-        $AH = $_POST['AH'] ?? '';
-        $BH = $_POST['BH'] ?? '';
-        $CH = $_POST['CH'] ?? '';
+        $AM = $_POST['AM'] ?? $given[self::MEDIAN_AM] ?? '';
+        $CM = $_POST['CM'] ?? $given[self::MEDIAN_BM] ?? '';
+        $BM = $_POST['BM'] ?? $given[self::MEDIAN_CM] ?? '';
 
-        $P = $_POST['P'] ?? '';
-        $S = $_POST['S'] ?? '';
+        $AH = $_POST['AH'] ?? $given[self::HEIGHT_AH] ?? '';
+        $BH = $_POST['BH'] ?? $given[self::HEIGHT_BH] ?? '';
+        $CH = $_POST['CH'] ?? $given[self::HEIGHT_CH] ?? '';
 
-        $R = $_POST['RLarge'] ?? '';
-        $r = $_POST['RSmall'] ?? '';
+        $P = $_POST['P'] ?? $given[self::PERIMETER] ?? '';
+        $S = $_POST['S'] ?? $given[self::SURFACE] ?? '';
 
-        $ALFromB = $_POST['ALFromB'] ?? '';
-        $CLFromB = $_POST['CLFromB'] ?? '';
-        $ALFromC = $_POST['ALFromC'] ?? '';
-        $BLFromC = $_POST['BLFromC'] ?? '';
-        $BLFromA = $_POST['BLFromA'] ?? '';
-        $CLFromA = $_POST['CLFromA'] ?? '';
+        $R = $_POST['RLarge'] ?? $given[self::OUTER_RADIUS] ?? '';
+        $r = $_POST['RSmall'] ?? $given[self::INNER_RADIUS] ?? '';
 
-        if(!$this->validateNumber($AB) &&
+        $ALFromB = $_POST['ALFromB'] ?? $given[self::SIDE_AL_FROM_B] ?? '';
+        $CLFromB = $_POST['CLFromB'] ?? $given[self::SIDE_CL_FROM_B] ?? '';
+        $ALFromC = $_POST['ALFromC'] ?? $given[self::SIDE_AL_FROM_C] ?? '';
+        $BLFromC = $_POST['BLFromC'] ?? $given[self::SIDE_BL_FROM_C] ?? '';
+        $BLFromA = $_POST['BLFromA'] ?? $given[self::SIDE_BL_FROM_A] ?? '';
+        $CLFromA = $_POST['CLFromA'] ?? $given[self::SIDE_CL_FROM_A] ?? '';
+
+        //clean POST AND SESSION GIVEN
+        $_POST = array();
+        unset($_SESSION['Given']);
+
+        if (!$this->validateNumber($AB) &&
             !$this->validateNumber($AC) &&
             !$this->validateNumber($A) &&
             !$this->validateNumber($B) &&
@@ -113,46 +122,66 @@ class TriangleController
             !$this->validateNumber($BLFromC) &&
             !$this->validateNumber($CLFromA) &&
             !$this->validateNumber($BLFromA)
-        ){
+        ) {
             View::render('triangle');
             echo json_encode("No negative values.");
             return $result;
-        }else{
-            $triangle =  [$AB, $AC, $BC, $A, $B, $C, $S, $P, $r, $R, $AM, $BM, $CM, $AL, $BL, $CL, $ALFromB, $CLFromB, $ALFromC, $BLFromC, $BLFromA, $CLFromA, $AH, $BH, $CH];
+        } else {
+            $triangle =  [$AB, $AC, $BC, $A,
+                $B, $C, $S, $P,
+                $r, $R, $AM, $BM,
+                $CM, $AL, $BL, $CL,
+                $ALFromB, $CLFromB,
+                $ALFromC, $BLFromC,
+                $BLFromA, $CLFromA,
+                $AH, $BH, $CH];
             $this->run($triangle);
             return true;
         }
-
     }
 
     public function run($triangleFill): bool
     {
         $result = false;
 
-        $stuck = true;
+        $stuck = false;
         //what formulas were used to find the sides.
         $text = "";
         $triangle = new FigureTriangle($triangleFill);
         //finds sides based on given parameters
-//        do {
-//            break;
-//        } while ($stuck != true);
+        do {
+            $newText = $triangle->iterate();
+            $text = $text . "</br>" . $newText;
+            //$newText = "";
+            if ($newText == "") {
+                $stuck = true;
+            }
+        } while ($stuck != true);
 
-        if(!$this->validateSides($triangle->getParameter(self::SIDE_AB), $triangle->getParameter(self::SIDE_BC), $triangle->getParameter(self::SIDE_AC))){
+        if($triangle->getParameter(self::SIDE_AB) == "" || $triangle->getParameter(self::SIDE_BC) == "" || $triangle->getParameter(self::SIDE_AC) == ""){
             View::render('triangle');
             echo json_encode("Impossible side proportions.");
             return $result;
         }
+
+        if (!$this->validateSides($triangle->getParameter(self::SIDE_AB), $triangle->getParameter(self::SIDE_BC), $triangle->getParameter(self::SIDE_AC))) {
+            View::render('triangle');
+            echo json_encode("Impossible side proportions.");
+            return $result;
+        }
+
         //find everything else based on sides;
-        if($triangle->getParameter(self::SIDE_AB) && $triangle->getParameter(self::SIDE_AC) && $triangle->getParameter(self::SIDE_BC)) {
+        if ($triangle->getParameter(self::SIDE_AB) && $triangle->getParameter(self::SIDE_AC) && $triangle->getParameter(self::SIDE_BC)) {
             $triangle->setEverythingFromSides();
-            setcookie("HowWasItSolved", $text . "Using the sides we can find everything else using the analogous formulas(you can find them on the main page)." ,time()+3600);
+            setcookie("HowWasItSolved", $text . "Using the sides we can find everything else using the analogous formulas(you can find them on the main page).", time()+3600);
         }
 
         $triangle->sendCookies();
 
         View::redirect('../../Diploma-Project-Math-Site/View/triangleResult.php', 301);
+        return true;
     }
+
 
     public function validateNumber($number): bool
     {
@@ -161,10 +190,10 @@ class TriangleController
 
     public function validateSides($a, $b, $c): bool
     {
-        if($a == "" || $b == "" || $c == ""){
+        if ($a == null || $b == null || $c == null) {
             return true;
         }
-        if(($a + $b <= $c) || ($a + $c <= $b) || ($b + $c <= $a)){
+        if (($a + $b <= $c) || ($a + $c <= $b) || ($b + $c <= $a)) {
             return false;
         }
         return true;

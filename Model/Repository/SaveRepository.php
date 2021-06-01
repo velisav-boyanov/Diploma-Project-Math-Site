@@ -17,6 +17,18 @@ class SaveRepository
         return $pdo->lastInsertId();
     }
 
+    public function getOldTests($id): array
+    {
+        $pdo = DBManager::getInstance()->getConnection();
+
+        $sql = 'SELECT `Id` FROM `Saved_Triangles`
+                WHERE `User_Id` = :id';
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['id' => $id]);
+        return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     public function getTriangleById($triangleId)
     {
         $pdo = DBManager::getInstance()->getConnection();
@@ -54,4 +66,39 @@ class SaveRepository
         $stmt->execute(['blog' => 1]);
         return $stmt->fetchAll(\PDO::FETCH_ASSOC);
     }
+
+    public function removePost($postId)
+    {
+        $pdo = DBManager::getInstance()->getConnection();
+
+        $sql = 'DELETE FROM `Saved_Triangles` 
+                WHERE `Saved_Triangles`.`Id` = :postId';
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['postId' => $postId]);
+    }
+
+    public function markAsAdded($postId, $isAdded)
+    {
+        $pdo = DBManager::getInstance()->getConnection();
+
+        $sql = 'UPDATE `Saved_Triangles`
+                SET  `Test_Added` = :isAdded
+                WHERE `Saved_Triangles`.`Id` = :postId';
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['postId' => $postId, 'isAdded' => $isAdded]);
+    }
+
+    public function clean()
+    {
+        $pdo = DBManager::getInstance()->getConnection();
+
+        $sql = 'UPDATE `Saved_Triangles`
+                SET  `Test_Added` = :isAdded';
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute(['isAdded' => 0]);
+    }
+
 }

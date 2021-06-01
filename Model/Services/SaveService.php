@@ -31,6 +31,18 @@ class SaveService
         return $result;
     }
 
+    public function getOldTests($userId){
+        $repo = new SaveRepository();
+
+        $saveIds = $repo->getOldTests($userId);
+
+        for($i = 0; $i < sizeof($saveIds); $i++){
+            $saveIds[$i] = $saveIds[$i]['Id'];
+        }
+
+        return $saveIds;
+    }
+
     public function getTriangle($triangleId): array
     {
         $result = [
@@ -50,6 +62,18 @@ class SaveService
         return $result;
     }
 
+    public function removePost($postId)
+    {
+        $repo = new SaveRepository();
+        $repo->removePost($postId);
+    }
+
+    public function markAsAdded($postId, $isAdded)
+    {
+        $repo = new SaveRepository();
+        $repo->markAsAdded($postId, $isAdded);
+    }
+
     public function getTriangleByUserId($userId): array
     {
         $repo = new SaveRepository();
@@ -60,5 +84,11 @@ class SaveService
     {
         $repo = new SaveRepository();
         return $repo->getBlogs();
+    }
+
+    public function cleanOldTests()
+    {
+        $repo = new SaveRepository();
+        return $repo->clean();
     }
 }
